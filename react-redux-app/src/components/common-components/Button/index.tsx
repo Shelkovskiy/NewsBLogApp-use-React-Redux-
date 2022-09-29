@@ -7,7 +7,7 @@ interface IButtonProps extends IButtonVisualProps {
 	onClick?: () => void;
 	active?: boolean;
 	className?: string;
-	type: "submit" | "button" | "reset";
+	type?: "submit" | "button" | "reset";
 }
 
 interface IButtonVisualProps {
@@ -22,7 +22,7 @@ interface IButtonVisualProps {
 	fontFamily?: string;
 	padding?: string;
 	border?: string;
-	borderRadius?:string;
+	borderRadius?: string;
 }
 
 export const Btn = styled.button<IButtonVisualProps>`
@@ -31,21 +31,16 @@ export const Btn = styled.button<IButtonVisualProps>`
 	margin: ${(p) => p.margin};
 	padding: ${(p) => p.padding};
 	height: ${(p) => p.height}px;
-	background: ${(p) => p.background};
-	font-size: ${(p) => p.fontSize}px;
-	font-weight: ${(p) => p.fontWeight};
-	color: ${(p) => p.color};
+	background: ${(p) => p.background || "none"};
+	font-size: ${(p) => p.fontSize || "16"}px;
+	font-weight: ${(p) => p.fontWeight || "400"};
+	color: ${(p) => p.color || "#313037"};
 	line-height: ${(p) => p.lineheight}px;
-	font-family: ${(p) => p.fontFamily};
-	border: ${(props) => props.border};
-	border-radius:${(props)=>props.borderRadius}px;
+	font-family: ${(p) => p.fontFamily || "Inter"};
+	border: ${(props) => props.border || "none"};
+	border-radius: ${(props) => props.borderRadius || "4"}px;
 	cursor: pointer;
-	
 `;
-
-interface IButtonState {
-	readonly text: string;
-}
 
 const Button = ({
 	children,
@@ -64,7 +59,7 @@ const Button = ({
 	fontFamily,
 	padding,
 	border,
-	borderRadius
+	borderRadius,
 }: IButtonProps) => {
 	return (
 		<Btn
@@ -88,10 +83,6 @@ const Button = ({
 			{children}
 		</Btn>
 	);
-};
-Button.defaultProps = {
-	children: "Button",
-	type: "button | submit",
 };
 
 export default React.memo(Button);

@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import Input from "../../Input";
 import Button from "../../Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import CustomText from "../../Text/index";
+import { CustomLnk } from "../../CustomLink/index";
 
 interface IHeader {
 	background?: string;
@@ -21,14 +21,6 @@ const HeaderBlock = styled.div<IHeader>`
 	align-items: center;
 	top: 0px;
 	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-`;
-
-interface ILink {
-	textDecoration?: string;
-}
-
-const CustomLnk = styled(Link)<ILink>`
-	text-decoration: ${(p) => p.textDecoration};
 `;
 
 const InputForm = styled.form`
@@ -52,7 +44,9 @@ const Header = () => {
 					border="none"
 					margin="auto"
 					width="100"
-					onChange={(e) => console.log(e.target.value)}
+					onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+						console.log(e.target.value)
+					}
 					height="56px"
 					type="search"
 				/>
@@ -77,4 +71,4 @@ const Header = () => {
 	);
 };
 
-export default Header;
+export default React.memo(Header);

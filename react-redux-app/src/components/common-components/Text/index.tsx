@@ -14,26 +14,29 @@ interface ICustomText {
 	fontweight?: string;
 	width?: string;
 	cursor?: string;
+	margin?: string;
 }
 
-const Text = styled.p<ICustomText>`
-	font-family: ${(props) => props.fontfamily};
-	font-style: ${(props) => props.fontstyle};
-	font-size: ${(props) => props.fontsize}px;
-	line-height: ${(props) => props.lineheight}px;
-	text-align: ${(props) => props.textAlignt};
+const Text = styled.div<ICustomText>`
+	font-family: ${(props) => props.fontfamily || "Inter"};
+	font-style: ${(props) => props.fontstyle || "normal"};
+	font-size: ${(props) => props.fontsize || 16}px;
+	line-height: ${(props) => props.lineheight || 18}px;
+	text-align: ${(props) => props.textAlignt || "center"};
 	vertical-align: ${(props) => props.verticalAlign};
 	letter-spacing: ${(props) => props.letterspacing};
 	align-items: ${(props) => props.alignItems};
 	color: ${(props) => props.color};
-	font-weight: ${(props) => props.fontweight};
+	font-weight: ${(props) => props.fontweight || "400"};
 	max-width: ${(props) => props.width}px;
 	cursor: ${(props) => props.cursor};
 	margin-block-start: 0px;
 	margin-block-end: 0px;
 	margin-inline-start: 0px;
 	margin-inline-end: 0px;
+	margin: ${(props) => props.margin};
 `;
+
 interface IText extends ICustomText {
 	children?: React.ReactNode;
 }
@@ -52,6 +55,7 @@ const CustomText = ({
 	fontweight,
 	width,
 	cursor,
+	margin,
 }: IText) => {
 	return (
 		<Text
@@ -67,6 +71,7 @@ const CustomText = ({
 			fontweight={fontweight}
 			width={width}
 			cursor={cursor}
+			margin={margin}
 		>
 			{children}
 		</Text>
