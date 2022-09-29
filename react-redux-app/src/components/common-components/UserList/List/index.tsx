@@ -100,6 +100,8 @@ const List = ({ items }: IListProps) => {
 								alignItems="center"
 								color="rgba(49, 48, 55, 0.5)"
 								width="123"
+								textAlignt="start"
+								margin="0px 0px 8px"
 							>
 								{item.publishedAt}{" "}
 							</CustomText>
@@ -111,6 +113,7 @@ const List = ({ items }: IListProps) => {
 								lineheight="28"
 								alignItems="center"
 								color="#313037"
+								textAlignt="start"
 							>
 								{item.title}
 							</CustomText>
@@ -122,4 +125,4 @@ const List = ({ items }: IListProps) => {
 	);
 };
 
-export default List;
+export default React.memo(List);

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "./index.css";
 import { getPostsArr } from "../API/getPostApi";
 import List from "../common-components/UserList/List";
-import styled from "styled-components";
+
+import { Loader } from "../common-components/Loader/Loader";
 
 export interface IPost {
 	id?: number;
@@ -27,24 +27,6 @@ export interface IPost {
 	];
 }
 
-const Loader = styled.div`
-	margin: auto;
-	border: 10px solid #f3f3f3;
-	border-top: 10px solid #3498db;
-	border-radius: 50%;
-	width: 80px;
-	height: 80px;
-	animation: spin 1s linear infinite;
-	@keyframes spin {
-		0% {
-			transform: rotate(0deg);
-		}
-		100% {
-			transform: rotate(360deg);
-		}
-	}
-`;
-
 const BlogPosts = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [posts, setPosts] = useState<IPost[] | []>([]);
@@ -54,8 +36,6 @@ const BlogPosts = () => {
 				setIsLoading(true);
 				const response = await getPostsArr();
 				setPosts(response);
-				console.log(response);
-				setIsLoading(false);
 			} catch (e) {
 				console.error(e);
 			} finally {
@@ -68,7 +48,7 @@ const BlogPosts = () => {
 	// const dispatch = useDispatch();
 	// const blog = useSelector((state) => state.blog.items);
 	return isLoading ? (
-		<Loader></Loader>
+		<Loader />
 	) : (
 		<>
 			<List items={posts} />
@@ -76,4 +56,4 @@ const BlogPosts = () => {
 	);
 };
 
-export default BlogPosts;
+export default React.memo(BlogPosts);
