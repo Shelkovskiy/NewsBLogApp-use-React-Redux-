@@ -1,5 +1,4 @@
-import react from "react";
-import styled from "styled-components";
+import React from "react";
 import CustomText from "../../components/common-components/Text";
 import SignIN from "../../components/SignInForm";
 import { CustomLnk } from "../../components/common-components/CustomLink";

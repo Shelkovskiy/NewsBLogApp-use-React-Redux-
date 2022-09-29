@@ -6,7 +6,7 @@ import { CustomLnk } from "../../components/common-components/CustomLink/index";
 
 const SignUpPage = () => {
 	return (
-		<ComponentsContainer margin="30 0 0">
+		<ComponentsContainer margin="30px 0px 0px">
 			<ComponentsContainer maxWidth="1120px" margin="0 auto 20px">
 				<ComponentsContainer maxWidth="212px" margin="20px 0 0">
 					<CustomLnk to="/mainpage" textDecoration="none">

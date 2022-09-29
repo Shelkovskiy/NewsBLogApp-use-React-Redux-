@@ -9,6 +9,7 @@ import {
 	NavWrap,
 	NavWrapItem,
 } from "../../components/common-components/Navigation";
+import { Page } from "../../components/Pagination";
 
 const totalPages: number[] = [1, 2, 3, 4, 5, 6];
 
@@ -31,22 +32,11 @@ const SortItem = styled.div`
 	}
 `;
 
-const Page = styled.span`
-	font-family: "Inter";
-	font-style: normal;
-	font-weight: 600;
-	font-size: 16px;
-	line-height: 24px;
-	text-transform: uppercase;
-	cursor: pointer;
-	color: rgba(49, 48, 55, 1);
-`;
-
 export const MainPage = () => {
 	return (
 		<ComponentsContainer
 			maxWidth="1120px"
-			margin="auto"
+			margin="60px auto 0"
 			padding="0px 0px 10px "
 		>
 			<ComponentsContainer maxWidth="100%" margin="0px 0px 64px">
