@@ -1,12 +1,8 @@
-export interface IData {
-	login: string;
-	password: string;
-}
+import { URL_POSTS } from "../../constants";
+import { IDataSignIn } from "../../Types/DataType";
 
-const URL = "https://jsonplaceholder.typicode.com/posts";
-
-export const SignInRequest = async ({ login, password }: IData) => {
-	const resRequest = await fetch(URL, {
+export const SignInRequest = async ({ login, password }: IDataSignIn) => {
+	const resRequest = await fetch(URL_POSTS, {
 		method: "POST",
 		body: JSON.stringify({ login, password }),
 		headers: {

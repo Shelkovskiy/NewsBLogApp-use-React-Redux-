@@ -1,35 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { getPostsArr } from "../API/getPostApi";
 import List from "../common-components/UserList/List";
-
-import { Loader } from "../common-components/Loader/Loader";
-
-export interface IPost {
-	id?: number;
-	featured: boolean;
-	title?: string;
-	url?: string;
-	imageUrl?: string;
-	newsSite?: string;
-	summary?: string;
-	publishedAt?: string;
-	launches: [
-		{
-			id: string;
-			provider: string;
-		},
-	];
-	events: [
-		{
-			id: string;
-			provider: string;
-		},
-	];
-}
+import Loader from "../common-components/Loader/Loader";
+import { IPost } from "../Types/BlogType";
 
 const BlogPosts = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [posts, setPosts] = useState<IPost[] | []>([]);
+
 	useEffect(() => {
 		const fetchPosts = async () => {
 			try {

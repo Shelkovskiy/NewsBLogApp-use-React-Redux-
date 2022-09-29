@@ -1,7 +1,7 @@
-const URL = "https://api.spaceflightnewsapi.net/v3/articles";
+import { URL_ARTICLES } from "../../constants";
 
 export const getPostsArr = async () => {
-	const PostsAPIrequesJSON = await fetch(URL);
+	const PostsAPIrequesJSON = await fetch(URL_ARTICLES);
 	const response = await PostsAPIrequesJSON.json();
 	return response;
 };

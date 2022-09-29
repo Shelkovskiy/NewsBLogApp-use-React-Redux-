@@ -1,45 +1,30 @@
 import React, { useCallback, useState } from "react";
-import styled from "styled-components";
 import Button from "../common-components/Button";
 import Input from "../common-components/Input";
 import CustomText from "../common-components/Text";
 import { SignInRequest } from "../API/SignInApi/index";
-import { Form } from "../common-components/Form/index";
+import { Form, FormLabel } from "../common-components/Form/index";
 import { CustomLnk } from "../common-components/CustomLink";
 import ComponentsContainer from "../common-components/Container";
+import { IDataSignIn } from "../Types/DataType";
 
-export const FormLabel = styled.label`
-	font-size: 16px;
-	font-family: "Inter";
-	font-weight: 600;
-	line-height: 20px;
-	color: #313037;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	font-weight: 600;
-	margin-bottom: 24px;
-`;
-
-export interface IData {
-	login: string;
-	password: string;
-}
-
-const prevUserData: IData = { login: "", password: "" };
+const prevUserData: IDataSignIn = { login: "", password: "" };
 
 const SignIN = () => {
 	const [userData, setUserData] = useState(prevUserData);
-	const onUserDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setUserData((prevState) => ({
-			...prevState,
-			[e.target.id]: e.target.value,
-		}));
-	};
+	const onUserDataChange = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			setUserData((prevState) => ({
+				...prevState,
+				[e.target.id]: e.target.value,
+			}));
+		},
+		[],
+	);
+
 	const onFormSubmit = useCallback(async () => {
 		try {
 			const response = await SignInRequest(userData);
-			console.log({ response });
 		} catch (e) {
 			console.error(e);
 		} finally {
@@ -89,7 +74,7 @@ const SignIN = () => {
 			<Button
 				fontSize="18"
 				fontWeight="600"
-				background=" rgba(108, 27, 219, 1)"
+				background="rgba(108, 27, 219, 1)"
 				width="100%"
 				fontFamily="Inter"
 				lineheight="24"
@@ -102,7 +87,12 @@ const SignIN = () => {
 			>
 				Sign In
 			</Button>
-			<ComponentsContainer maxWidth="256" display="flex" margin="auto">
+			<ComponentsContainer
+				justifyContent="center"
+				maxWidth="256"
+				display="flex"
+				margin="auto"
+			>
 				<CustomText
 					fontsize="16"
 					fontfamily="Inter"

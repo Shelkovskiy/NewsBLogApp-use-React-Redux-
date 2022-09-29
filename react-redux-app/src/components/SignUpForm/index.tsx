@@ -1,32 +1,12 @@
 import React, { useCallback, useState } from "react";
-import styled from "styled-components";
 import Button from "../common-components/Button";
 import Input from "../common-components/Input";
 import { SignUpRequest } from "../API/SignUpApi";
-import { Form } from "../common-components/Form/index";
+import { Form, FormLabel } from "../common-components/Form/index";
 import ComponentsContainer from "../common-components/Container";
+import { IDataSignUP } from "../Types/DataType";
 
-export const FormLabel = styled.label`
-	font-size: 16px;
-	font-family: "Inter";
-	font-weight: 600;
-	line-height: 20px;
-	color: #313037;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	font-weight: 600;
-	margin-bottom: 24px;
-`;
-
-export interface IData {
-	password: string;
-	name: string;
-	email: string;
-	confirmpassword: string;
-}
-
-const prevUserData: IData = {
+const prevUserData: IDataSignUP = {
 	name: "",
 	email: "",
 	confirmpassword: "",
@@ -35,16 +15,19 @@ const prevUserData: IData = {
 
 const SignUp = () => {
 	const [userData, setUserData] = useState(prevUserData);
-	const onUserDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setUserData((prevState) => ({
-			...prevState,
-			[e.target.id]: e.target.value,
-		}));
-	};
+	const onUserDataChange = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			setUserData((prevState) => ({
+				...prevState,
+				[e.target.id]: e.target.value,
+			}));
+		},
+		[],
+	);
+
 	const onFormSubmit = useCallback(async () => {
 		try {
 			const response = await SignUpRequest(userData);
-			console.log({ response });
 		} catch (e) {
 			console.error(e);
 		} finally {
