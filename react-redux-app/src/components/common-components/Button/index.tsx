@@ -27,15 +27,15 @@ interface IButtonVisualProps {
 
 export const Btn = styled.button<IButtonVisualProps>`
 	display: block;
-	width: ${(p) => p.width};
-	margin: ${(p) => p.margin};
-	padding: ${(p) => p.padding};
-	height: ${(p) => p.height}px;
+	width: ${(p) => p.width || "150px"};
+	margin: ${(p) => p.margin || "start"};
+	padding: ${(p) => p.padding || "0"};
+	height: ${(p) => p.height || "50"}px;
 	background: ${(p) => p.background || "none"};
 	font-size: ${(p) => p.fontSize || "16"}px;
 	font-weight: ${(p) => p.fontWeight || "400"};
 	color: ${(p) => p.color || "#313037"};
-	line-height: ${(p) => p.lineheight}px;
+	line-height: ${(p) => p.lineheight || "18"}px;
 	font-family: ${(p) => p.fontFamily || "Inter"};
 	border: ${(props) => props.border || "none"};
 	border-radius: ${(props) => props.borderRadius || "4"}px;

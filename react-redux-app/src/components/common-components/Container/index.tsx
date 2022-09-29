@@ -8,7 +8,7 @@ interface ICustomComponentsContainer {
 	padding?: string;
 	justifyContent?: string;
 	alignItems?: string;
-   width?:string;
+	width?: string;
 }
 
 interface IComponentsContainer extends ICustomComponentsContainer {
@@ -16,13 +16,13 @@ interface IComponentsContainer extends ICustomComponentsContainer {
 }
 
 const CustomComponentsContainer = styled.div<ICustomComponentsContainer>`
-	width: ${(props) => props.width};
-   max-width: ${(props) => props.maxWidth};
-	display: ${(props) => props.display};
-	margin: ${(props) => props.margin};
-	padding: ${(props) => props.padding};
-	justify-content: ${(props) => props.justifyContent};
-	align-items: ${(props) => props.alignItems};
+	width: ${(props) => props.width || "100%"};
+	max-width: ${(props) => props.maxWidth || "100%"};
+	display: ${(props) => props.display || "block"};
+	margin: ${(props) => props.margin || "0"};
+	padding: ${(props) => props.padding || 0};
+	justify-content: ${(props) => props.justifyContent || "space-between"};
+	align-items: ${(props) => props.alignItems || "center"};
 `;
 
 const ComponentsContainer = ({
@@ -33,7 +33,7 @@ const ComponentsContainer = ({
 	children,
 	justifyContent,
 	alignItems,
-   width
+	width,
 }: IComponentsContainer) => {
 	return (
 		<CustomComponentsContainer
@@ -43,7 +43,7 @@ const ComponentsContainer = ({
 			display={display}
 			justifyContent={justifyContent}
 			alignItems={alignItems}
-         width={width}
+			width={width}
 		>
 			{children}
 		</CustomComponentsContainer>

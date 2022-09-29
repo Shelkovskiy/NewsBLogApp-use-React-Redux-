@@ -20,11 +20,11 @@ interface IInputForm {
 }
 
 export const InputForm = styled.input<iInputprops>`
-	width: ${(props) => props.width}%;
-	height: ${(props) => props.height};
-	margin: ${(props) => props.margin};
-	border: ${(props) => props.border};
-	padding-left:20px;
+	width: ${(props) => props.width || "auto"};
+	height: ${(props) => props.height || "50px"};
+	margin: ${(props) => props.margin || "start"};
+	border: ${(props) => props.border || "none"};
+	padding-left: 20px;
 	font-size: 16px;
 	line-height: 20px;
 	font-weight: 400px;

@@ -1,6 +1,7 @@
+import React from "react";
 import styled from "styled-components";
 
-export const Loader = styled.div`
+const Loader = styled.div`
 	margin: auto;
 	border: 10px solid #f3f3f3;
 	border-top: 10px solid #3498db;
@@ -17,3 +18,5 @@ export const Loader = styled.div`
 		}
 	}
 `;
+
+export default React.memo(Loader);

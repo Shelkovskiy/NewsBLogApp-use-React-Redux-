@@ -17,28 +17,28 @@ interface ICustomText {
 	margin?: string;
 }
 
-const Text = styled.div<ICustomText>`
+const Text = styled.p<ICustomText>`
+	display: block;
 	font-family: ${(props) => props.fontfamily || "Inter"};
 	font-style: ${(props) => props.fontstyle || "normal"};
 	font-size: ${(props) => props.fontsize || 16}px;
 	line-height: ${(props) => props.lineheight || 18}px;
 	text-align: ${(props) => props.textAlignt || "center"};
-	vertical-align: ${(props) => props.verticalAlign};
 	letter-spacing: ${(props) => props.letterspacing};
-	align-items: ${(props) => props.alignItems};
-	color: ${(props) => props.color};
+	align-items: ${(props) => props.alignItems || "center"};
+	color: ${(props) => props.color || "black"};
 	font-weight: ${(props) => props.fontweight || "400"};
-	max-width: ${(props) => props.width}px;
-	cursor: ${(props) => props.cursor};
+	max-width: ${(props) => props.width || "auto"}px;
+	cursor: ${(props) => props.cursor || "pointer"};
 	margin-block-start: 0px;
 	margin-block-end: 0px;
 	margin-inline-start: 0px;
 	margin-inline-end: 0px;
-	margin: ${(props) => props.margin};
+	margin: ${(props) => props.margin || "auto"};
 `;
 
 interface IText extends ICustomText {
-	children?: React.ReactNode;
+	children?: string;
 }
 
 const CustomText = ({
