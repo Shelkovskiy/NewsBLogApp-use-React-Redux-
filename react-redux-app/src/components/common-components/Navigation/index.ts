@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export const NavWrap = styled.div`
+export const NavWrap = styled.nav`
 	max-width: 305px;
 	display: flex;
 	justify-content: space-evenly;
 	border-bottom: 1px solid rgba(49, 48, 55, 0.1);
 `;
 
-export const NavWrapItem = styled.div`
+export const NavWrapItem = styled.nav`
 	width: 141px;
 	font-family: "Inter";
 	font-style: normal;
