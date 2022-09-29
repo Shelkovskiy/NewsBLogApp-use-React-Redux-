@@ -3,27 +3,10 @@ import styled from "styled-components";
 import Button from "../common-components/Button";
 import Input from "../common-components/Input";
 import CustomText from "../common-components/Text";
-import { Link } from "react-router-dom";
 import { SignInRequest } from "../API/SignInApi/index";
-
-interface IFormProps {
-	width?: string;
-	heigth?: string;
-	padding?: string;
-	margin?: string;
-}
-
-export const Form = styled.form<IFormProps>`
-	border-radius: 16px;
-	display: flex;
-	flex-direction: column;
-	box-sizing: border-box;
-	width: ${(props) => props.width}px;
-	height: ${(props) => props.heigth}px;
-	padding: ${(props) => props.padding}px;
-	margin: ${(props) => props.margin};
-	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-`;
+import { Form } from "../common-components/Form/index";
+import { CustomLnk } from "../common-components/CustomLink";
+import ComponentsContainer from "../common-components/Container";
 
 export const FormLabel = styled.label`
 	font-size: 16px;
@@ -38,28 +21,11 @@ export const FormLabel = styled.label`
 	margin-bottom: 24px;
 `;
 
-const LabelContainer = styled.div`
-	margin-bottom: 48px;
-`;
-
-const BtnContainer = styled.div`
-	width: 256px;
-	display: flex;
-	margin: auto;
-`;
-
-interface ILink {
-	textDecoration?: string;
-}
-
-const CustomLnk = styled(Link)<ILink>`
-	text-decoration: ${(p) => p.textDecoration};
-`;
-
 export interface IData {
-	login?: string;
-	password?: string;
+	login: string;
+	password: string;
 }
+
 const prevUserData: IData = { login: "", password: "" };
 
 const SignIN = () => {
@@ -73,16 +39,17 @@ const SignIN = () => {
 	const onFormSubmit = useCallback(async () => {
 		try {
 			const response = await SignInRequest(userData);
+			console.log({ response });
 		} catch (e) {
 			console.error(e);
 		} finally {
 			setUserData(prevUserData);
 		}
-	}, []);
+	}, [userData]);
 
 	return (
-		<Form width="624" heigth="472" margin="auto" padding="40">
-			<LabelContainer>
+		<Form maxwidth="624" maxheigth="472" margin="auto" padding="40">
+			<ComponentsContainer margin="0 0 48px">
 				<FormLabel htmlFor="email">
 					Email
 					<Input
@@ -118,7 +85,7 @@ const SignIN = () => {
 				>
 					Forgot password?
 				</Button>
-			</LabelContainer>
+			</ComponentsContainer>
 			<Button
 				fontSize="18"
 				fontWeight="600"
@@ -135,7 +102,7 @@ const SignIN = () => {
 			>
 				Sign In
 			</Button>
-			<BtnContainer>
+			<ComponentsContainer maxWidth="256" display="flex" margin="auto">
 				<CustomText
 					fontsize="16"
 					fontfamily="Inter"
@@ -156,7 +123,7 @@ const SignIN = () => {
 						SignUp
 					</Button>
 				</CustomLnk>
-			</BtnContainer>
+			</ComponentsContainer>
 		</Form>
 	);
 };

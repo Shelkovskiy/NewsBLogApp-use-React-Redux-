@@ -3,25 +3,8 @@ import styled from "styled-components";
 import Button from "../common-components/Button";
 import Input from "../common-components/Input";
 import { SignUpRequest } from "../API/SignUpApi";
-
-interface IFormProps {
-	width?: string;
-	heigth?: string;
-	padding?: string;
-	margin?: string;
-}
-
-export const Form = styled.form<IFormProps>`
-	border-radius: 16px;
-	display: flex;
-	flex-direction: column;
-	box-sizing: border-box;
-	width: ${(props) => props.width}px;
-	height: ${(props) => props.heigth}px;
-	padding: ${(props) => props.padding}px;
-	margin: ${(props) => props.margin};
-	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-`;
+import { Form } from "../common-components/Form/index";
+import ComponentsContainer from "../common-components/Container";
 
 export const FormLabel = styled.label`
 	font-size: 16px;
@@ -36,15 +19,11 @@ export const FormLabel = styled.label`
 	margin-bottom: 24px;
 `;
 
-const LabelContainer = styled.div`
-	margin-bottom: 10px;
-`;
-
 export interface IData {
-	password?: string;
-	name?: string;
-	email?: string;
-	confirmpassword?: string;
+	password: string;
+	name: string;
+	email: string;
+	confirmpassword: string;
 }
 
 const prevUserData: IData = {
@@ -65,16 +44,17 @@ const SignUp = () => {
 	const onFormSubmit = useCallback(async () => {
 		try {
 			const response = await SignUpRequest(userData);
+			console.log({ response });
 		} catch (e) {
 			console.error(e);
 		} finally {
 			setUserData(prevUserData);
 		}
-	}, []);
+	}, [userData]);
 
 	return (
-		<Form width="624" heigth="550" margin="auto" padding="40">
-			<LabelContainer>
+		<Form maxwidth="624" maxheigth="550" margin="auto" padding="40">
+			<ComponentsContainer margin="0 0 10px">
 				<FormLabel htmlFor="name">
 					Name
 					<Input
@@ -123,7 +103,7 @@ const SignUp = () => {
 						onChange={onUserDataChange}
 					/>
 				</FormLabel>
-			</LabelContainer>
+			</ComponentsContainer>
 			<Button
 				fontSize="18"
 				fontWeight="600"
