@@ -1,48 +1,102 @@
 import React from "react";
-import "./MainPage.css";
 import BlogPosts from "../../components/BlogPosts/index";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
 import Button from "../../components/common-components/Button";
+import { CustomLnk } from "../../components/common-components/CustomLink";
+import ComponentsContainer from "../../components/common-components/Container";
+import CustomText from "../../components/common-components/Text";
+import styled from "styled-components";
+import {
+	NavWrap,
+	NavWrapItem,
+} from "../../components/common-components/Navigation";
 
-interface ILink {
-	textDecoration?: string;
-}
+const totalPages: number[] = [1, 2, 3, 4, 5, 6];
 
-const CustomLnk = styled(Link)<ILink>`
-	text-decoration: ${(props) => props.textDecoration};
+const SortItem = styled.div`
+	text-align: center;
+	list-style-type: none;
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 24px;
+	background: rgba(49, 48, 55, 0.1);
+	border-radius: 4px;
+	padding: 16px 40px;
+	gap: 4px;
+	color: #313037;
+	:hover {
+		background: rgba(108, 27, 219, 1);
+		color: #ffffff;
+	}
 `;
 
-let totalPages: number[] = [1, 2, 3, 4, 5, 6];
+const Page = styled.span`
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 24px;
+	text-transform: uppercase;
+	cursor: pointer;
+	color: rgba(49, 48, 55, 1);
+`;
 
 export const MainPage = () => {
 	return (
-		<div className="container">
-			<div className="main-title">
+		<ComponentsContainer
+			maxWidth="1120px"
+			margin="auto"
+			padding="0px 0px 10px "
+		>
+			<ComponentsContainer maxWidth="100%" margin="0px 0px 64px">
 				<div>
-					<h1 className="title">Blog</h1>
+					<CustomText
+						fontweight="700"
+						fontsize="56"
+						lineheight="80"
+						color="#313037"
+						margin="0px 0px 40px"
+						alignItems="center"
+						width="123"
+					>
+						Blog
+					</CustomText>
 				</div>
-				<div className="nav-wrap">
+				<NavWrap>
 					<CustomLnk textDecoration="none" to="/MainPage">
-						<div className="nav-wrap-item">Blog</div>
+						<NavWrapItem>Blog</NavWrapItem>
 					</CustomLnk>
-
-					<div className="nav-wrap-item">News</div>
-				</div>
-			</div>
-			<div className="sort-container">
-				<ul className="sort-wrap">
-					<li className="sort-wrap-item">Day</li>
-					<li className="sort-wrap-item">Week</li>
-					<li className="sort-wrap-item">Monath</li>
-					<li className="sort-wrap-item">Year</li>
-				</ul>
-				<div className="sort">SORT</div>
-			</div>
-			<div className="card-container">
+					<NavWrapItem>News</NavWrapItem>
+				</NavWrap>
+			</ComponentsContainer>
+			<ComponentsContainer
+				display="flex"
+				justifyContent="space-between"
+				alignItems="center"
+			>
+				<ComponentsContainer
+					display="flex"
+					justifyContent="space-between"
+					alignItems="center"
+					width="535px"
+				>
+					<SortItem>Day</SortItem>
+					<SortItem>Week</SortItem>
+					<SortItem>Monath</SortItem>
+					<SortItem>Year</SortItem>
+				</ComponentsContainer>
+				<SortItem>SORT</SortItem>
+			</ComponentsContainer>
+			<div>
 				<BlogPosts />
 			</div>
-			<div className="pagination">
+			<ComponentsContainer
+				width="100%"
+				display="flex"
+				justifyContent="space-between"
+				alignItems="center"
+			>
 				<Button
 					background="none"
 					border="none"
@@ -53,11 +107,15 @@ export const MainPage = () => {
 				>
 					← Prev
 				</Button>
-				<div className="pages">
+				<ComponentsContainer
+					width="179px"
+					display="flex"
+					justifyContent="space-between"
+				>
 					{totalPages.map((page, index) => (
-						<span key={index}>{page}</span>
+						<Page key={index}>{page}</Page>
 					))}
-				</div>
+				</ComponentsContainer>
 				<Button
 					background="none"
 					color="#313037"
@@ -68,8 +126,8 @@ export const MainPage = () => {
 				>
 					Next →
 				</Button>
-			</div>
-		</div>
+			</ComponentsContainer>
+		</ComponentsContainer>
 	);
 };
 export default MainPage;

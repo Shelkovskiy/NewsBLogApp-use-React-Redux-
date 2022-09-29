@@ -1,36 +1,14 @@
 import React from "react";
-import styled from "styled-components";
 import CustomText from "../../components/common-components/Text";
-import { Link } from "react-router-dom";
 import SignUp from "../../components/SignUpForm";
-
-const LoginFormContainer = styled.div`
-	max-width: 1120px;
-	margin: auto;
-	margin-bottom: 20px;
-`;
-
-const TextContainer = styled.div`
-	width: 212px;
-`;
-
-const SignUpPageContainer = styled.div`
-	margin-top: 30px;
-`;
-
-interface ILink {
-	textDecoration?: string;
-}
-
-const CustomLnk = styled(Link)<ILink>`
-	text-decoration: ${(p) => p.textDecoration};
-`;
+import ComponentsContainer from "../../components/common-components/Container";
+import { CustomLnk } from "../../components/common-components/CustomLink/index";
 
 const SignUpPage = () => {
 	return (
-		<SignUpPageContainer>
-			<LoginFormContainer>
-				<TextContainer>
+		<ComponentsContainer margin="30 0 0">
+			<ComponentsContainer maxWidth="1120px" margin="0 auto 20px">
+				<ComponentsContainer maxWidth="212px" margin="20px 0 0">
 					<CustomLnk to="/mainpage" textDecoration="none">
 						<CustomText
 							fontfamily="Inter"
@@ -53,10 +31,10 @@ const SignUpPage = () => {
 					>
 						Sign Up
 					</CustomText>
-				</TextContainer>
+				</ComponentsContainer>
 				<SignUp />
-			</LoginFormContainer>
-		</SignUpPageContainer>
+			</ComponentsContainer>
+		</ComponentsContainer>
 	);
 };
 
