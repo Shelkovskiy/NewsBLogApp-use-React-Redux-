@@ -2,7 +2,7 @@ import { GET_POSTS } from "../../action";
 
 const defaulState = {
 	items: [],
-	isFetching: true,
+	isFetching: false,
 };
 
 export default function postsReducer(
@@ -13,11 +13,11 @@ export default function postsReducer(
 		case GET_POSTS:
 			return {
 				...state,
-				items:payload.articles
-			}
+				items: payload.articles,
+			};
 		default:
 			return state;
 	}
 }
 
-export const setPosts = (posts:any) =>({type:GET_POSTS,payload:posts})
+export const setPosts = (posts: any) => ({ type: GET_POSTS, payload: posts });
