@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../../Button";
-import { faToggleOn } from "@fortawesome/free-solid-svg-icons";
+import { faCopyright, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomText from "../../Text/index";
 
@@ -11,13 +11,13 @@ interface IFooter {
 	padding?: string;
 }
 
-const FooterBlock = styled.div<IFooter>`
+const FooterBlock = styled.footer<IFooter>`
 	max-width: 1120px;
 	border-top: 2px solid rgba(49, 48, 55, 0.1);
 	display: flex;
-	background: ${(props) => props.background};
-	margin: ${(props) => props.margin};
-	padding: ${(props) => props.padding}px;
+	background: ${(props) => props.background || "none"};
+	margin: ${(props) => props.margin || "start"};
+	padding: ${(props) => props.padding || "0"}px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -41,6 +41,7 @@ const Footer = () => {
 		<>
 			<FooterBlock background="none" margin="auto" padding="34">
 				<div>
+					<div>{<FontAwesomeIcon icon={faCopyright} size="1x" />}</div>
 					<CustomText
 						fontfamily="Inter"
 						fontsize="16"
@@ -48,7 +49,7 @@ const Footer = () => {
 						lineheight="24"
 						fontweight="400"
 					>
-						©2022 Blogolog
+						2022 Blogolog
 					</CustomText>
 				</div>
 				<DarkThemeBlock>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import Input from "../../Input";
 import Button from "../../Button";
@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import CustomText from "../../Text/index";
 import { CustomLnk } from "../../CustomLink/index";
+import { Form } from "../../Form/index";
+import Image from "./img/logo.png";
 
 interface IHeader {
 	background?: string;
@@ -13,8 +15,10 @@ interface IHeader {
 	padding?: string;
 }
 
-const HeaderBlock = styled.div<IHeader>`
-	padding: ${(props) => props.padding}px;
+const HeaderBlock = styled.header<IHeader>`
+	background: ${(props) => props.background || "none"};
+	margin: ${(props) => props.margin || "start"};
+	padding: ${(props) => props.padding || "0"}px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-evenly;
@@ -23,37 +27,38 @@ const HeaderBlock = styled.div<IHeader>`
 	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `;
 
-const InputForm = styled.form`
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	width: 1300px;
-`;
-
 const Header = () => {
 	return (
 		<HeaderBlock padding="20">
 			<CustomLnk to="/mainpage">
 				<div>
-					<img src={require("./img/Logo.png")} alt="logo" />
+					<img src={Image} alt="logo" />
 				</div>
 			</CustomLnk>
-
-			<InputForm>
+			<Form
+				width="1300px"
+				maxwidth="1300"
+				maxheigth="100"
+				padding="0"
+				margin="auto"
+				flexDirection="row"
+			>
 				<Input
 					border="none"
 					margin="auto"
-					width="100"
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-						console.log(e.target.value)
-					}
+					width="100%"
+					onChange={useCallback(
+						(e: React.ChangeEvent<HTMLInputElement>) =>
+							console.log(e.target.value),
+						[],
+					)}
 					height="56px"
 					type="search"
 				/>
 				<Button background="none" border="none">
 					<FontAwesomeIcon icon={faMagnifyingGlass} />
 				</Button>
-			</InputForm>
+			</Form>
 			<CustomLnk to="/signinpage" textDecoration="none">
 				<div>
 					<CustomText
