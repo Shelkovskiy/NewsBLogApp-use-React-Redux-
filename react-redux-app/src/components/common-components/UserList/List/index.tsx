@@ -2,29 +2,9 @@ import React from "react";
 import ListItem from "./ListItem/index";
 import styled from "styled-components";
 import CustomText from "../../Text";
-
-export interface IPost {
-	id?: number;
-	featured: boolean;
-	title?: string;
-	url?: string;
-	imageUrl?: string;
-	newsSite?: string;
-	summary?: string;
-	publishedAt?: string;
-	launches?: [
-		{
-			id: string;
-			provider: string;
-		},
-	];
-	events?: [
-		{
-			id: string;
-			provider: string;
-		},
-	];
-}
+import { IPost } from "../../../Types/BlogType";
+import { Image } from "../../Image/index";
+import ComponentsContainer from "../../Container/index";
 
 interface IListProps {
 	items: IPost[];
@@ -66,21 +46,6 @@ export const CardImageContainer = styled.div`
 	}
 `;
 
-const Image = styled.img`
-	height: 208px;
-	width: 352px;
-	z-index: 1;
-
-	border-radius: 0px;
-	object-fit: cover;
-`;
-
-const CardTextContainer = styled.div`
-	width: 287px;
-	margin: auto;
-	padding: 32px;
-`;
-
 const List = ({ items }: IListProps) => {
 	return (
 		<UlList>
@@ -90,7 +55,7 @@ const List = ({ items }: IListProps) => {
 						<CardImageContainer>
 							<Image src={item.imageUrl} alt="" />
 						</CardImageContainer>
-						<CardTextContainer>
+						<ComponentsContainer width="287px" margin="auto" padding="32px">
 							<CustomText
 								fontfamily="Inter"
 								fontstyle="normal"
@@ -103,7 +68,7 @@ const List = ({ items }: IListProps) => {
 								textAlignt="start"
 								margin="0px 0px 8px"
 							>
-								{item.publishedAt}{" "}
+								{item.publishedAt}
 							</CustomText>
 							<CustomText
 								fontfamily="Inter"
@@ -117,7 +82,7 @@ const List = ({ items }: IListProps) => {
 							>
 								{item.title}
 							</CustomText>
-						</CardTextContainer>
+						</ComponentsContainer>
 					</ListItem>
 				);
 			})}
