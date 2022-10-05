@@ -22,7 +22,6 @@ const FooterBlock = styled.footer<IFooter>`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	position: absolute;
 	width: 100%;
 	flex-shrink: 0;
 	left: 270px;
