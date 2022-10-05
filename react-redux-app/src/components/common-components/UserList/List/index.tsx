@@ -5,9 +5,10 @@ import CustomText from "../../Text";
 import { IPost } from "../../../Types/BlogType";
 import { Image } from "../../Image/index";
 import ComponentsContainer from "../../Container/index";
+import { CustomLnk } from "../../CustomLink/index";
 
 interface IListProps {
-	items: IPost[];
+	items: IPost[] | [];
 }
 
 export const UlList = styled.ul`
@@ -70,18 +71,20 @@ const List = ({ items }: IListProps) => {
 							>
 								{item.publishedAt}
 							</CustomText>
-							<CustomText
-								fontfamily="Inter"
-								fontstyle="normal"
-								fontweight="600"
-								fontsize="18"
-								lineheight="28"
-								alignItems="center"
-								color="#313037"
-								textAlignt="start"
-							>
-								{item.title}
-							</CustomText>
+							<CustomLnk  to={`/selectedpage/${item.id}`}>
+								<CustomText
+									fontfamily="Inter"
+									fontstyle="normal"
+									fontweight="600"
+									fontsize="18"
+									lineheight="28"
+									alignItems="center"
+									color="#313037"
+									textAlignt="start"
+								>
+									{item.title}
+								</CustomText>
+							</CustomLnk>
 						</ComponentsContainer>
 					</ListItem>
 				);

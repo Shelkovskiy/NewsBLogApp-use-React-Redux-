@@ -1,10 +1,16 @@
 import styled from "styled-components";
 
-export const Image = styled.img`
-	height: 208px;
-	width: 352px;
-	z-index: 1;
+interface IImage {
+	height?: string;
+	width?: string;
+	borderRadius?: string;
+	objectFit?: string;
+}
 
-	border-radius: 0px;
-	object-fit: cover;
+export const Image = styled.img<IImage>`
+	height: ${(props) => props.height || "208"}px;
+	width: ${(props) => props.width || "352px"};
+	border-radius: ${(props) => props.borderRadius || "0px"};
+	object-fit: ${(props) => props.objectFit || "cover"};
+	z-index: 1;
 `;

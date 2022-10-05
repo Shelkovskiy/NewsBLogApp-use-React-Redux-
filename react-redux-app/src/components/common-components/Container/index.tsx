@@ -9,6 +9,10 @@ interface ICustomComponentsContainer {
 	justifyContent?: string;
 	alignItems?: string;
 	width?: string;
+	fontSize?: string;
+	color?: string;
+	background?:string;
+	borderRadius?:string;
 }
 
 interface IComponentsContainer extends ICustomComponentsContainer {
@@ -16,6 +20,10 @@ interface IComponentsContainer extends ICustomComponentsContainer {
 }
 
 const CustomComponentsContainer = styled.div<ICustomComponentsContainer>`
+	border-radius:${(props)=>props.borderRadius || "0px"};
+	background:${(props)=>props.background || "none"};
+	font-size: ${(props) => props.fontSize || "16px"};
+	color: ${(props) => props.color || "black"};
 	width: ${(props) => props.width || "100%"};
 	max-width: ${(props) => props.maxWidth || "100%"};
 	display: ${(props) => props.display || "block"};
@@ -34,9 +42,14 @@ const ComponentsContainer = ({
 	justifyContent,
 	alignItems,
 	width,
+	color,
+	fontSize,
+	background,
+	borderRadius
 }: IComponentsContainer) => {
 	return (
 		<CustomComponentsContainer
+			color={color}
 			margin={margin}
 			padding={padding}
 			maxWidth={maxWidth}
@@ -44,6 +57,9 @@ const ComponentsContainer = ({
 			justifyContent={justifyContent}
 			alignItems={alignItems}
 			width={width}
+			fontSize={fontSize}
+			background={background}
+			borderRadius={borderRadius}
 		>
 			{children}
 		</CustomComponentsContainer>
