@@ -7,7 +7,7 @@ import { IPost } from "../Types/BlogType";
 const BlogPosts = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [posts, setPosts] = useState<IPost[] | []>([]);
-
+	
 	useEffect(() => {
 		const fetchPosts = async () => {
 			try {
