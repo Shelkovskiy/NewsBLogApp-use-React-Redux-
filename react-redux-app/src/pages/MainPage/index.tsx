@@ -48,7 +48,7 @@ export const MainPage = () => {
 						color="#313037"
 						margin="0px 0px 40px"
 						alignItems="center"
-						width="123"
+						width="123px"
 					>
 						Blog
 					</CustomText>
@@ -57,7 +57,9 @@ export const MainPage = () => {
 					<CustomLnk textDecoration="none" to="/MainPage">
 						<NavWrapItem>Blog</NavWrapItem>
 					</CustomLnk>
-					<NavWrapItem>News</NavWrapItem>
+					<CustomLnk textDecoration="none" to="/newspage">
+						<NavWrapItem>News</NavWrapItem>
+					</CustomLnk>
 				</NavWrap>
 			</ComponentsContainer>
 			<ComponentsContainer
