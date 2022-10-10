@@ -1,4 +1,4 @@
-import { URL_POSTS } from "../../constants";
+import { URL_POSTS } from "../../constants/URLS";
 import { IDataSignIn } from "../../Types/DataType";
 
 export const SignInRequest = async ({ login, password }: IDataSignIn) => {

@@ -1,4 +1,4 @@
-import { URL_POSTS } from "../../constants";
+import { URL_POSTS } from "../../constants/URLS";
 import { IDataSignUP } from "../../Types/DataType";
 
 export const SignUpRequest = async ({
