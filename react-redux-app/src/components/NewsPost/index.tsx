@@ -1,34 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { IPost } from "../Types/BlogType";
-import List from "../common-components/UserList/List";
+import React, { useEffect } from "react";
 import Loader from "../common-components/Loader/Loader";
-import { getNewsArr } from "../API/getPostApi";
+import List from "../common-components/UserList/List";
+import { ThunkDispatch } from "redux-thunk";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../redux/hooks/index";
+import {
+	newsSelectors,
+	isLoadingNewsSelector,
+	errorNewsSelector,
+} from "../../redux/selectors/NewsSelector";
+import { getAsyncNews } from "../../redux/action/newsActionCreators/index";
+import WarningText from "../common-components/warningText";
 
 const NewsPosts = () => {
-	const [isLoading, setIsLoading] = useState(false);
-	const [blogs, setBlogs] = useState<IPost[] | []>([]);
+	const thunkDispatch: ThunkDispatch<{}, {}, any> = useDispatch();
+	const news = useAppSelector(newsSelectors);
+	const isLoading = useAppSelector(isLoadingNewsSelector);
+	const errorMessage = useAppSelector(errorNewsSelector);
 
 	useEffect(() => {
-		const fetchPosts = async () => {
-			try {
-				setIsLoading(true);
-				const response = await getNewsArr();
-				console.log(response)
-				setBlogs(response);
-			} catch (e) {
-				console.error(e);
-			} finally {
-				setIsLoading(false);
-			}
+		const NewsPosts = async () => {
+			thunkDispatch(getAsyncNews());
 		};
-		fetchPosts();
+		NewsPosts();
 	}, []);
 
 	return isLoading ? (
 		<Loader />
 	) : (
 		<>
-			<List items={blogs} />
+			{errorMessage && (
+				<WarningText style={{ color: "red", fontSize: "18px" }}>
+					{errorMessage}
+				</WarningText>
+			)}
+			<List items={news} />
 		</>
 	);
 };
