@@ -30,10 +30,10 @@ const BlogPosts = () => {
 	const currentPage = useAppSelector(currentPageSelector);
 	const perPage = useAppSelector(perPageSelector);
 	const totalCount = useAppSelector(totalCountSelector);
-	// const pageCount = Math.ceil(totalCount / perPage);
+	const pageCount = Math.ceil(totalCount / perPage);
 
 	const pages: number[] = [];
-	createPages({ pages, totalCount, currentPage });
+	createPages({ pages, pageCount, currentPage });
 
 	useEffect(() => {
 		const BlogsPosts = async () => {
@@ -47,7 +47,7 @@ const BlogPosts = () => {
 			thunkDispatch(getTotalAsyncCount());
 		};
 		totalCountPage();
-	}, []);
+	}, [currentPage]);
 
 	return isLoading ? (
 		<Loader />

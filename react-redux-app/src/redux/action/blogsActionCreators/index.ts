@@ -76,7 +76,8 @@ export const getAsyncBlogs = () => {
 			});
 	};
 };
-
+// Я не понимаю какой тут должен быть запрос чтобы данные обновлялись 
+// при при переходе между страницами 
 export const getTotalAsyncCount = () => {
 	return (dispatch: Dispatch<TBlogsActionTypes>) => {
 		dispatch(getAsyncTotalCount());
