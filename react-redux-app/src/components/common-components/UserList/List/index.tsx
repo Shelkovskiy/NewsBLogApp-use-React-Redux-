@@ -2,13 +2,14 @@ import React from "react";
 import ListItem from "./ListItem/index";
 import styled from "styled-components";
 import CustomText from "../../Text";
-import { IPost } from "../../../Types/BlogType";
 import { Image } from "../../Image/index";
 import ComponentsContainer from "../../Container/index";
 import { CustomLnk } from "../../CustomLink/index";
+import { IAsyncBlogsResponseData } from "../../../../redux/Types/ResponseType";
 
-interface IListProps {
-	items: IPost[] | [];
+interface IListProps  {
+	items: IAsyncBlogsResponseData[];
+	
 }
 
 export const UlList = styled.ul`
@@ -48,6 +49,7 @@ export const CardImageContainer = styled.div`
 `;
 
 const List = ({ items }: IListProps) => {
+
 	return (
 		<UlList>
 			{items.map((item) => {
@@ -71,7 +73,7 @@ const List = ({ items }: IListProps) => {
 							>
 								{item.publishedAt}
 							</CustomText>
-							<CustomLnk  to={`/selectedpage/${item.id}`}>
+							<CustomLnk to={`/selectedpage/${item.id}`}>
 								<CustomText
 									fontfamily="Inter"
 									fontstyle="normal"

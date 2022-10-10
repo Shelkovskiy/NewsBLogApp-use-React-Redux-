@@ -8,7 +8,6 @@ import CustomText from "../../Text/index";
 import { CustomLnk } from "../../CustomLink/index";
 import { Form } from "../../Form/index";
 import Image from "./img/logo.png";
-
 interface IHeader {
 	background?: string;
 	margin?: string;
@@ -28,6 +27,28 @@ const HeaderBlock = styled.header<IHeader>`
 `;
 
 const Header = () => {
+	// const [value, setValue] = useState("");
+	// const [isLoading, setIsLoading] = useState(false);
+	// const [posts, setPosts] = useState<IPost[] | []>([]);
+	// useEffect(() => {
+	// 	const fetchPosts = async () => {
+	// 		try {
+	// 			setIsLoading(true);
+	// 			const response = await getPostsArr();
+	// 			setPosts(response);
+	// 		} catch (e) {
+	// 			console.error(e);
+	// 		} finally {
+	// 			setIsLoading(false);
+	// 		}
+	// 	};
+	// 	fetchPosts();
+	// }, []);
+
+	// const filterBlogs = posts.filter((post) => {
+	// 	return post.title?.toLowerCase().includes(value.toLowerCase());
+	// });
+
 	return (
 		<HeaderBlock padding="20">
 			<CustomLnk to="/mainpage">
@@ -55,9 +76,11 @@ const Header = () => {
 					height="56px"
 					type="search"
 				/>
-				<Button background="none" border="none">
-					<FontAwesomeIcon icon={faMagnifyingGlass} />
-				</Button>
+				<CustomLnk to="/searchpage" textDecoration="none">
+					<Button background="none" border="none">
+						<FontAwesomeIcon icon={faMagnifyingGlass} />
+					</Button>
+				</CustomLnk>
 			</Form>
 			<CustomLnk to="/signinpage" textDecoration="none">
 				<div>
@@ -72,6 +95,9 @@ const Header = () => {
 					</CustomText>
 				</div>
 			</CustomLnk>
+			{/* <div>
+				<List items={filterBlogs} />
+			</div> */}
 		</HeaderBlock>
 	);
 };
