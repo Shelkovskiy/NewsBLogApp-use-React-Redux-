@@ -48,9 +48,9 @@ export const NewsPage = () => {
 						color="#313037"
 						margin="0px 0px 40px"
 						alignItems="center"
-						width="123"
+						width="123px"
 					>
-						Blog
+						News
 					</CustomText>
 				</div>
 				<NavWrap>

@@ -1,8 +1,6 @@
 import React from "react";
 import ComponentsContainer from "../../components/common-components/Container";
 import CustomText from "../../components/common-components/Text";
-import List from "../../components/common-components/UserList/List";
-import useState from 'react';
 
 const Searchpage = () => {
 	return (

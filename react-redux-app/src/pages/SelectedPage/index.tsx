@@ -8,19 +8,15 @@ import { CustomLnk } from "../../components/common-components/CustomLink/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import { ISinglePage } from "../../components/Types/BlogType";
 
 const SelectedPage = () => {
-	const [singlePosts, setSiglePosts] = useState<{
-		title: string;
-		imageUrl: string;
-		summary: string;
-		url: string;
-	}>();
+	const [singlePosts, setSiglePosts] = useState<ISinglePage>();
 	const { id } = useParams();
 
 	useEffect(() => {
 		if (id) {
-			const Posts = async () => {
+			const posts = async () => {
 				try {
 					const response = await getSignglePosts(id);
 					setSiglePosts(response);
@@ -28,10 +24,10 @@ const SelectedPage = () => {
 					console.error(e);
 				}
 			};
-			Posts();
+			posts();
 		}
 	}, [id]);
-	console.log({ singlePosts });
+
 	return (
 		<ComponentsContainer
 			maxWidth="1120px"
@@ -129,4 +125,4 @@ const SelectedPage = () => {
 	);
 };
 
-export default React.memo(SelectedPage);
+export default SelectedPage;
