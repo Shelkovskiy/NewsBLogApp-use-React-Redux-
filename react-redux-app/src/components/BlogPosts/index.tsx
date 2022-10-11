@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import List from "../common-components/UserList/List";
 import Loader from "../common-components/Loader/Loader";
 import { ThunkDispatch } from "redux-thunk";
@@ -27,7 +27,7 @@ const BlogPosts = () => {
 	const blogs = useAppSelector(blogSelectors);
 	const isLoading = useAppSelector(isLoadingSelector);
 	const errorMessage = useAppSelector(errorSelector);
-	const currentPage = useAppSelector(currentPageSelector);
+	const currentPage: number = useAppSelector(currentPageSelector);
 	const perPage = useAppSelector(perPageSelector);
 	const totalCount = useAppSelector(totalCountSelector);
 	const pageCount = Math.ceil(totalCount / perPage);
@@ -37,7 +37,7 @@ const BlogPosts = () => {
 
 	useEffect(() => {
 		const BlogsPosts = async () => {
-			thunkDispatch(getAsyncBlogs());
+			thunkDispatch(getAsyncBlogs({ currentPage }));
 		};
 		BlogsPosts();
 	}, [currentPage]);
@@ -85,14 +85,17 @@ const BlogPosts = () => {
 					display="flex"
 					justifyContent="space-between"
 				>
-					{pages.map((page, index) => (
-						<Page
-							onClick={() => thunkDispatch(setCurrentPage(page))}
-							key={index}
-						>
-							{page}
-						</Page>
-					))}
+					{pages.map((page, index) => {
+						return (
+							<Page
+								key={index}
+								isSelected={page === currentPage}
+								onClick={() => thunkDispatch(setCurrentPage(page))}
+							>
+								{page}
+							</Page>
+						);
+					})}
 				</ComponentsContainer>
 				<Button
 					background="none"
