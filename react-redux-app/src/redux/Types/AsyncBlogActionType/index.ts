@@ -29,7 +29,7 @@ interface IGetAsyncBlogsFailureAction {
 	payload: string;
 }
 
-interface ISetCurrentPageAction {
+export interface ISetCurrentPageAction {
 	type: typeof SET_CURRENT_PAGE
 	payload: number;
 }
