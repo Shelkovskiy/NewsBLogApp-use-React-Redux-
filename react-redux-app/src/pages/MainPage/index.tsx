@@ -46,12 +46,12 @@ export const MainPage = () => {
 						alignItems="center"
 						width="123px"
 					>
-						Blog
+						Articles
 					</CustomText>
 				</div>
 				<NavWrap>
 					<CustomLnk textDecoration="none" to="/MainPage">
-						<NavWrapItem>Blog</NavWrapItem>
+						<NavWrapItem>Articles</NavWrapItem>
 					</CustomLnk>
 					<CustomLnk textDecoration="none" to="/newspage">
 						<NavWrapItem>News</NavWrapItem>

@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "../../components/common-components/Button";
 import { CustomLnk } from "../../components/common-components/CustomLink";
 import ComponentsContainer from "../../components/common-components/Container";
 import CustomText from "../../components/common-components/Text";
@@ -8,10 +7,7 @@ import {
 	NavWrap,
 	NavWrapItem,
 } from "../../components/common-components/Navigation";
-import { Page } from "../../components/Pagination";
 import NewsPost from "../../components/NewsPost";
-
-const totalPages: number[] = [1, 2, 3, 4, 5, 6];
 
 const SortItem = styled.div`
 	text-align: center;
@@ -81,42 +77,6 @@ export const NewsPage = () => {
 			<div>
 				<NewsPost />
 			</div>
-			<ComponentsContainer
-				width="100%"
-				display="flex"
-				justifyContent="space-between"
-				alignItems="center"
-			>
-				<Button
-					background="none"
-					border="none"
-					color="#313037"
-					fontFamily="Inter"
-					fontSize="16"
-					fontWeight="600"
-				>
-					← Prev
-				</Button>
-				<ComponentsContainer
-					width="179px"
-					display="flex"
-					justifyContent="space-between"
-				>
-					{totalPages.map((page, index) => (
-						<Page key={index}>{page}</Page>
-					))}
-				</ComponentsContainer>
-				<Button
-					background="none"
-					color="#313037"
-					fontFamily="Inter"
-					border="none"
-					fontSize="16"
-					fontWeight="600"
-				>
-					Next →
-				</Button>
-			</ComponentsContainer>
 		</ComponentsContainer>
 	);
 };
