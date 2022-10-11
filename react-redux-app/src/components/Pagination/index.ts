@@ -1,17 +1,21 @@
 import styled from "styled-components";
 
-export const Page = styled.span`
-	width:24px;
-	height:24px;
+interface ISelectPage {
+	isSelected: boolean;
+}
+
+export const Page = styled.span<ISelectPage>`
+	width: 30px;
 	font-family: "Inter";
 	font-style: normal;
-	font-weight: 600;
+	font-weight: ${(props) => (props.isSelected ? "700" : "400")};
 	font-size: 16px;
 	line-height: 24px;
 	text-transform: uppercase;
 	cursor: pointer;
-	color: rgba(49, 48, 55, 1);
-	border:1px solid grey;
-	border-radius:50%	;
-	text-align:center;
+	border: ${(props) =>
+		props.isSelected ? "3px solid black" : "1px solid grey"};
+	border-radius: 50%;
+	text-align: center;
+	color: ${(props) => (props.isSelected ? "black" : "rgba(49, 48, 55, 1)")};
 `;
