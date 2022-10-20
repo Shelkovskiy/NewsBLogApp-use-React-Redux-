@@ -11,7 +11,7 @@ import {
 	currentPageSelector,
 	perPageSelector,
 	totalCountSelector,
-} from "../../redux/selectors/NewsSelector";
+} from "../../redux/selectors/newsSelector";
 import {
 	getAsyncNews,
 	getTotalAsyncNewsCount,
@@ -41,9 +41,7 @@ const NewsPosts = () => {
 			thunkDispatch(getAsyncNews({ currentPage }));
 		};
 		NewsPosts();
-	}, [currentPage]);
 
-	useEffect(() => {
 		const totalCountPage = async () => {
 			thunkDispatch(getTotalAsyncNewsCount());
 		};

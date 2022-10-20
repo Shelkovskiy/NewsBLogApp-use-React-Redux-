@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import List from "../common-components/UserList/List";
 import Loader from "../common-components/Loader/Loader";
 import { ThunkDispatch } from "redux-thunk";
@@ -16,11 +16,13 @@ import {
 	currentPageSelector,
 	perPageSelector,
 	totalCountSelector,
-} from "../../redux/selectors/BlogsSelector/index";
+} from "../../redux/selectors/blogsSelector/index";
 import Button from "../common-components/Button";
 import { Page } from "../Pagination";
 import { setCurrentPage } from "../../redux/action/blogsActionCreators/index";
 import { createPages } from "../Pagination/createPagesFUnc";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const BlogPosts = () => {
 	const thunkDispatch: ThunkDispatch<{}, {}, any> = useDispatch();
@@ -30,7 +32,11 @@ const BlogPosts = () => {
 	const currentPage: number = useAppSelector(currentPageSelector);
 	const perPage = useAppSelector(perPageSelector);
 	const totalCount = useAppSelector(totalCountSelector);
-	const pageCount = Math.ceil(totalCount / perPage);
+
+	const pageCount = useMemo(() => {
+		const count = Math.ceil(totalCount / perPage);
+		return count;
+	}, [totalCount]);
 
 	const pages: number[] = [];
 	createPages({ pages, pageCount, currentPage });
@@ -40,74 +46,76 @@ const BlogPosts = () => {
 			thunkDispatch(getAsyncBlogs({ currentPage }));
 		};
 		BlogsPosts();
-	}, [currentPage]);
 
-	useEffect(() => {
 		const totalCountPage = async () => {
 			thunkDispatch(getTotalAsyncCount());
 		};
 		totalCountPage();
 	}, [currentPage]);
 
-	return isLoading ? (
-		<Loader />
-	) : (
+	return (
 		<>
-			{errorMessage && (
-				<ComponentsContainer
-					width="300px"
-					margin="20px auto "
-					fontSize="20"
-					color="red"
-				>
-					{errorMessage}
-				</ComponentsContainer>
+			{isLoading ? (
+				<Loader />
+			) : (
+				<>
+					{errorMessage && (
+						<ComponentsContainer
+							width="300px"
+							margin="20px auto "
+							fontSize="20"
+							color="red"
+						>
+							{errorMessage}
+						</ComponentsContainer>
+					)}
+					<List items={blogs} />
+					<ComponentsContainer
+						width="100%"
+						display="flex"
+						justifyContent="space-between"
+						alignItems="center"
+					>
+						<Button
+							background="none"
+							border="none"
+							color="#313037"
+							fontFamily="Inter"
+							fontSize="16"
+							fontWeight="600"
+						>
+							<FontAwesomeIcon icon={faArrowLeft} /> Prev
+						</Button>
+						<ComponentsContainer
+							width="400px"
+							display="flex"
+							justifyContent="space-between"
+						>
+							{pages.map((page) => {
+								return (
+									<Page
+										key={page}
+										isSelected={page === currentPage}
+										onClick={() => thunkDispatch(setCurrentPage(page))}
+									>
+										{page}
+									</Page>
+								);
+							})}
+						</ComponentsContainer>
+						<Button
+							background="none"
+							color="#313037"
+							fontFamily="Inter"
+							border="none"
+							fontSize="16"
+							fontWeight="600"
+						>
+							Next <FontAwesomeIcon icon={faArrowRight} />
+						</Button>
+					</ComponentsContainer>
+				</>
 			)}
-			<List items={blogs} />
-			<ComponentsContainer
-				width="100%"
-				display="flex"
-				justifyContent="space-between"
-				alignItems="center"
-			>
-				<Button
-					background="none"
-					border="none"
-					color="#313037"
-					fontFamily="Inter"
-					fontSize="16"
-					fontWeight="600"
-				>
-					← Prev
-				</Button>
-				<ComponentsContainer
-					width="400px"
-					display="flex"
-					justifyContent="space-between"
-				>
-					{pages.map((page, index) => {
-						return (
-							<Page
-								key={index}
-								isSelected={page === currentPage}
-								onClick={() => thunkDispatch(setCurrentPage(page))}
-							>
-								{page}
-							</Page>
-						);
-					})}
-				</ComponentsContainer>
-				<Button
-					background="none"
-					color="#313037"
-					fontFamily="Inter"
-					border="none"
-					fontSize="16"
-					fontWeight="600"
-				>
-					Next →
-				</Button>
-			</ComponentsContainer>
 		</>
 	);
 };
