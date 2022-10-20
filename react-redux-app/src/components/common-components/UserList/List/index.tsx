@@ -5,11 +5,10 @@ import CustomText from "../../Text";
 import { Image } from "../../Image/index";
 import ComponentsContainer from "../../Container/index";
 import { CustomLnk } from "../../CustomLink/index";
-import { IAsyncBlogsResponseData } from "../../../../redux/Types/ResponseType";
+import { IAsyncBlogsResponseData } from "../../../../redux/Types/responseType";
 
-interface IListProps  {
+interface IListProps {
 	items: IAsyncBlogsResponseData[];
-	
 }
 
 export const UlList = styled.ul`
@@ -49,7 +48,6 @@ export const CardImageContainer = styled.div`
 `;
 
 const List = ({ items }: IListProps) => {
-
 	return (
 		<UlList>
 			{items.map((item) => {

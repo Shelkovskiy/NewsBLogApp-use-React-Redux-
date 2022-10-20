@@ -8,4 +8,4 @@ const WarningText = ({ children, ...rest }: IWarningTextProps) => {
 	return <p {...rest}>{children}</p>;
 };
 
-export default React.memo(WarningText);
+export default WarningText;
