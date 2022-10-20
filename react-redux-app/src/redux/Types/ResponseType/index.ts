@@ -22,5 +22,5 @@ export interface IAsyncBlogsResponseData {
 }
 
 export interface IGetAsyncTotalCount {
-	count:number;
+	count: number;
 }

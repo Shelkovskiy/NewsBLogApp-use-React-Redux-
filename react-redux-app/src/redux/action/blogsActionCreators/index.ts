@@ -1,3 +1,7 @@
+import {
+	getAsyncBlogsCount,
+	getAsyncBlogsFromApi,
+} from "./../../services/index";
 import { Dispatch, ActionCreator } from "redux";
 import axios from "axios";
 import {
@@ -5,10 +9,17 @@ import {
 	GET_ASYNC_BLOGS_START,
 	GET_ASYNC_BLOGS_SUCCESS,
 } from "../index";
-import { IAsyncBlogsResponseData } from "../../Types/ResponseType";
+import { IAsyncBlogsResponseData } from "../../Types/responseType";
 import { BASE_BLOG_URL, URL_ARTICLES_COUNT } from "../../constants/URLS";
-import { TBlogsActionTypes } from "../../Types/AsyncBlogActionType";
-import { SET_CURRENT_PAGE, GET_ASYNC_TOTAL_COUNT } from "../index";
+import { TBlogsActionTypes } from "../../Types/asyncBlogActionType";
+import {
+	SET_CURRENT_PAGE,
+	GET_ASYNC_TOTAL_COUNT,
+	GET_ASYNC_SEARCH_BLOGS_START,
+	GET_ASYNC_BLOGS_SEARCH_SUCCESS,
+	GET_ASYNC_BLOGS_SEARCH_FAILURE,
+} from "../index";
+import { blogsSearch } from "./../../services/index";
 
 export const getAsyncBlogsStart: ActionCreator<TBlogsActionTypes> = () => {
 	return {
@@ -17,18 +28,43 @@ export const getAsyncBlogsStart: ActionCreator<TBlogsActionTypes> = () => {
 	};
 };
 
+export const getAsyncBlogsSearchStart: ActionCreator<
+	TBlogsActionTypes
+> = () => {
+	return {
+		type: GET_ASYNC_SEARCH_BLOGS_START,
+		payload: {},
+	};
+};
+
 export const getAsyncBlogsSuccess: ActionCreator<TBlogsActionTypes> = (
-	Blogs: IAsyncBlogsResponseData[],
+	blogs: IAsyncBlogsResponseData[],
 ) => {
 	return {
 		type: GET_ASYNC_BLOGS_SUCCESS,
-		payload: Blogs,
+		payload: blogs,
+	};
+};
+
+export const getAsyncBlogsSearchSuccess: ActionCreator<TBlogsActionTypes> = (
+	searchblogs: IAsyncBlogsResponseData[],
+) => {
+	return {
+		type: GET_ASYNC_BLOGS_SEARCH_SUCCESS,
+		payload: searchblogs,
 	};
 };
 
 export const getAsyncBlogsFailure = (error: string) => {
 	return {
 		type: GET_ASYNC_BLOGS_FAILURE,
+		payload: error,
+	};
+};
+
+export const getAsyncBlogsSearchFailure = (error: string) => {
+	return {
+		type: GET_ASYNC_BLOGS_SEARCH_FAILURE,
 		payload: error,
 	};
 };
@@ -51,28 +87,19 @@ export const getAsyncTotalCount: ActionCreator<TBlogsActionTypes> = (
 	};
 };
 
+export const getAsyncCountFailure = (error: string) => {
+	return {
+		type: GET_ASYNC_BLOGS_FAILURE,
+		payload: error,
+	};
+};
+
 export const getAsyncBlogs = ({ currentPage }: any) => {
 	return (dispatch: Dispatch<TBlogsActionTypes>) => {
 		dispatch(getAsyncBlogsStart());
-		axios
-			.get<IAsyncBlogsResponseData[]>(
-				`${BASE_BLOG_URL}/v3/articles?_limit=12&_start=${currentPage}`,
-			)
+		getAsyncBlogsFromApi({ currentPage })
 			.then((res) => {
-				const result = res.data.map((el) => ({
-					id: el.id,
-					featured: el.featured,
-					title: el.title,
-					url: el.url,
-					imageUrl: el.imageUrl,
-					newsSite: el.newsSite,
-					summary: el.summary,
-					publishedAt: el.publishedAt,
-					launches: el.launches,
-					events: el.events,
-				}));
-				dispatch(getAsyncBlogsSuccess(result));
-				console.log(result);
+				dispatch(getAsyncBlogsSuccess(res.data));
 			})
 			.catch((error) => {
 				dispatch(getAsyncBlogsFailure(error?.message));
@@ -83,8 +110,25 @@ export const getAsyncBlogs = ({ currentPage }: any) => {
 export const getTotalAsyncCount = () => {
 	return (dispatch: Dispatch<TBlogsActionTypes>) => {
 		dispatch(getAsyncTotalCount());
-		axios.get<number>(URL_ARTICLES_COUNT).then((res) => {
-			dispatch(getAsyncTotalCount(res.data));
-		});
+		getAsyncBlogsCount()
+			.then((res) => {
+				dispatch(getAsyncTotalCount(res.data));
+			})
+			.catch((error) => {
+				dispatch(getAsyncCountFailure(error?.message));
+			});
+	};
+};
+
+export const getAsyncBlogsSearch = (value: string) => {
+	return (dispatch: Dispatch<TBlogsActionTypes>) => {
+		dispatch(getAsyncBlogsSearchStart());
+		blogsSearch(value)
+			.then((res) => {
+				dispatch(getAsyncBlogsSearchSuccess(res.data));
+			})
+			.catch((error) => {
+				dispatch(getAsyncBlogsSearchFailure(error?.message));
+			});
 	};
 };
