@@ -1,12 +1,14 @@
-import { IAsyncBlogsResponseData } from "../../Types/ResponseType";
-import {
-	GET_ASYNC_BLOGS_FAILURE,
-	SET_CURRENT_PAGE,
-	GET_ASYNC_TOTAL_COUNT,
-} from "../../action/index";
+import { GET_ASYNC_TOTAL_COUNT_FAILURE } from "../../action/index";
+import { IAsyncBlogsResponseData } from "../../Types/responseType";
 import {
 	GET_ASYNC_BLOGS_START,
 	GET_ASYNC_BLOGS_SUCCESS,
+	GET_ASYNC_BLOGS_FAILURE,
+	GET_ASYNC_SEARCH_BLOGS_START,
+	GET_ASYNC_BLOGS_SEARCH_SUCCESS,
+	GET_ASYNC_BLOGS_SEARCH_FAILURE,
+	SET_CURRENT_PAGE,
+	GET_ASYNC_TOTAL_COUNT,
 } from "../../action/index";
 
 export type IInitialState = {
@@ -16,6 +18,7 @@ export type IInitialState = {
 	currentPage: number;
 	perPage: number;
 	totalCount: number;
+	searchblogs: IAsyncBlogsResponseData[];
 };
 
 const initialState: IInitialState = {
@@ -25,6 +28,7 @@ const initialState: IInitialState = {
 	currentPage: 1,
 	perPage: 12,
 	totalCount: 0,
+	searchblogs: [],
 };
 
 export const blogReducer = (state = initialState, { type, payload }: any) => {
@@ -56,6 +60,31 @@ export const blogReducer = (state = initialState, { type, payload }: any) => {
 			return {
 				...state,
 				totalCount: payload,
+			};
+		case GET_ASYNC_SEARCH_BLOGS_START:
+			return {
+				...state,
+				searchblogs: [],
+				isLoading: true,
+			};
+		case GET_ASYNC_BLOGS_SEARCH_SUCCESS:
+			return {
+				...state,
+				searchblogs: [...payload],
+				isLoading: false,
+				error: null,
+			};
+		case GET_ASYNC_BLOGS_SEARCH_FAILURE:
+			return {
+				...state,
+				error: payload,
+				isLoading: false,
+			};
+		case GET_ASYNC_TOTAL_COUNT_FAILURE:
+			return {
+				...state,
+				error: payload,
+				isLoading: false,
 			};
 		default:
 			return state;

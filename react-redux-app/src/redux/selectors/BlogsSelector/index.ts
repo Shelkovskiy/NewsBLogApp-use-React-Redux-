@@ -6,3 +6,4 @@ export const errorSelector = (state:RootState) => state.blogs.error;
 export const currentPageSelector =(state:RootState) =>state.blogs.currentPage;
 export const perPageSelector =(state:RootState) =>state.blogs.perPage;
 export const totalCountSelector =(state:RootState) =>state.blogs.totalCount;
+export const searchResult =(state:RootState) =>state.blogs.searchblogs;

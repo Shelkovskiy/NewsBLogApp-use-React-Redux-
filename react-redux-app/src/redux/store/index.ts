@@ -12,13 +12,9 @@ const composeEnhancers =
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 
 const configureStore = (preloadedState: any) =>
-	createStore(
-		rootReducer, 
-		preloadedState, 
-		enhancer, 
-	);
+	createStore(rootReducer, preloadedState, enhancer);
 
-	export type RootState = ReturnType<typeof store.getState>
-	export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export const store = configureStore({});
