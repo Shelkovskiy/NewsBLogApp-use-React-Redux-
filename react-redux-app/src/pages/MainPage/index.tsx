@@ -28,7 +28,7 @@ const SortItem = styled.div`
 	}
 `;
 
-export const MainPage = () => {
+const MainPage = () => {
 	return (
 		<ComponentsContainer
 			maxWidth="1120px"

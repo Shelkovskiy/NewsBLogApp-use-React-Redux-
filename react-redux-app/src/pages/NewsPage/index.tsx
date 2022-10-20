@@ -80,4 +80,5 @@ export const NewsPage = () => {
 		</ComponentsContainer>
 	);
 };
+
 export default NewsPage;
