@@ -1,17 +1,22 @@
+import { GET_ASYNC_TOTAL_COUNT_NEWS_FAILURE } from "./../../action/index";
 import {
 	GET_ASYNC_NEWS_START,
 	GET_ASYNC_NEWS_SUCCESS,
 	GET_ASYNC_NEWS_FAILURE,
 } from "../../action";
-import { IAsyncBlogsResponseData } from "../ResponseType";
-import { SET_CURRENT_NEWS_PAGE, GET_ASYNC_TOTAL_COUNT_NEWS } from '../../action/index';
+import { IAsyncBlogsResponseData } from "../responseType";
+import {
+	SET_CURRENT_NEWS_PAGE,
+	GET_ASYNC_TOTAL_COUNT_NEWS,
+} from "../../action/index";
 
 export type TNewsActionTypes =
 	| IGetAsyncBlogsStartAction
 	| IGetAsyncBlogsSuccessAction
 	| IGetAsyncBlogsFailureAction
-	|ISetCurrentNewsPageAction
-	|IGetAsyncTotalCountNews;
+	| ISetCurrentNewsPageAction
+	| IGetAsyncTotalCountNews
+	| IGetAsyncNewsCountFailureAction;
 
 interface IGetAsyncBlogsStartAction {
 	type: typeof GET_ASYNC_NEWS_START;
@@ -28,13 +33,17 @@ interface IGetAsyncBlogsFailureAction {
 	payload: string;
 }
 
+interface IGetAsyncNewsCountFailureAction {
+	type: typeof GET_ASYNC_TOTAL_COUNT_NEWS_FAILURE;
+	payload: string;
+}
+
 export interface ISetCurrentNewsPageAction {
-	type: typeof SET_CURRENT_NEWS_PAGE
+	type: typeof SET_CURRENT_NEWS_PAGE;
 	payload: number;
 }
 
 interface IGetAsyncTotalCountNews {
-	type :typeof GET_ASYNC_TOTAL_COUNT_NEWS
-	payload:number;
+	type: typeof GET_ASYNC_TOTAL_COUNT_NEWS;
+	payload: number;
 }
-
