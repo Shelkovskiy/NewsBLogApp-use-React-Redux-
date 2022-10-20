@@ -1,3 +1,4 @@
+import { GET_ASYNC_TOTAL_COUNT_NEWS_FAILURE } from "./../index";
 import { Dispatch, ActionCreator } from "redux";
 import axios from "axios";
 import {
@@ -6,10 +7,12 @@ import {
 	GET_ASYNC_NEWS_SUCCESS,
 	GET_ASYNC_TOTAL_COUNT_NEWS,
 } from "../index";
-import { IAsyncBlogsResponseData } from "../../Types/ResponseType";
-import { BASE_BLOG_URL, } from "../../constants/URLS";
-import { TNewsActionTypes } from "../../Types/AsyncNewsActionType/index";
+import { IAsyncBlogsResponseData } from "../../Types/responseType";
+import { BASE_BLOG_URL } from "../../constants/URLS";
+import { TNewsActionTypes } from "../../Types/asyncNewsActionType";
 import { SET_CURRENT_NEWS_PAGE } from "../index";
+import { getAsyncNewsFromApi } from "../../services";
+import { getAsyncNewsCount } from "../../services";
 
 export const getAsyncNewsStart: ActionCreator<TNewsActionTypes> = () => {
 	return {
@@ -52,28 +55,19 @@ export const getAsyncTotalCount: ActionCreator<TNewsActionTypes> = (
 	};
 };
 
+export const getAsyncCountFailure = (error: string) => {
+	return {
+		type: GET_ASYNC_TOTAL_COUNT_NEWS_FAILURE,
+		payload: error,
+	};
+};
+
 export const getAsyncNews = ({ currentPage }: any) => {
 	return (dispatch: Dispatch<TNewsActionTypes>) => {
 		dispatch(getAsyncNewsStart());
-		axios
-			.get<IAsyncBlogsResponseData[]>(
-				`${BASE_BLOG_URL}/v3/blogs?_limit=12&_start=${currentPage}`,
-			)
+		getAsyncNewsFromApi({ currentPage })
 			.then((res) => {
-				const result = res.data.map((el) => ({
-					id: el.id,
-					featured: el.featured,
-					title: el.title,
-					url: el.url,
-					imageUrl: el.imageUrl,
-					newsSite: el.newsSite,
-					summary: el.summary,
-					publishedAt: el.publishedAt,
-					launches: el.launches,
-					events: el.events,
-				}));
-				console.log(result);
-				dispatch(getAsyncNewsSuccess(result));
+				dispatch(getAsyncNewsSuccess(res.data));
 			})
 			.catch((error) => {
 				dispatch(getAsyncNewsFailure(error?.message));
@@ -84,8 +78,12 @@ export const getAsyncNews = ({ currentPage }: any) => {
 export const getTotalAsyncNewsCount = () => {
 	return (dispatch: Dispatch<TNewsActionTypes>) => {
 		dispatch(getAsyncTotalCount());
-		axios.get<number>(`${BASE_BLOG_URL}/v3/blogs/count`).then((res) => {
-			dispatch(getAsyncTotalCount(res.data));
-		});
+		getAsyncNewsCount()
+			.then((res) => {
+				dispatch(getAsyncTotalCount(res.data));
+			})
+			.catch((error) => {
+				dispatch(getAsyncCountFailure(error?.message));
+			});
 	};
 };
