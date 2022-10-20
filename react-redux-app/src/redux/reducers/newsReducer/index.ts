@@ -1,11 +1,11 @@
-import { IAsyncBlogsResponseData } from "../../Types/ResponseType";
+import { GET_ASYNC_TOTAL_COUNT_NEWS_FAILURE } from "./../../action/index";
+import { IAsyncBlogsResponseData } from "../../Types/responseType";
 import {
 	GET_ASYNC_NEWS_START,
 	GET_ASYNC_NEWS_SUCCESS,
 	GET_ASYNC_NEWS_FAILURE,
 	GET_ASYNC_TOTAL_COUNT_NEWS,
-	SET_CURRENT_NEWS_PAGE
-
+	SET_CURRENT_NEWS_PAGE,
 } from "../../action/index";
 
 export type IInitialState = {
@@ -46,7 +46,7 @@ export const newsReducer = (state = initialState, { type, payload }: any) => {
 				error: payload,
 				isLoading: false,
 			};
-			case SET_CURRENT_NEWS_PAGE:
+		case SET_CURRENT_NEWS_PAGE:
 			return {
 				...state,
 				currentPage: payload,
@@ -55,6 +55,12 @@ export const newsReducer = (state = initialState, { type, payload }: any) => {
 			return {
 				...state,
 				totalCount: payload,
+			};
+		case GET_ASYNC_TOTAL_COUNT_NEWS_FAILURE:
+			return {
+				...state,
+				error: payload,
+				isLoading: false,
 			};
 		default:
 			return state;

@@ -1,9 +1,9 @@
-import { combineReducers,  } from "redux";
-import { blogReducer } from "./BlogsReducer";
-import { newsReducer } from './newsReducer/index';
+import { combineReducers } from "redux";
+import { blogReducer } from "./blogsReducer";
+import { newsReducer } from "./newsReducer/index";
 
 const rootReducer = combineReducers({
 	blogs: blogReducer,
-	news: newsReducer
+	news: newsReducer,
 });
 export default rootReducer;
