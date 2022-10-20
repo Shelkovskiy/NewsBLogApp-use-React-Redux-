@@ -11,17 +11,13 @@ interface ICustomComponentsContainer {
 	width?: string;
 	fontSize?: string;
 	color?: string;
-	background?:string;
-	borderRadius?:string;
+	background?: string;
+	borderRadius?: string;
 }
 
-interface IComponentsContainer extends ICustomComponentsContainer {
-	children?: React.ReactNode;
-}
-
-const CustomComponentsContainer = styled.div<ICustomComponentsContainer>`
-	border-radius:${(props)=>props.borderRadius || "0px"};
-	background:${(props)=>props.background || "none"};
+export const ComponentsContainer = styled.div<ICustomComponentsContainer>`
+	border-radius: ${(props) => props.borderRadius || "0px"};
+	background: ${(props) => props.background || "none"};
 	font-size: ${(props) => props.fontSize || "16px"};
 	color: ${(props) => props.color || "black"};
 	width: ${(props) => props.width || "100%"};
@@ -33,37 +29,4 @@ const CustomComponentsContainer = styled.div<ICustomComponentsContainer>`
 	align-items: ${(props) => props.alignItems || "center"};
 `;
 
-const ComponentsContainer = ({
-	margin,
-	display,
-	maxWidth,
-	padding,
-	children,
-	justifyContent,
-	alignItems,
-	width,
-	color,
-	fontSize,
-	background,
-	borderRadius
-}: IComponentsContainer) => {
-	return (
-		<CustomComponentsContainer
-			color={color}
-			margin={margin}
-			padding={padding}
-			maxWidth={maxWidth}
-			display={display}
-			justifyContent={justifyContent}
-			alignItems={alignItems}
-			width={width}
-			fontSize={fontSize}
-			background={background}
-			borderRadius={borderRadius}
-		>
-			{children}
-		</CustomComponentsContainer>
-	);
-};
-
-export default ComponentsContainer;
+export default React.memo(ComponentsContainer);

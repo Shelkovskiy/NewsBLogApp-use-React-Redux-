@@ -2,12 +2,20 @@ import React from "react";
 import Header from "./Headers/index";
 import Footer from "./Footer/index";
 import { Outlet } from "react-router-dom";
+import styled from "styled-components";
+
+const MainContent = styled.div`
+	margin: 20px;
+	position: relative;
+`;
 
 const Layout = () => {
 	return (
 		<>
 			<Header />
-			<Outlet />
+			<MainContent>
+				<Outlet />
+			</MainContent>
 			<Footer />
 		</>
 	);
