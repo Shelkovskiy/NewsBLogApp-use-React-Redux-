@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/common-components/Layout/index";
-import { MainPage } from "./pages/MainPage";
+import MainPage from "./pages/MainPage";
 import NewsPage from "./pages/NewsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Searchpage from "./pages/SearchPage";
