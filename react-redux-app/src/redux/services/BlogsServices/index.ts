@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IAsyncBlogsResponseData } from "../../Types/responseType";
-import { BASE_BLOG_URL } from "../../constants/URLS";
-import { URL_ARTICLES_COUNT } from "../../constants/URLS";
+import { BASE_BLOG_URL } from "../../constants/urls";
+import { URL_ARTICLES_COUNT } from "../../constants/urls";
 
 export const getAsyncBlogsFromApi = ({ currentPage }: any) => {
 	return axios.get<IAsyncBlogsResponseData[]>(

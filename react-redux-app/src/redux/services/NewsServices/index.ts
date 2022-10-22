@@ -1,6 +1,6 @@
 import axios from "axios";
 import { IAsyncBlogsResponseData } from "../../Types/responseType";
-import { BASE_BLOG_URL } from "../../constants/URLS";
+import { BASE_BLOG_URL } from "../../constants/urls";
 
 export const getAsyncNewsFromApi = ({ currentPage }: any) => {
 	return axios.get<IAsyncBlogsResponseData[]>(
