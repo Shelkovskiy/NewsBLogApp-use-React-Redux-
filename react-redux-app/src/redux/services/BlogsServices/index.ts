@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IAsyncBlogsResponseData } from "../../Types/responseType";
 import { BASE_BLOG_URL } from "../../constants/urls";
-import { URL_ARTICLES_COUNT } from "../../constants/urls";
+
 
 export const getAsyncBlogsFromApi = ({ currentPage }: any) => {
 	return axios.get<IAsyncBlogsResponseData[]>(
@@ -10,7 +10,7 @@ export const getAsyncBlogsFromApi = ({ currentPage }: any) => {
 };
 
 export const getAsyncBlogsCount = () => {
-	return axios.get<number>(URL_ARTICLES_COUNT);
+	return axios.get<number>(`${BASE_BLOG_URL}/v3/articles/count`);
 };
 
 export const blogsSearch = (value: string) => {
