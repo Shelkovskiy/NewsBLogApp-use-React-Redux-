@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-interface ISelectPage {
+interface IPageProps {
 	isSelected: boolean;
 }
 
-export const Page = styled.span<ISelectPage>`
+export const Page = styled.span<IPageProps>`
 	width: 30px;
 	font-family: "Inter";
 	font-style: normal;
