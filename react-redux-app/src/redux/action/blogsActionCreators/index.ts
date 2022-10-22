@@ -1,9 +1,9 @@
 import {
-	getAsyncBlogsCount,
 	getAsyncBlogsFromApi,
-} from "./../../services/index";
+	getAsyncBlogsCount,
+	blogsSearch,
+} from "../../services/BlogsServices";
 import { Dispatch, ActionCreator } from "redux";
-import axios from "axios";
 import {
 	GET_ASYNC_BLOGS_FAILURE,
 	GET_ASYNC_BLOGS_START,
@@ -19,7 +19,6 @@ import {
 	GET_ASYNC_BLOGS_SEARCH_SUCCESS,
 	GET_ASYNC_BLOGS_SEARCH_FAILURE,
 } from "../index";
-import { blogsSearch } from "./../../services/index";
 
 export const getAsyncBlogsStart: ActionCreator<TBlogsActionTypes> = () => {
 	return {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import ComponentsContainer from "../../components/common-components/Container";
 import CustomText from "../../components/common-components/Text";
-import { getSignglePosts } from "../../components/API/getPostApi";
+import { getSignglePosts } from "../../redux/services/BlogsServices";
 import { Image } from "../../components/common-components/Image";
 import { CustomLnk } from "../../components/common-components/CustomLink/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

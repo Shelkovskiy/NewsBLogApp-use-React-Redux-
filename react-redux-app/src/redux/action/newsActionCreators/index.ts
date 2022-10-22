@@ -1,6 +1,9 @@
 import { GET_ASYNC_TOTAL_COUNT_NEWS_FAILURE } from "./../index";
 import { Dispatch, ActionCreator } from "redux";
-import axios from "axios";
+import {
+	getAsyncNewsFromApi,
+	getAsyncNewsCount,
+} from "../../services/NewsServices";
 import {
 	GET_ASYNC_NEWS_FAILURE,
 	GET_ASYNC_NEWS_START,
@@ -8,11 +11,8 @@ import {
 	GET_ASYNC_TOTAL_COUNT_NEWS,
 } from "../index";
 import { IAsyncBlogsResponseData } from "../../Types/responseType";
-import { BASE_BLOG_URL } from "../../constants/URLS";
 import { TNewsActionTypes } from "../../Types/asyncNewsActionType";
 import { SET_CURRENT_NEWS_PAGE } from "../index";
-import { getAsyncNewsFromApi } from "../../services";
-import { getAsyncNewsCount } from "../../services";
 
 export const getAsyncNewsStart: ActionCreator<TNewsActionTypes> = () => {
 	return {
