@@ -29,4 +29,4 @@ export const ComponentsContainer = styled.div<ICustomComponentsContainer>`
 	align-items: ${(props) => props.alignItems || "center"};
 `;
 
-export default React.memo(ComponentsContainer);
+export default ComponentsContainer;

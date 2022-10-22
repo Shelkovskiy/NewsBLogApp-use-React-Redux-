@@ -8,7 +8,7 @@ import CustomText from "../../Text/index";
 import { CustomLnk } from "../../CustomLink/index";
 import { Form } from "../../Form/index";
 import Image from "./img/logo.png";
-import { ThunkDispatch } from "redux-thunk";
+import { AppDispatch } from "../../../../redux/hooks";
 import { useDispatch } from "react-redux";
 import { getAsyncBlogsSearch } from "../../../../redux/action/blogsActionCreators/index";
 
@@ -34,11 +34,12 @@ const initialSearchValue: string = "";
 
 const Header = () => {
 	const [value, setValue] = useState(initialSearchValue);
-	const thunkDispatch: ThunkDispatch<{}, {}, any> = useDispatch();
+
+	const dispatch: AppDispatch = useDispatch();
 
 	const onBtnSearch = useCallback(async () => {
 		try {
-			await thunkDispatch(getAsyncBlogsSearch(value));
+			await dispatch(getAsyncBlogsSearch(value));
 		} catch (e) {
 			console.error(e);
 		} finally {

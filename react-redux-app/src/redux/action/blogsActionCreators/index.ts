@@ -10,7 +10,6 @@ import {
 	GET_ASYNC_BLOGS_SUCCESS,
 } from "../index";
 import { IAsyncBlogsResponseData } from "../../Types/responseType";
-import { BASE_BLOG_URL, URL_ARTICLES_COUNT } from "../../constants/urls";
 import { TBlogsActionTypes } from "../../Types/asyncBlogActionType";
 import {
 	SET_CURRENT_PAGE,
