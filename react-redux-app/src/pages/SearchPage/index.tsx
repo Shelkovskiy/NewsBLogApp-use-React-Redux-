@@ -9,6 +9,7 @@ import {
 import List from "../../components/common-components/UserList/List";
 import Loader from "../../components/common-components/Loader/Loader";
 import { CustomLnk } from "../../components/common-components/CustomLink";
+
 const Searchpage = () => {
 	const searchBlogsResult = useAppSelector(searchResult);
 	const isLoading = useAppSelector(isLoadingSelector);
