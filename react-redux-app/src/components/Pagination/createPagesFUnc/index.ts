@@ -1,5 +1,3 @@
-import useState from "react";
-
 interface IPages {
 	pages: number[];
 	pageCount: number;
