@@ -27,7 +27,6 @@ import { RootState } from "../../redux/store";
 import { AnyAction } from "redux";
 
 const BlogPosts = () => {
-	const thunkDispatch: ThunkDispatch<{}, {}, any> = useDispatch();
 	const blogs = useAppSelector(blogSelectors);
 	const isLoading = useAppSelector(isLoadingSelector);
 	const errorMessage = useAppSelector(errorSelector);
@@ -94,7 +93,7 @@ const BlogPosts = () => {
 									<Page
 										key={page}
 										isSelected={page === currentPage}
-										onClick={() => thunkDispatch(setCurrentPage(page))}
+										onClick={() => dispatch(setCurrentPage(page))}
 									>
 										{page}
 									</Page>

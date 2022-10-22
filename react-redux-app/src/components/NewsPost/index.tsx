@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import Loader from "../common-components/Loader/Loader";
 import List from "../common-components/UserList/List";
 import { ThunkDispatch } from "redux-thunk";
@@ -26,20 +26,22 @@ import { RootState } from "../../redux/store";
 import { AnyAction } from "redux";
 
 const NewsPosts = () => {
-	const thunkDispatch: ThunkDispatch<{}, {}, any> = useDispatch();
+	type AppDispatch = ThunkDispatch<RootState, any, AnyAction>;
+	const dispatch: AppDispatch = useDispatch();
 	const news = useAppSelector(newsSelectors);
 	const isLoading = useAppSelector(isLoadingNewsSelector);
 	const errorMessage = useAppSelector(errorNewsSelector);
 	const currentPage: number = useAppSelector(currentPageSelector);
 	const perPage = useAppSelector(perPageSelector);
 	const totalCount = useAppSelector(totalCountSelector);
-	const pageCount = Math.ceil(totalCount / perPage);
+
+	const pageCount = useMemo(() => {
+		const count = Math.ceil(totalCount / perPage);
+		return count;
+	}, [totalCount]);
 
 	const pages: number[] = [];
 	createPages({ pages, pageCount, currentPage });
-
-	type AppDispatch = ThunkDispatch<RootState, any, AnyAction>;
-	const dispatch: AppDispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(getAsyncNews({ currentPage }));
@@ -84,7 +86,7 @@ const NewsPosts = () => {
 									<Page
 										key={index}
 										isSelected={page === currentPage}
-										onClick={() => thunkDispatch(setCurrentNewsPage(page))}
+										onClick={() => dispatch(setCurrentNewsPage(page))}
 									>
 										{page}
 									</Page>
