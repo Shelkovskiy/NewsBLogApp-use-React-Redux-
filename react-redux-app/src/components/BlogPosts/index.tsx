@@ -23,6 +23,8 @@ import { setCurrentPage } from "../../redux/action/blogsActionCreators/index";
 import { createPages } from "../Pagination/createPagesFUnc";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { RootState } from "../../redux/store";
+import { AnyAction } from "redux";
 
 const BlogPosts = () => {
 	const thunkDispatch: ThunkDispatch<{}, {}, any> = useDispatch();
@@ -41,16 +43,12 @@ const BlogPosts = () => {
 	const pages: number[] = [];
 	createPages({ pages, pageCount, currentPage });
 
-	useEffect(() => {
-		const BlogsPosts = async () => {
-			thunkDispatch(getAsyncBlogs({ currentPage }));
-		};
-		BlogsPosts();
+	type AppDispatch = ThunkDispatch<RootState, any, AnyAction>;
+	const dispatch: AppDispatch = useDispatch();
 
-		const totalCountPage = async () => {
-			thunkDispatch(getTotalAsyncCount());
-		};
-		totalCountPage();
+	useEffect(() => {
+		dispatch(getAsyncBlogs({ currentPage }));
+		dispatch(getTotalAsyncCount());
 	}, [currentPage]);
 
 	return (

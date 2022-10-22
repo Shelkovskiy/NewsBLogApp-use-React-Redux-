@@ -22,6 +22,8 @@ import ComponentsContainer from "../common-components/Container";
 import Button from "../common-components/Button";
 import { Page } from "../Pagination";
 import { setCurrentNewsPage } from "../../redux/action/newsActionCreators/index";
+import { RootState } from "../../redux/store";
+import { AnyAction } from "redux";
 
 const NewsPosts = () => {
 	const thunkDispatch: ThunkDispatch<{}, {}, any> = useDispatch();
@@ -36,72 +38,72 @@ const NewsPosts = () => {
 	const pages: number[] = [];
 	createPages({ pages, pageCount, currentPage });
 
-	useEffect(() => {
-		const NewsPosts = async () => {
-			thunkDispatch(getAsyncNews({ currentPage }));
-		};
-		NewsPosts();
+	type AppDispatch = ThunkDispatch<RootState, any, AnyAction>;
+	const dispatch: AppDispatch = useDispatch();
 
-		const totalCountPage = async () => {
-			thunkDispatch(getTotalAsyncNewsCount());
-		};
-		totalCountPage();
+	useEffect(() => {
+		dispatch(getAsyncNews({ currentPage }));
+		dispatch(getTotalAsyncNewsCount());
 	}, [currentPage]);
 
-	return isLoading ? (
-		<Loader />
-	) : (
+	return (
 		<>
-			{errorMessage && (
-				<WarningText style={{ color: "red", fontSize: "18px" }}>
-					{errorMessage}
-				</WarningText>
+			{isLoading ? (
+				<Loader />
+			) : (
+				<>
+					{errorMessage && (
+						<WarningText style={{ color: "red", fontSize: "18px" }}>
+							{errorMessage}
+						</WarningText>
+					)}
+					<List items={news} />
+					<ComponentsContainer
+						width="100%"
+						display="flex"
+						justifyContent="space-between"
+						alignItems="center"
+					>
+						<Button
+							background="none"
+							border="none"
+							color="#313037"
+							fontFamily="Inter"
+							fontSize="16"
+							fontWeight="600"
+						>
+							← Prev
+						</Button>
+						<ComponentsContainer
+							width="400px"
+							display="flex"
+							justifyContent="space-between"
+						>
+							{pages.map((page, index) => {
+								return (
+									<Page
+										key={index}
+										isSelected={page === currentPage}
+										onClick={() => thunkDispatch(setCurrentNewsPage(page))}
+									>
+										{page}
+									</Page>
+								);
+							})}
+						</ComponentsContainer>
+						<Button
+							background="none"
+							color="#313037"
+							fontFamily="Inter"
+							border="none"
+							fontSize="16"
+							fontWeight="600"
+						>
+							Next →
+						</Button>
+					</ComponentsContainer>
+				</>
 			)}
-			<List items={news} />
-			<ComponentsContainer
-				width="100%"
-				display="flex"
-				justifyContent="space-between"
-				alignItems="center"
-			>
-				<Button
-					background="none"
-					border="none"
-					color="#313037"
-					fontFamily="Inter"
-					fontSize="16"
-					fontWeight="600"
-				>
-					← Prev
-				</Button>
-				<ComponentsContainer
-					width="400px"
-					display="flex"
-					justifyContent="space-between"
-				>
-					{pages.map((page, index) => {
-						return (
-							<Page
-								key={index}
-								isSelected={page === currentPage}
-								onClick={() => thunkDispatch(setCurrentNewsPage(page))}
-							>
-								{page}
-							</Page>
-						);
-					})}
-				</ComponentsContainer>
-				<Button
-					background="none"
-					color="#313037"
-					fontFamily="Inter"
-					border="none"
-					fontSize="16"
-					fontWeight="600"
-				>
-					Next →
-				</Button>
-			</ComponentsContainer>
 		</>
 	);
 };
