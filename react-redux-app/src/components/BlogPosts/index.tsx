@@ -1,8 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import List from "../common-components/UserList/List";
 import Loader from "../common-components/Loader/Loader";
-import { ThunkDispatch } from "redux-thunk";
-import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../redux/hooks/index";
 import {
 	getAsyncBlogs,
@@ -23,8 +21,8 @@ import { setCurrentPage } from "../../redux/action/blogsActionCreators/index";
 import { createPages } from "../Pagination/createPagesFUnc";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { RootState } from "../../redux/store";
-import { AnyAction } from "redux";
+import { AppDispatch } from "../../redux/hooks/index";
+import { useDispatch } from "react-redux";
 
 const BlogPosts = () => {
 	const blogs = useAppSelector(blogSelectors);
@@ -39,11 +37,10 @@ const BlogPosts = () => {
 		return count;
 	}, [totalCount]);
 
+	const dispatch: AppDispatch = useDispatch();
+
 	const pages: number[] = [];
 	createPages({ pages, pageCount, currentPage });
-
-	type AppDispatch = ThunkDispatch<RootState, any, AnyAction>;
-	const dispatch: AppDispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(getAsyncBlogs({ currentPage }));

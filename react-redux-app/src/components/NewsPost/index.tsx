@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import Loader from "../common-components/Loader/Loader";
 import List from "../common-components/UserList/List";
-import { ThunkDispatch } from "redux-thunk";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../redux/hooks/index";
 import {
@@ -22,11 +21,9 @@ import ComponentsContainer from "../common-components/Container";
 import Button from "../common-components/Button";
 import { Page } from "../Pagination";
 import { setCurrentNewsPage } from "../../redux/action/newsActionCreators/index";
-import { RootState } from "../../redux/store";
-import { AnyAction } from "redux";
+import { AppDispatch } from "../../redux/hooks/index";
 
 const NewsPosts = () => {
-	type AppDispatch = ThunkDispatch<RootState, any, AnyAction>;
 	const dispatch: AppDispatch = useDispatch();
 	const news = useAppSelector(newsSelectors);
 	const isLoading = useAppSelector(isLoadingNewsSelector);
