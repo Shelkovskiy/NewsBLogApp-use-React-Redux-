@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useMemo } from "react";
 import styled from "styled-components";
 import Input from "../../Input";
 import Button from "../../Button";
@@ -8,9 +8,14 @@ import CustomText from "../../Text/index";
 import { CustomLnk } from "../../CustomLink/index";
 import { Form } from "../../Form/index";
 import Image from "./img/logo.png";
-import { AppDispatch } from "../../../../redux/hooks";
+import { AppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { useDispatch } from "react-redux";
 import { getAsyncBlogsSearch } from "../../../../redux/action/blogsActionCreators/index";
+import {
+	dataSelectors,
+	isAuthSelector,
+} from "../../../../redux/selectors/authSelectrors";
+import ComponentsContainer from "../../Container";
 
 interface IHeader {
 	background?: string;
@@ -34,8 +39,9 @@ const initialSearchValue: string = "";
 
 const Header = () => {
 	const [value, setValue] = useState(initialSearchValue);
-
 	const dispatch: AppDispatch = useDispatch();
+	const { username, email } = useAppSelector(dataSelectors);
+	const isAuth = useAppSelector(isAuthSelector);
 
 	const onBtnSearch = useCallback(async () => {
 		try {
@@ -77,30 +83,38 @@ const Header = () => {
 						height="56px"
 						type="text"
 					/>
-					<CustomLnk to="/searchpage" textDecoration="none">
-						<Button
-							type="submit"
-							onClick={onBtnSearch}
-							background="none"
-							border="none"
-						>
-							<FontAwesomeIcon icon={faMagnifyingGlass} />
-						</Button>
-					</CustomLnk>
+					<ComponentsContainer width="20px" alignItems="center" display="flex">
+						<CustomLnk to="/searchpage" textDecoration="none">
+							<Button
+								width="100%"
+								disabled={!value}
+								type="submit"
+								onClick={onBtnSearch}
+								background="none"
+								border="none"
+							>
+								<FontAwesomeIcon icon={faMagnifyingGlass} />
+							</Button>
+						</CustomLnk>
+					</ComponentsContainer>
 				</Form>
-				<CustomLnk to="/signinpage" textDecoration="none">
-					<div>
-						<CustomText
-							fontfamily="Inter"
-							color="rgba(49, 48, 55, 1)"
-							fontweight="600"
-							lineheight="34"
-							fontsize="16"
-						>
-							Login
-						</CustomText>
-					</div>
-				</CustomLnk>
+				{!isAuth ? (
+					<CustomLnk to="/signinpage" textDecoration="none">
+						<div>
+							<CustomText
+								fontfamily="Inter"
+								color="rgba(49, 48, 55, 1)"
+								fontweight="600"
+								lineheight="34"
+								fontsize="16"
+							>
+								Login
+							</CustomText>
+						</div>
+					</CustomLnk>
+				) : (
+					<CustomText>{username}</CustomText>
+				)}
 			</HeaderBlock>
 		</>
 	);

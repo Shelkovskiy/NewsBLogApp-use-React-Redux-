@@ -4,7 +4,7 @@ import styled from "styled-components";
 interface IButtonProps extends IButtonVisualProps {
 	children: React.ReactNode;
 	disabled?: boolean;
-	onClick?: () => void;
+	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 	active?: boolean;
 	className?: string;
 	type?: "submit" | "button" | "reset";

@@ -4,7 +4,7 @@ import Footer from "./Footer/index";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
-const MainContent = styled.div`
+const MainContent = styled.main`
 	margin: 20px;
 	position: relative;
 `;
