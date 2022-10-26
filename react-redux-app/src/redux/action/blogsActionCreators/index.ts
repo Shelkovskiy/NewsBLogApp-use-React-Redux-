@@ -92,10 +92,10 @@ export const getAsyncCountFailure = (error: string) => {
 	};
 };
 
-export const getAsyncBlogs = ({ currentPage }: any) => {
+export const getAsyncBlogs = ( currentPage : number) => {
 	return (dispatch: Dispatch<TBlogsActionTypes>) => {
 		dispatch(getAsyncBlogsStart());
-		getAsyncBlogsFromApi({ currentPage })
+		getAsyncBlogsFromApi( currentPage )
 			.then((res) => {
 				dispatch(getAsyncBlogsSuccess(res.data));
 			})

@@ -43,7 +43,7 @@ const BlogPosts = () => {
 	createPages({ pages, pageCount, currentPage });
 
 	useEffect(() => {
-		dispatch(getAsyncBlogs({ currentPage }));
+		dispatch(getAsyncBlogs(currentPage));
 		dispatch(getTotalAsyncCount());
 	}, [currentPage, dispatch]);
 

@@ -41,7 +41,7 @@ const NewsPosts = () => {
 	createPages({ pages, pageCount, currentPage });
 
 	useEffect(() => {
-		dispatch(getAsyncNews({ currentPage }));
+		dispatch(getAsyncNews(currentPage));
 		dispatch(getTotalAsyncNewsCount());
 	}, [currentPage]);
 
