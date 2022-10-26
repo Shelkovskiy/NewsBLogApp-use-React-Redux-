@@ -107,7 +107,6 @@ export const getAsyncBlogs = ({ currentPage }: any) => {
 
 export const getTotalAsyncCount = () => {
 	return (dispatch: Dispatch<TBlogsActionTypes>) => {
-		dispatch(getAsyncTotalCount());
 		getAsyncBlogsCount()
 			.then((res) => {
 				dispatch(getAsyncTotalCount(res.data));
