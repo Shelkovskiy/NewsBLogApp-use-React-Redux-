@@ -45,7 +45,7 @@ const BlogPosts = () => {
 	useEffect(() => {
 		dispatch(getAsyncBlogs({ currentPage }));
 		dispatch(getTotalAsyncCount());
-	}, [currentPage]);
+	}, [currentPage, dispatch]);
 
 	return (
 		<>
