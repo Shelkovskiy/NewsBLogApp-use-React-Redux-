@@ -35,26 +35,26 @@ const HeaderBlock = styled.header<IHeader>`
 	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `;
 
-const initialSearchValue: string = "";
+const initialSearchValue = {
+	searchText: "",
+};
 
 const Header = () => {
-	const [value, setValue] = useState(initialSearchValue);
+	const [searchForm, setSearchForm] = useState(initialSearchValue);
 	const dispatch: AppDispatch = useDispatch();
-	const { username, email } = useAppSelector(dataSelectors);
+	const { username } = useAppSelector(dataSelectors);
 	const isAuth = useAppSelector(isAuthSelector);
 
 	const onBtnSearch = useCallback(async () => {
-		try {
-			await dispatch(getAsyncBlogsSearch(value));
-		} catch (e) {
-			console.error(e);
-		} finally {
-			setValue(initialSearchValue);
-		}
-	}, [value]);
+		dispatch(getAsyncBlogsSearch(searchForm.searchText));
+	}, [dispatch, searchForm.searchText]);
 
 	const handleSearchChange = useCallback(
-		(e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value),
+		(e: React.ChangeEvent<HTMLInputElement>) =>
+			setSearchForm((prevState) => ({
+				...prevState,
+				[e.target.id]: e.target.value,
+			})),
 		[],
 	);
 
@@ -75,10 +75,11 @@ const Header = () => {
 					flexDirection="row"
 				>
 					<Input
+						fieldName="searchText"
 						border="none"
 						margin="auto"
 						width="100%"
-						value={value}
+						value={searchForm.searchText}
 						onChange={handleSearchChange}
 						height="56px"
 						type="text"
@@ -87,7 +88,6 @@ const Header = () => {
 						<CustomLnk to="/searchpage" textDecoration="none">
 							<Button
 								width="100%"
-								disabled={!value}
 								type="submit"
 								onClick={onBtnSearch}
 								background="none"
