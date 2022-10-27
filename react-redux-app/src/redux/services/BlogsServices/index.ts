@@ -2,9 +2,17 @@ import axios from "axios";
 import { IAsyncBlogsResponseData } from "../../Types/responseType";
 import { BASE_BLOG_URL } from "../../constants/urls";
 
-export const getAsyncBlogsFromApi = (currentPage: number) => {
+export const getAsyncBlogsFromApi = ({
+	currentPage = 1,
+	limit = 12,
+}: {
+	currentPage?: number;
+	limit?: number;
+}) => {
 	return axios.get<IAsyncBlogsResponseData[]>(
-		`${BASE_BLOG_URL}/v3/articles?_limit=12&_start=${currentPage}`,
+		`${BASE_BLOG_URL}/v3/articles?_limit=${limit}&_start=${
+			limit * (currentPage - 1)
+		}`,
 	);
 };
 
@@ -12,9 +20,9 @@ export const getAsyncBlogsCount = () => {
 	return axios.get<number>(`${BASE_BLOG_URL}/v3/articles/count`);
 };
 
-export const blogsSearch = (value: string) => {
+export const blogsSearch = ({ filter = "" }: { filter?: string }) => {
 	return axios.get<IAsyncBlogsResponseData[]>(
-		`${BASE_BLOG_URL}/v3/articles?title_contains=${value}`,
+		`${BASE_BLOG_URL}/v3/articles?title_contains=${filter}`,
 	);
 };
 
