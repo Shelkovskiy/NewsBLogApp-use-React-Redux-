@@ -47,7 +47,6 @@ const SignUp = () => {
 					setIsRegistered(true);
 					setRegistrationFormData(prevUserData);
 				}
-				console.log(response);
 			} catch (e: any) {
 				const [values] = Object.values(e?.response?.data).flat();
 				setErrorMessage(values as string);
