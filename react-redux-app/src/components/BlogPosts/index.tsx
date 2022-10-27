@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import List from "../common-components/UserList/List";
 import Loader from "../common-components/Loader/Loader";
 import { useAppSelector } from "../../redux/hooks/index";
@@ -12,39 +12,39 @@ import {
 	blogSelectors,
 	errorSelector,
 	currentPageSelector,
-	perPageSelector,
 	totalCountSelector,
 } from "../../redux/selectors/blogsSelector/index";
 import Button from "../common-components/Button";
 import { Page } from "../Pagination";
-import { setCurrentPage } from "../../redux/action/blogsActionCreators/index";
-import { createPages } from "../Pagination/createPagesFUnc";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { AppDispatch } from "../../redux/hooks/index";
 import { useDispatch } from "react-redux";
+import { usePagination } from "../Pagination/createPagesFUnc";
+import WarningText from "../common-components/warningText";
 
 const BlogPosts = () => {
 	const blogs = useAppSelector(blogSelectors);
 	const isLoading = useAppSelector(isLoadingSelector);
 	const errorMessage = useAppSelector(errorSelector);
 	const currentPage: number = useAppSelector(currentPageSelector);
-	const perPage = useAppSelector(perPageSelector);
 	const totalCount = useAppSelector(totalCountSelector);
 
-	const pageCount = useMemo(() => {
-		const count = Math.ceil(totalCount / perPage);
-		return count;
-	}, [totalCount]);
+	const pageSize: number = 12;
+	const siblingCount: number = 2;
+
+	const pagination = usePagination({
+		currentPage,
+		pageSize,
+		siblingCount,
+		totalCount,
+	});
 
 	const dispatch: AppDispatch = useDispatch();
 
-	const pages: number[] = [];
-	createPages({ pages, pageCount, currentPage });
-
 	useEffect(() => {
-		dispatch(getAsyncBlogs(currentPage));
 		dispatch(getTotalAsyncCount());
+		dispatch(getAsyncBlogs(currentPage));
 	}, [currentPage, dispatch]);
 
 	return (
@@ -54,14 +54,16 @@ const BlogPosts = () => {
 			) : (
 				<>
 					{errorMessage && (
-						<ComponentsContainer
-							width="300px"
-							margin="20px auto "
-							fontSize="20"
-							color="red"
+						<WarningText
+							style={{
+								color: "red",
+								fontSize: "18px",
+								margin: "10px auto 10px",
+								width: "500px",
+							}}
 						>
 							{errorMessage}
-						</ComponentsContainer>
+						</WarningText>
 					)}
 					<List items={blogs} />
 					<ComponentsContainer
@@ -71,6 +73,8 @@ const BlogPosts = () => {
 						alignItems="center"
 					>
 						<Button
+							disabled={currentPage <= 1}
+							onClick={() => dispatch(getAsyncBlogs(currentPage - 1))}
 							background="none"
 							border="none"
 							color="#313037"
@@ -81,16 +85,16 @@ const BlogPosts = () => {
 							<FontAwesomeIcon icon={faArrowLeft} /> Prev
 						</Button>
 						<ComponentsContainer
-							width="400px"
+							width="600px"
 							display="flex"
 							justifyContent="space-between"
 						>
-							{pages.map((page) => {
+							{pagination!.map((page) => {
 								return (
 									<Page
 										key={page}
 										isSelected={page === currentPage}
-										onClick={() => dispatch(setCurrentPage(page))}
+										onClick={() => dispatch(getAsyncBlogs(page))}
 									>
 										{page}
 									</Page>
@@ -98,6 +102,8 @@ const BlogPosts = () => {
 							})}
 						</ComponentsContainer>
 						<Button
+							disabled={currentPage >= totalCount}
+							onClick={() => dispatch(getAsyncBlogs(currentPage + 1))}
 							background="none"
 							color="#313037"
 							fontFamily="Inter"
