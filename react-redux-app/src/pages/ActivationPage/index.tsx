@@ -6,6 +6,7 @@ import { CustomLnk } from "../../components/common-components/CustomLink";
 import CustomText from "../../components/common-components/Text";
 import Button from "../../components/common-components/Button";
 import Loader from "../../components/common-components/Loader/Loader";
+import WarningText from "../../components/common-components/warningText";
 
 const ActivationPage = () => {
 	const { uid, id } = useParams();
@@ -44,9 +45,16 @@ const ActivationPage = () => {
 						{!isLoading ? (
 							<>
 								{errorMessage && (
-									<CustomText margin="auto" width="600" color="red">
+									<WarningText
+										style={{
+											color: "red",
+											fontSize: "18px",
+											margin: "10px auto 10px",
+											width: "500px",
+										}}
+									>
 										{errorMessage}
-									</CustomText>
+									</WarningText>
 								)}
 							</>
 						) : (

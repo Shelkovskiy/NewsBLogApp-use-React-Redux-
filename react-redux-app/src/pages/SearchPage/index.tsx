@@ -3,7 +3,7 @@ import ComponentsContainer from "../../components/common-components/Container";
 import CustomText from "../../components/common-components/Text";
 import { useAppSelector } from "../../redux/hooks/index";
 import {
-	searchResult,
+	blogSelectors,
 	isLoadingSelector,
 } from "../../redux/selectors/blogsSelector/index";
 import List from "../../components/common-components/UserList/List";
@@ -11,7 +11,7 @@ import Loader from "../../components/common-components/Loader/Loader";
 import { CustomLnk } from "../../components/common-components/CustomLink";
 
 const Searchpage = () => {
-	const searchBlogsResult = useAppSelector(searchResult);
+	const searchBlogsResult = useAppSelector(blogSelectors);
 	const isLoading = useAppSelector(isLoadingSelector);
 
 	return (
