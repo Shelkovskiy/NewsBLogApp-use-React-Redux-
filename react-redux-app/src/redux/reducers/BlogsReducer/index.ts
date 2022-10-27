@@ -1,3 +1,4 @@
+import { SET_BLOG_FILTER } from "./../../action/index";
 import { GET_ASYNC_TOTAL_COUNT_FAILURE } from "../../action/index";
 import { IAsyncBlogsResponseData } from "../../Types/responseType";
 import {
@@ -16,9 +17,8 @@ export type IInitialState = {
 	isLoading: boolean;
 	error: null | string;
 	currentPage: number;
-	perPage: number;
 	totalCount: number;
-	searchblogs: IAsyncBlogsResponseData[];
+	filter: string;
 };
 
 const initialState: IInitialState = {
@@ -26,9 +26,8 @@ const initialState: IInitialState = {
 	isLoading: false,
 	error: null,
 	currentPage: 1,
-	perPage: 12,
 	totalCount: 0,
-	searchblogs: [],
+	filter: "",
 };
 
 export const blogReducer = (state = initialState, { type, payload }: any) => {
@@ -64,13 +63,12 @@ export const blogReducer = (state = initialState, { type, payload }: any) => {
 		case GET_ASYNC_SEARCH_BLOGS_START:
 			return {
 				...state,
-				searchblogs: [],
 				isLoading: true,
 			};
 		case GET_ASYNC_BLOGS_SEARCH_SUCCESS:
 			return {
 				...state,
-				searchblogs: [...payload],
+				blogs: [...payload],
 				isLoading: false,
 				error: null,
 			};
@@ -85,6 +83,11 @@ export const blogReducer = (state = initialState, { type, payload }: any) => {
 				...state,
 				error: payload,
 				isLoading: false,
+			};
+		case SET_BLOG_FILTER:
+			return {
+				...state,
+				filter: payload,
 			};
 		default:
 			return state;

@@ -13,7 +13,6 @@ export type IInitialState = {
 	isLoading: boolean;
 	error: null | string;
 	currentPage: number;
-	perPage: number;
 	totalCount: number;
 };
 
@@ -22,7 +21,6 @@ const initialState: IInitialState = {
 	isLoading: false,
 	error: null,
 	currentPage: 1,
-	perPage: 12,
 	totalCount: 0,
 };
 
