@@ -34,7 +34,6 @@ axiosPrivate.interceptors.response.use(
 				if (token) {
 					try {
 						const newAccessToken = await refreshToken({ refresh: token });
-						console.log({ newAccessToken });
 						originalRequest.headers!.authorization = `Bearer ${newAccessToken.data.access}`;
 						localStorage.setItem("accessToken", newAccessToken.data.access);
 						return axiosPrivate(originalRequest);
