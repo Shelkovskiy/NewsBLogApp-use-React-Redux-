@@ -1,4 +1,7 @@
-import { GET_ASYNC_TOTAL_COUNT_FAILURE } from "./../../action/index";
+import {
+	GET_ASYNC_TOTAL_COUNT_FAILURE,
+	SET_BLOG_FILTER,
+} from "./../../action/index";
 import {
 	GET_ASYNC_BLOGS_START,
 	GET_ASYNC_BLOGS_SUCCESS,
@@ -22,7 +25,9 @@ export type TBlogsActionTypes =
 	| IGetAsyncBlogsSearchStartAction
 	| IGetAsyncBlogsSearchSuccessAction
 	| IGetAsyncBlogsSearchFailureAction
-	| IGetAsyncBlogsCountFailureAction;
+	| IGetAsyncBlogsCountFailureAction
+	| IGetBLogWithFilter
+	| ISetBLogFIlter;
 
 interface IGetAsyncBlogsStartAction {
 	type: typeof GET_ASYNC_BLOGS_START;
@@ -66,5 +71,15 @@ interface IGetAsyncTotalCount {
 
 interface IGetAsyncBlogsCountFailureAction {
 	type: typeof GET_ASYNC_TOTAL_COUNT_FAILURE;
+	payload: string;
+}
+
+interface IGetBLogWithFilter {
+	type: typeof GET_ASYNC_BLOGS_SEARCH_SUCCESS;
+	payload: string;
+}
+
+interface ISetBLogFIlter {
+	type: typeof SET_BLOG_FILTER;
 	payload: string;
 }
