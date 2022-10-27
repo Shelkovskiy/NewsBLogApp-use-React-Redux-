@@ -10,6 +10,7 @@ export const GET_ASYNC_BLOGS_SEARCH_SUCCESS =
 	"GET_ASYNC_BLOGS_SEARCH_SUCCESS" as const;
 export const GET_ASYNC_BLOGS_SEARCH_FAILURE =
 	"GET_ASYNC_BLOGS_SEARCH_FAILURE" as const;
+export const SET_BLOG_FILTER = "SET_BLOG_FILTER" as const;
 
 // news async action
 export const GET_ASYNC_NEWS_START = "GET_ASYNC_NEWS_START" as const;

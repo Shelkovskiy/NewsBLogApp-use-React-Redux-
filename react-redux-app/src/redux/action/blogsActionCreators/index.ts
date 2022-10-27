@@ -1,3 +1,4 @@
+import { SET_BLOG_FILTER } from "./../index";
 import {
 	getAsyncBlogsFromApi,
 	getAsyncBlogsCount,
@@ -19,18 +20,10 @@ import {
 	GET_ASYNC_BLOGS_SEARCH_FAILURE,
 } from "../index";
 
+// get blogs
 export const getAsyncBlogsStart: ActionCreator<TBlogsActionTypes> = () => {
 	return {
 		type: GET_ASYNC_BLOGS_START,
-		payload: {},
-	};
-};
-
-export const getAsyncBlogsSearchStart: ActionCreator<
-	TBlogsActionTypes
-> = () => {
-	return {
-		type: GET_ASYNC_SEARCH_BLOGS_START,
 		payload: {},
 	};
 };
@@ -44,19 +37,38 @@ export const getAsyncBlogsSuccess: ActionCreator<TBlogsActionTypes> = (
 	};
 };
 
-export const getAsyncBlogsSearchSuccess: ActionCreator<TBlogsActionTypes> = (
-	searchblogs: IAsyncBlogsResponseData[],
-) => {
-	return {
-		type: GET_ASYNC_BLOGS_SEARCH_SUCCESS,
-		payload: searchblogs,
-	};
-};
-
 export const getAsyncBlogsFailure = (error: string) => {
 	return {
 		type: GET_ASYNC_BLOGS_FAILURE,
 		payload: error,
+	};
+};
+
+// search
+export const setBlogsFilter: ActionCreator<TBlogsActionTypes> = (
+	filter: string,
+) => {
+	return {
+		type: SET_BLOG_FILTER,
+		payload: filter,
+	};
+};
+
+export const getAsyncBlogsSearchStart: ActionCreator<
+	TBlogsActionTypes
+> = () => {
+	return {
+		type: GET_ASYNC_SEARCH_BLOGS_START,
+		payload: {},
+	};
+};
+
+export const getAsyncBlogsSearchSuccess: ActionCreator<TBlogsActionTypes> = (
+	filter: string,
+) => {
+	return {
+		type: GET_ASYNC_BLOGS_SEARCH_SUCCESS,
+		payload: filter,
 	};
 };
 
@@ -76,6 +88,7 @@ export const setCurrentPage: ActionCreator<TBlogsActionTypes> = (
 	};
 };
 
+// count
 export const getAsyncTotalCount: ActionCreator<TBlogsActionTypes> = (
 	count: number,
 ) => {
@@ -92,10 +105,11 @@ export const getAsyncCountFailure = (error: string) => {
 	};
 };
 
-export const getAsyncBlogs = ( currentPage : number) => {
+export const getAsyncBlogs = (currentPage: number) => {
 	return (dispatch: Dispatch<TBlogsActionTypes>) => {
 		dispatch(getAsyncBlogsStart());
-		getAsyncBlogsFromApi( currentPage )
+		dispatch(setCurrentPage(currentPage));
+		getAsyncBlogsFromApi({ currentPage })
 			.then((res) => {
 				dispatch(getAsyncBlogsSuccess(res.data));
 			})
@@ -117,10 +131,11 @@ export const getTotalAsyncCount = () => {
 	};
 };
 
-export const getAsyncBlogsSearch = (value: string) => {
+export const getAsyncBlogsSearch = (filter: string) => {
 	return (dispatch: Dispatch<TBlogsActionTypes>) => {
+		dispatch(setBlogsFilter(filter));
 		dispatch(getAsyncBlogsSearchStart());
-		blogsSearch(value)
+		blogsSearch({ filter })
 			.then((res) => {
 				dispatch(getAsyncBlogsSearchSuccess(res.data));
 			})

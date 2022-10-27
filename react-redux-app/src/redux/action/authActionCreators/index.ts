@@ -70,7 +70,6 @@ export const setAsyncLoginData = ({
 						.then((res) => dispatch(getLoginDataSuccess({ ...res.data })))
 						.catch((e: any) => {
 							dispatch(getLoginDataFailure(e?.message));
-							console.log(e?.message);
 						});
 				}
 			})
