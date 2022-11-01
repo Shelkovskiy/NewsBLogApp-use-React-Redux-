@@ -62,7 +62,7 @@ export const getAsyncCountFailure = (error: string) => {
 	};
 };
 
-export const getAsyncNews = (currentPage: number) => {
+export const getAsyncNews = (currentPage: number | string) => {
 	return (dispatch: Dispatch<TNewsActionTypes>) => {
 		dispatch(setCurrentNewsPage(currentPage));
 		dispatch(getAsyncNewsStart());

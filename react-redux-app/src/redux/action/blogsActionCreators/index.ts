@@ -105,7 +105,7 @@ export const getAsyncCountFailure = (error: string) => {
 	};
 };
 
-export const getAsyncBlogs = (currentPage: number) => {
+export const getAsyncBlogs = (currentPage: number | string) => {
 	return (dispatch: Dispatch<TBlogsActionTypes>) => {
 		dispatch(getAsyncBlogsStart());
 		dispatch(setCurrentPage(currentPage));
