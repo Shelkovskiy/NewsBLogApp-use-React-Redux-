@@ -8,7 +8,7 @@ import { CustomLnk } from "../../components/common-components/CustomLink/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
-import { ISinglePage } from "../../components/Types/BlogType";
+import { ISinglePage } from "../../redux/Types/responseType";
 
 const SelectedPage = () => {
 	const [singlePosts, setSiglePosts] = useState<ISinglePage>();
@@ -19,7 +19,7 @@ const SelectedPage = () => {
 			const posts = async () => {
 				try {
 					const response = await getSignglePosts(id);
-					setSiglePosts(response);
+					setSiglePosts(response.data);
 				} catch (e) {
 					console.error(e);
 				}
