@@ -24,3 +24,10 @@ export interface IAsyncBlogsResponseData {
 export interface IGetAsyncTotalCount {
 	count: number;
 }
+
+export interface ISinglePage {
+	title: string;
+	imageUrl: string;
+	summary: string;
+	url: string;
+}
