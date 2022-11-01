@@ -5,7 +5,6 @@ import {
 } from "./../../Types/authTypes/index";
 import {
 	AUTH_LOADING,
-	SET_LOGIN_DATA_START,
 	GET_LOGIN_DATA_SUCCESS,
 	GET_LOGIN_DATA_FAILURE,
 } from "./../index";
@@ -13,15 +12,6 @@ import { TAuthLoginData } from "./../../Types/asyncAuthActionType/index";
 import { ActionCreator } from "redux";
 import { Dispatch } from "react";
 import { login } from "../../services/authServices";
-
-export const setLoginData: ActionCreator<TAuthLoginData> = (
-	loginData: IAuthRequestLoginData,
-) => {
-	return {
-		type: SET_LOGIN_DATA_START,
-		payload: loginData,
-	};
-};
 
 export const setAuthLoading: ActionCreator<TAuthLoginData> = (
 	isLoading: boolean,
