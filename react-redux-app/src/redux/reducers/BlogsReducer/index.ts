@@ -16,7 +16,7 @@ export type IInitialState = {
 	blogs: IAsyncBlogsResponseData[];
 	isLoading: boolean;
 	error: null | string;
-	currentPage: number;
+	currentPage: number |string;
 	totalCount: number;
 	filter: string;
 };
