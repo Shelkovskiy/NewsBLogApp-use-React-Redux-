@@ -22,6 +22,8 @@ import { AppDispatch } from "../../redux/hooks/index";
 import { usePagination } from "../Pagination/createPagesFUnc";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { pageSize, siblingCount } from "../../constants";
+
 const NewsPosts = () => {
 	const dispatch: AppDispatch = useDispatch();
 	const news = useAppSelector(newsSelectors);
@@ -31,8 +33,9 @@ const NewsPosts = () => {
 
 	const totalCount = useAppSelector(totalCountSelector);
 
-	const pageSize: number = 12;
-	const siblingCount: number = 2;
+	const onPageChange = (currentPage: number) => {
+		dispatch(getAsyncNews(currentPage));
+	};
 
 	const pagination = usePagination({
 		currentPage,
@@ -52,11 +55,7 @@ const NewsPosts = () => {
 				<Loader />
 			) : (
 				<>
-					{errorMessage && (
-						<WarningText style={{ color: "red", fontSize: "18px" }}>
-							{errorMessage}
-						</WarningText>
-					)}
+					{errorMessage && <WarningText>{errorMessage}</WarningText>}
 					<List items={news} />
 					<ComponentsContainer
 						width="100%"
@@ -66,7 +65,7 @@ const NewsPosts = () => {
 					>
 						<Button
 							disabled={currentPage <= 1}
-							onClick={() => dispatch(getAsyncNews(currentPage - 1))}
+							onClick={() => onPageChange(currentPage - 1)}
 							background="none"
 							border="none"
 							color="#313037"
@@ -86,7 +85,7 @@ const NewsPosts = () => {
 									<Page
 										key={page}
 										isSelected={page === currentPage}
-										onClick={() => dispatch(getAsyncNews(page))}
+										onClick={() => onPageChange(page as number)}
 									>
 										{page}
 									</Page>
@@ -95,7 +94,7 @@ const NewsPosts = () => {
 						</ComponentsContainer>
 						<Button
 							disabled={currentPage >= totalCount}
-							onClick={() => dispatch(getAsyncNews(currentPage + 1))}
+							onClick={() => onPageChange(currentPage + 1)}
 							background="none"
 							color="#313037"
 							fontFamily="Inter"

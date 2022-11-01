@@ -22,6 +22,7 @@ import { AppDispatch } from "../../redux/hooks/index";
 import { useDispatch } from "react-redux";
 import { usePagination } from "../Pagination/createPagesFUnc";
 import WarningText from "../common-components/warningText";
+import { pageSize, siblingCount } from "../../constants";
 
 const BlogPosts = () => {
 	const blogs = useAppSelector(blogSelectors);
@@ -29,9 +30,6 @@ const BlogPosts = () => {
 	const errorMessage = useAppSelector(errorSelector);
 	const currentPage: number = useAppSelector(currentPageSelector);
 	const totalCount = useAppSelector(totalCountSelector);
-
-	const pageSize: number = 12;
-	const siblingCount: number = 2;
 
 	const pagination = usePagination({
 		currentPage,
@@ -47,24 +45,17 @@ const BlogPosts = () => {
 		dispatch(getAsyncBlogs(currentPage));
 	}, [currentPage, dispatch]);
 
+	const onPageChange = (currentPage: number) => {
+		dispatch(getAsyncBlogs(currentPage));
+	};
+
 	return (
 		<>
 			{isLoading ? (
 				<Loader />
 			) : (
 				<>
-					{errorMessage && (
-						<WarningText
-							style={{
-								color: "red",
-								fontSize: "18px",
-								margin: "10px auto 10px",
-								width: "500px",
-							}}
-						>
-							{errorMessage}
-						</WarningText>
-					)}
+					{errorMessage && <WarningText>{errorMessage}</WarningText>}
 					<List items={blogs} />
 					<ComponentsContainer
 						width="100%"
@@ -74,7 +65,7 @@ const BlogPosts = () => {
 					>
 						<Button
 							disabled={currentPage <= 1}
-							onClick={() => dispatch(getAsyncBlogs(currentPage - 1))}
+							onClick={() => onPageChange(currentPage - 1)}
 							background="none"
 							border="none"
 							color="#313037"
@@ -94,7 +85,7 @@ const BlogPosts = () => {
 									<Page
 										key={page}
 										isSelected={page === currentPage}
-										onClick={() => dispatch(getAsyncBlogs(page))}
+										onClick={() => onPageChange(page as number)}
 									>
 										{page}
 									</Page>
@@ -103,7 +94,7 @@ const BlogPosts = () => {
 						</ComponentsContainer>
 						<Button
 							disabled={currentPage >= totalCount}
-							onClick={() => dispatch(getAsyncBlogs(currentPage + 1))}
+							onClick={() => onPageChange(currentPage + 1)}
 							background="none"
 							color="#313037"
 							fontFamily="Inter"
