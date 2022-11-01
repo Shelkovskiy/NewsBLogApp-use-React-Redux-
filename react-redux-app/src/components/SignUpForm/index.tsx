@@ -3,14 +3,14 @@ import Button from "../common-components/Button";
 import Input from "../common-components/Input";
 import { Form, FormLabel } from "../common-components/Form/index";
 import ComponentsContainer from "../common-components/Container";
-import { IDataSignUP } from "../Types/DataType";
 import { registration } from "../../redux/services/authServices";
 import WarningText from "../common-components/warningText";
 import { CustomLnk } from "../common-components/CustomLink";
 import CustomText from "../common-components/Text";
 import Loader from "../common-components/Loader/Loader";
+import { IAuthRequestRegistrationData } from "../../redux/Types/authTypes";
 
-const prevUserData: IDataSignUP = {
+const prevUserData: IAuthRequestRegistrationData = {
 	username: "",
 	email: "",
 	password: "",
@@ -59,18 +59,7 @@ const SignUp = () => {
 
 	return (
 		<>
-			{errorMessage && (
-				<WarningText
-					style={{
-						color: "red",
-						fontSize: "18px",
-						margin: "10px auto 10px",
-						width: "500px",
-					}}
-				>
-					{errorMessage}
-				</WarningText>
-			)}
+			{errorMessage && <WarningText>{errorMessage}</WarningText>}
 			<>
 				{isRegistered ? (
 					<>
@@ -150,4 +139,4 @@ const SignUp = () => {
 	);
 };
 
-export default SignUp;
+export default React.memo(SignUp);

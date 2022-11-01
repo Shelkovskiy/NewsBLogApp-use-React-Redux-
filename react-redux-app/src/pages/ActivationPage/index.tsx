@@ -43,20 +43,7 @@ const ActivationPage = () => {
 				{isActivated ? (
 					<>
 						{!isLoading ? (
-							<>
-								{errorMessage && (
-									<WarningText
-										style={{
-											color: "red",
-											fontSize: "18px",
-											margin: "10px auto 10px",
-											width: "500px",
-										}}
-									>
-										{errorMessage}
-									</WarningText>
-								)}
-							</>
+							<>{errorMessage && <WarningText>{errorMessage}</WarningText>}</>
 						) : (
 							<Loader />
 						)}

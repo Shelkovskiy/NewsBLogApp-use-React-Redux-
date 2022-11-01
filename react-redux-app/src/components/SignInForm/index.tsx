@@ -6,7 +6,6 @@ import CustomText from "../common-components/Text";
 import { Form, FormLabel } from "../common-components/Form/index";
 import { CustomLnk } from "../common-components/CustomLink";
 import ComponentsContainer from "../common-components/Container";
-import { IDataSignIn } from "../Types/DataType";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setAsyncLoginData } from "../../redux/action/authActionCreators";
 import {
@@ -17,8 +16,9 @@ import {
 import WarningText from "../common-components/warningText";
 import Loader from "../common-components/Loader/Loader";
 import { useNavigate } from "react-router";
+import { IAuthRequestLoginData } from "../../redux/Types/authTypes";
 
-const prevUserData: IDataSignIn = { login: "", password: "" };
+const prevUserData: IAuthRequestLoginData = { email: "", password: "" };
 
 const SignIN = () => {
 	const dispatch = useAppDispatch();
@@ -45,26 +45,15 @@ const SignIN = () => {
 	const onFormSubmit = useCallback(() => {
 		dispatch(
 			setAsyncLoginData({
-				email: userData.login,
+				email: userData.email,
 				password: userData.password,
 			}),
 		);
-	}, [dispatch, userData.login, userData.password]);
+	}, [dispatch, userData.email, userData.password]);
 
 	return (
 		<>
-			{errorMessage && (
-				<WarningText
-					style={{
-						color: "red",
-						fontSize: "18px",
-						margin: "10px auto 10px",
-						width: "500px",
-					}}
-				>
-					{errorMessage}
-				</WarningText>
-			)}
+			{errorMessage && <WarningText>{errorMessage}</WarningText>}
 			{!isAuthLoading ? (
 				<>
 					<Form maxwidth="624" maxheigth="472" margin="auto" padding="40">
@@ -76,8 +65,8 @@ const SignIN = () => {
 									height="56px"
 									border="1px solid rgba(49, 48, 55, 0.1) "
 									placeholder="Your email"
-									value={userData.login}
-									fieldName="login"
+									value={userData.email}
+									fieldName="email"
 									onChange={onUserDataChange}
 								/>
 							</FormLabel>
@@ -157,4 +146,4 @@ const SignIN = () => {
 	);
 };
 
-export default SignIN;
+export default React.memo(SignIN);
