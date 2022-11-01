@@ -1,6 +1,6 @@
+import { BASE_BLOG_URL } from "./../../redux/constants/urls/index";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { AxiosRequestConfig } from "axios";
-import { config } from "process";
 import { refreshToken } from "../../redux/services/authServices";
 
 export const BASE_LOGIN_API = "https://studapi.teachmeskills.by";
@@ -50,3 +50,7 @@ axiosPrivate.interceptors.response.use(
 		}
 	},
 );
+
+export const axiosContent = axios.create({
+	baseURL: BASE_BLOG_URL,
+});

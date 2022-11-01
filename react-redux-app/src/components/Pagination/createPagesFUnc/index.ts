@@ -1,3 +1,4 @@
+import { range } from "./../../../utils/index";
 import { useMemo } from "react";
 
 interface IPagination {
@@ -7,12 +8,7 @@ interface IPagination {
 	currentPage: number;
 }
 
-const DOTS: any = "...";
-
-const range = (start: number, end: number) => {
-	let length = end - start + 1;
-	return Array.from({ length }, (_, idx) => idx + start);
-};
+const DOTS: string = "...";
 
 export const usePagination = ({
 	totalCount,
