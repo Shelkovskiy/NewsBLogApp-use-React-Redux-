@@ -28,8 +28,8 @@ const Text = styled.p<ICustomText>`
 	align-items: ${(props) => props.alignItems || "center"};
 	color: ${(props) => props.color || "black"};
 	font-weight: ${(props) => props.fontweight || "400"};
-	max-width: ${(props) => props.width || "auto"}px;
-	cursor: ${(props) => props.cursor || "pointer"};
+	max-width: ${(props) => props.width || "auto"};
+	cursor: ${(props) => props.cursor || "default"};
 	margin-block-start: 0px;
 	margin-block-end: 0px;
 	margin-inline-start: 0px;

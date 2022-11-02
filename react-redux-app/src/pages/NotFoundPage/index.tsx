@@ -1,19 +1,15 @@
 import React from "react";
 import CustomText from "../../components/common-components/Text";
-import styled from "styled-components";
-
-const PageContanier = styled.div`
-	margin: auto;
-	width: 700px;
-`;
+import ComponentsContainer from "../../components/common-components/Container/index";
 
 const NotFoundPage = () => {
 	return (
-		<PageContanier>
+		<ComponentsContainer margin="60px auto 10px">
 			<CustomText fontsize="56" color="red">
 				Sorry,this page is not found
 			</CustomText>
-		</PageContanier>
+		</ComponentsContainer>
 	);
 };
+
 export default NotFoundPage;

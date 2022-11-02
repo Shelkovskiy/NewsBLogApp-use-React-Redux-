@@ -1,6 +1,5 @@
 import rootReducer from "../reducers";
 import thunk from "redux-thunk";
-import { composeWithDevTools } from '@redux-devtools/extension';
 import { createStore, compose, applyMiddleware } from "redux";
 
 const composeEnhancers =
@@ -10,13 +9,17 @@ const composeEnhancers =
 		? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
 		: compose;
 
-const enhancer = composeWithDevTools(applyMiddleware(thunk));
+const enhancer = composeEnhancers(applyMiddleware(thunk));
 
 const configureStore = (preloadedState: any) =>
-	createStore(
-		rootReducer, 
-		preloadedState, 
-		enhancer, 
-	);
+	createStore(rootReducer, preloadedState, enhancer);
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export const store = configureStore({});
+
+type PropertiesType<T> = T extends { [key: string]: infer U } ? U : never;
+export type InferActionTypes<
+	T extends { [key: string]: (...args: any[]) => any },
+> = ReturnType<PropertiesType<T>>;

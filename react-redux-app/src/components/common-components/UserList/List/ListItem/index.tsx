@@ -5,7 +5,7 @@ interface IListItem {
 	children: React.ReactNode;
 }
 
-export const ListItemLi = styled.li`
+const ListItemLi = styled.li`
 	cursor: pointer;
 	margin-top: 40px;
 	overflow: hidden;

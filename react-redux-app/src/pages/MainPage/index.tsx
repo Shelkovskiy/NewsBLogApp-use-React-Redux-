@@ -1,6 +1,5 @@
 import React from "react";
 import BlogPosts from "../../components/BlogPosts/index";
-import Button from "../../components/common-components/Button";
 import { CustomLnk } from "../../components/common-components/CustomLink";
 import ComponentsContainer from "../../components/common-components/Container";
 import CustomText from "../../components/common-components/Text";
@@ -9,9 +8,6 @@ import {
 	NavWrap,
 	NavWrapItem,
 } from "../../components/common-components/Navigation";
-import { Page } from "../../components/Pagination";
-
-const totalPages: number[] = [1, 2, 3, 4, 5, 6];
 
 const SortItem = styled.div`
 	text-align: center;
@@ -32,7 +28,7 @@ const SortItem = styled.div`
 	}
 `;
 
-export const MainPage = () => {
+const MainPage = () => {
 	return (
 		<ComponentsContainer
 			maxWidth="1120px"
@@ -48,16 +44,18 @@ export const MainPage = () => {
 						color="#313037"
 						margin="0px 0px 40px"
 						alignItems="center"
-						width="123"
+						width="123px"
 					>
-						Blog
+						Articles
 					</CustomText>
 				</div>
 				<NavWrap>
 					<CustomLnk textDecoration="none" to="/MainPage">
-						<NavWrapItem>Blog</NavWrapItem>
+						<NavWrapItem>Articles</NavWrapItem>
 					</CustomLnk>
-					<NavWrapItem>News</NavWrapItem>
+					<CustomLnk textDecoration="none" to="/newspage">
+						<NavWrapItem>News</NavWrapItem>
+					</CustomLnk>
 				</NavWrap>
 			</ComponentsContainer>
 			<ComponentsContainer
@@ -81,42 +79,6 @@ export const MainPage = () => {
 			<div>
 				<BlogPosts />
 			</div>
-			<ComponentsContainer
-				width="100%"
-				display="flex"
-				justifyContent="space-between"
-				alignItems="center"
-			>
-				<Button
-					background="none"
-					border="none"
-					color="#313037"
-					fontFamily="Inter"
-					fontSize="16"
-					fontWeight="600"
-				>
-					← Prev
-				</Button>
-				<ComponentsContainer
-					width="179px"
-					display="flex"
-					justifyContent="space-between"
-				>
-					{totalPages.map((page, index) => (
-						<Page key={index}>{page}</Page>
-					))}
-				</ComponentsContainer>
-				<Button
-					background="none"
-					color="#313037"
-					fontFamily="Inter"
-					border="none"
-					fontSize="16"
-					fontWeight="600"
-				>
-					Next →
-				</Button>
-			</ComponentsContainer>
 		</ComponentsContainer>
 	);
 };

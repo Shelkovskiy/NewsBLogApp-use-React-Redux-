@@ -1,10 +1,11 @@
-import { combineReducers, createStore, applyMiddleware } from "redux";
-import postsReducer from "./postsReducer/index";
+import { combineReducers } from "redux";
+import { blogReducer } from "./blogsReducer";
+import { newsReducer } from "./newsReducer/index";
+import authReducer from "./authReducer";
 
 const rootReducer = combineReducers({
-	posts: postsReducer,
+	blogs: blogReducer,
+	news: newsReducer,
+	auth: authReducer,
 });
-
-// export type RootState = ResultType<typeof rootReducer>;
-
 export default rootReducer;

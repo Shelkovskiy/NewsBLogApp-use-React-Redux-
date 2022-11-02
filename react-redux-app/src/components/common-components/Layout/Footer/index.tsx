@@ -22,10 +22,8 @@ const FooterBlock = styled.footer<IFooter>`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	position: absolute;
-	width: 100%;
-	flex-shrink: 0;
 	left: 270px;
+	width: 100%;
 `;
 
 const DarkThemeBlock = styled.div`
@@ -39,7 +37,7 @@ const DarkThemeBlock = styled.div`
 const Footer = () => {
 	return (
 		<>
-			<FooterBlock background="none" margin="auto" padding="34">
+			<FooterBlock background="none" margin="auto auto 0" padding="34">
 				<div>
 					<div>{<FontAwesomeIcon icon={faCopyright} size="1x" />}</div>
 					<CustomText

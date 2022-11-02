@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState, useMemo } from "react";
 import styled from "styled-components";
 import Input from "../../Input";
 import Button from "../../Button";
@@ -8,6 +8,14 @@ import CustomText from "../../Text/index";
 import { CustomLnk } from "../../CustomLink/index";
 import { Form } from "../../Form/index";
 import Image from "./img/logo.png";
+import { AppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { useDispatch } from "react-redux";
+import { getAsyncBlogsSearch } from "../../../../redux/action/blogsActionCreators/index";
+import {
+	dataSelectors,
+	isAuthSelector,
+} from "../../../../redux/selectors/authSelectrors";
+import ComponentsContainer from "../../Container";
 
 interface IHeader {
 	background?: string;
@@ -27,52 +35,88 @@ const HeaderBlock = styled.header<IHeader>`
 	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `;
 
+const initialSearchValue = {
+	searchText: "",
+};
+
 const Header = () => {
+	const [searchForm, setSearchForm] = useState(initialSearchValue);
+	const dispatch: AppDispatch = useDispatch();
+	const { username } = useAppSelector(dataSelectors);
+	const isAuth = useAppSelector(isAuthSelector);
+
+	const onBtnSearch = useCallback(async () => {
+		dispatch(getAsyncBlogsSearch(searchForm.searchText));
+	}, [dispatch, searchForm.searchText]);
+
+	const handleSearchChange = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) =>
+			setSearchForm((prevState) => ({
+				...prevState,
+				[e.target.id]: e.target.value,
+			})),
+		[],
+	);
+
 	return (
-		<HeaderBlock padding="20">
-			<CustomLnk to="/mainpage">
-				<div>
-					<img src={Image} alt="logo" />
-				</div>
-			</CustomLnk>
-			<Form
-				width="1300px"
-				maxwidth="1300"
-				maxheigth="100"
-				padding="0"
-				margin="auto"
-				flexDirection="row"
-			>
-				<Input
-					border="none"
+		<>
+			<HeaderBlock padding="20">
+				<CustomLnk to="/mainpage">
+					<div>
+						<img src={Image} alt="logo" />
+					</div>
+				</CustomLnk>
+				<Form
+					width="1300px"
+					maxwidth="1300"
+					maxheigth="100"
+					padding="0"
 					margin="auto"
-					width="100%"
-					onChange={useCallback(
-						(e: React.ChangeEvent<HTMLInputElement>) =>
-							console.log(e.target.value),
-						[],
-					)}
-					height="56px"
-					type="search"
-				/>
-				<Button background="none" border="none">
-					<FontAwesomeIcon icon={faMagnifyingGlass} />
-				</Button>
-			</Form>
-			<CustomLnk to="/signinpage" textDecoration="none">
-				<div>
-					<CustomText
-						fontfamily="Inter"
-						color="rgba(49, 48, 55, 1)"
-						fontweight="600"
-						lineheight="34"
-						fontsize="16"
-					>
-						Login
-					</CustomText>
-				</div>
-			</CustomLnk>
-		</HeaderBlock>
+					flexDirection="row"
+				>
+					<Input
+						fieldName="searchText"
+						border="none"
+						margin="auto"
+						width="100%"
+						value={searchForm.searchText}
+						onChange={handleSearchChange}
+						height="56px"
+						type="text"
+					/>
+					<ComponentsContainer width="20px" alignItems="center" display="flex">
+						<CustomLnk to="/searchpage" textDecoration="none">
+							<Button
+								width="100%"
+								type="submit"
+								onClick={onBtnSearch}
+								background="none"
+								border="none"
+							>
+								<FontAwesomeIcon icon={faMagnifyingGlass} />
+							</Button>
+						</CustomLnk>
+					</ComponentsContainer>
+				</Form>
+				{!isAuth ? (
+					<CustomLnk to="/signinpage" textDecoration="none">
+						<div>
+							<CustomText
+								fontfamily="Inter"
+								color="rgba(49, 48, 55, 1)"
+								fontweight="600"
+								lineheight="34"
+								fontsize="16"
+							>
+								Login
+							</CustomText>
+						</div>
+					</CustomLnk>
+				) : (
+					<CustomText>{username}</CustomText>
+				)}
+			</HeaderBlock>
+		</>
 	);
 };
 

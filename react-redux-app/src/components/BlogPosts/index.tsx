@@ -1,35 +1,112 @@
-import React, { useState, useEffect } from "react";
-import { getPostsArr } from "../API/getPostApi";
+import React, { useEffect } from "react";
 import List from "../common-components/UserList/List";
 import Loader from "../common-components/Loader/Loader";
-import { IPost } from "../Types/BlogType";
+import { useAppSelector } from "../../redux/hooks/index";
+import {
+	getAsyncBlogs,
+	getTotalAsyncCount,
+} from "../../redux/action/blogsActionCreators/index";
+import ComponentsContainer from "../common-components/Container/index";
+import {
+	isLoadingSelector,
+	blogSelectors,
+	errorSelector,
+	currentPageSelector,
+	totalCountSelector,
+} from "../../redux/selectors/blogsSelector/index";
+import Button from "../common-components/Button";
+import { Page } from "../Pagination";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { AppDispatch } from "../../redux/hooks/index";
+import { useDispatch } from "react-redux";
+import { usePagination } from "../Pagination/createPagesFUnc";
+import WarningText from "../common-components/warningText";
+import { PAGE_SIZE, SIBLING_COUNT } from "../../constants";
 
 const BlogPosts = () => {
-	const [isLoading, setIsLoading] = useState(false);
-	const [posts, setPosts] = useState<IPost[] | []>([]);
+	const blogs = useAppSelector(blogSelectors);
+	const isLoading = useAppSelector(isLoadingSelector);
+	const errorMessage = useAppSelector(errorSelector);
+	const currentPage: number = useAppSelector(currentPageSelector);
+	const totalCount = useAppSelector(totalCountSelector);
+
+	const pagination = usePagination({
+		currentPage,
+		PAGE_SIZE,
+		SIBLING_COUNT,
+		totalCount,
+	});
+
+	const dispatch: AppDispatch = useDispatch();
 
 	useEffect(() => {
-		const fetchPosts = async () => {
-			try {
-				setIsLoading(true);
-				const response = await getPostsArr();
-				setPosts(response);
-			} catch (e) {
-				console.error(e);
-			} finally {
-				setIsLoading(false);
-			}
-		};
-		fetchPosts();
-	}, []);
+		dispatch(getTotalAsyncCount());
+		dispatch(getAsyncBlogs(currentPage));
+	}, [currentPage, dispatch]);
 
-	// const dispatch = useDispatch();
-	// const blog = useSelector((state) => state.blog.items);
-	return isLoading ? (
-		<Loader />
-	) : (
+	const onPageChange = (currentPage: number) => {
+		dispatch(getAsyncBlogs(currentPage));
+	};
+
+	return (
 		<>
-			<List items={posts} />
+			{isLoading ? (
+				<Loader />
+			) : (
+				<>
+					{errorMessage && <WarningText>{errorMessage}</WarningText>}
+					<List items={blogs} />
+					<ComponentsContainer
+						width="100%"
+						display="flex"
+						justifyContent="space-between"
+						alignItems="center"
+					>
+						<Button
+							disabled={currentPage <= 1}
+							onClick={() => onPageChange(currentPage - 1)}
+							background="none"
+							border="none"
+							color="#313037"
+							fontFamily="Inter"
+							fontSize="16"
+							fontWeight="600"
+						>
+							<FontAwesomeIcon icon={faArrowLeft} /> Prev
+						</Button>
+						<ComponentsContainer
+							width="600px"
+							display="flex"
+							justifyContent="space-between"
+						>
+							{pagination!.map((page) => {
+								return (
+									<Page
+										key={page}
+										isSelected={page === currentPage}
+										onClick={() => onPageChange(page as number)}
+									>
+										{page}
+									</Page>
+								);
+							})}
+						</ComponentsContainer>
+						<Button
+							disabled={currentPage >= totalCount}
+							onClick={() => onPageChange(currentPage + 1)}
+							background="none"
+							color="#313037"
+							fontFamily="Inter"
+							border="none"
+							fontSize="16"
+							fontWeight="600"
+						>
+							Next <FontAwesomeIcon icon={faArrowRight} />
+						</Button>
+					</ComponentsContainer>
+				</>
+			)}
 		</>
 	);
 };
