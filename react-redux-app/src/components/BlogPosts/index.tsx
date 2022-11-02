@@ -22,7 +22,7 @@ import { AppDispatch } from "../../redux/hooks/index";
 import { useDispatch } from "react-redux";
 import { usePagination } from "../Pagination/createPagesFUnc";
 import WarningText from "../common-components/warningText";
-import { pageSize, siblingCount } from "../../constants";
+import { PAGE_SIZE, SIBLING_COUNT } from "../../constants";
 
 const BlogPosts = () => {
 	const blogs = useAppSelector(blogSelectors);
@@ -33,8 +33,8 @@ const BlogPosts = () => {
 
 	const pagination = usePagination({
 		currentPage,
-		pageSize,
-		siblingCount,
+		PAGE_SIZE,
+		SIBLING_COUNT,
 		totalCount,
 	});
 

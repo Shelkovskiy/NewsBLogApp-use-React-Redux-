@@ -22,7 +22,7 @@ import { AppDispatch } from "../../redux/hooks/index";
 import { usePagination } from "../Pagination/createPagesFUnc";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { pageSize, siblingCount } from "../../constants";
+import { PAGE_SIZE, SIBLING_COUNT } from "../../constants";
 
 const NewsPosts = () => {
 	const dispatch: AppDispatch = useDispatch();
@@ -39,8 +39,8 @@ const NewsPosts = () => {
 
 	const pagination = usePagination({
 		currentPage,
-		pageSize,
-		siblingCount,
+		PAGE_SIZE,
+		SIBLING_COUNT,
 		totalCount,
 	});
 
