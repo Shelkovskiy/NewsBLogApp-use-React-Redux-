@@ -16,6 +16,7 @@ import {
 	isAuthSelector,
 } from "../../../../redux/selectors/authSelectrors";
 import ComponentsContainer from "../../Container";
+import { device } from "../../../../constants/size";
 
 interface IHeader {
 	background?: string;
@@ -24,15 +25,34 @@ interface IHeader {
 }
 
 const HeaderBlock = styled.header<IHeader>`
+	box-sizing: border-box;
 	background: ${(props) => props.background || "none"};
 	margin: ${(props) => props.margin || "start"};
-	padding: ${(props) => props.padding || "0"}px;
+	padding: ${(props) => props.padding || "0px"};
 	display: flex;
 	flex-direction: row;
 	justify-content: space-evenly;
 	align-items: center;
 	top: 0px;
 	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+	@media ${device.mobile} {
+		${Form} {
+			display: none;
+		}
+	}
+
+	@media ${device.tablet} {
+		${Form} {
+			max-width: 330px;
+		}
+	}
+
+	@media ${device.desktop} {
+		${Form} {
+			max-width: 1400px;
+		}
+	}
 `;
 
 const initialSearchValue = {
@@ -60,15 +80,14 @@ const Header = () => {
 
 	return (
 		<>
-			<HeaderBlock padding="20">
+			<HeaderBlock padding="20px 32px">
 				<CustomLnk to="/mainpage">
 					<div>
 						<img src={Image} alt="logo" />
 					</div>
 				</CustomLnk>
 				<Form
-					width="1300px"
-					maxwidth="1300"
+					width="100%"
 					maxheigth="100"
 					padding="0"
 					margin="auto"

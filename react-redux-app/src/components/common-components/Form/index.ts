@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface IFormProps {
-	maxwidth: string;
+	maxwidth?: string;
 	maxheigth: string;
 	padding: string;
 	margin: string;
@@ -15,7 +15,7 @@ export const Form = styled.form<IFormProps>`
 	display: flex;
 	flex-direction: ${(props) => props.flexDirection || "column"};
 	box-sizing: border-box;
-	max-width: ${(props) => props.maxwidth}px;
+	max-width: ${(props) => props.maxwidth};
 	max-height: ${(props) => props.maxheigth}px;
 	padding: ${(props) => props.padding}px;
 	margin: ${(props) => props.margin};
