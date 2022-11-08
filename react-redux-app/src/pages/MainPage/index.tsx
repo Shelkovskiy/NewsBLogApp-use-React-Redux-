@@ -2,12 +2,14 @@ import React from "react";
 import BlogPosts from "../../components/BlogPosts/index";
 import { CustomLnk } from "../../components/common-components/CustomLink";
 import ComponentsContainer from "../../components/common-components/Container";
-import CustomText from "../../components/common-components/Text";
 import styled from "styled-components";
 import {
 	NavWrap,
 	NavWrapItem,
 } from "../../components/common-components/Navigation";
+
+import { MainTitle } from "../../components/MainTitle";
+import { SortContainer } from "../../components/SortContainer";
 
 const SortItem = styled.div`
 	text-align: center;
@@ -31,23 +33,13 @@ const SortItem = styled.div`
 const MainPage = () => {
 	return (
 		<ComponentsContainer
-			maxWidth="1120px"
-			margin="60px auto 0"
+			width="100%"
+			margin="72px auto 0"
 			padding="0px 0px 10px "
 		>
-			<ComponentsContainer maxWidth="100%" margin="0px 0px 64px">
+			<ComponentsContainer width="100%" margin="0px 0px 64px">
 				<div>
-					<CustomText
-						fontweight="700"
-						fontsize="56"
-						lineheight="80"
-						color="#313037"
-						margin="0px 0px 40px"
-						alignItems="center"
-						width="123px"
-					>
-						Articles
-					</CustomText>
+					<MainTitle>Articles</MainTitle>
 				</div>
 				<NavWrap>
 					<CustomLnk textDecoration="none" to="/MainPage">
@@ -63,17 +55,12 @@ const MainPage = () => {
 				justifyContent="space-between"
 				alignItems="center"
 			>
-				<ComponentsContainer
-					display="flex"
-					justifyContent="space-between"
-					alignItems="center"
-					width="535px"
-				>
+				<SortContainer>
 					<SortItem>Day</SortItem>
 					<SortItem>Week</SortItem>
 					<SortItem>Monath</SortItem>
 					<SortItem>Year</SortItem>
-				</ComponentsContainer>
+				</SortContainer>
 				<SortItem>SORT</SortItem>
 			</ComponentsContainer>
 			<div>

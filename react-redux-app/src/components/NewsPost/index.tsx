@@ -17,7 +17,7 @@ import {
 import WarningText from "../common-components/warningText";
 import ComponentsContainer from "../common-components/Container";
 import Button from "../common-components/Button";
-import { Page } from "../Pagination";
+import { Page, PaginationContainer } from "../Pagination";
 import { AppDispatch } from "../../redux/hooks/index";
 import { usePagination } from "../Pagination/createPagesFUnc";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -75,11 +75,7 @@ const NewsPosts = () => {
 						>
 							<FontAwesomeIcon icon={faArrowLeft} /> Prev
 						</Button>
-						<ComponentsContainer
-							width="600px"
-							display="flex"
-							justifyContent="space-between"
-						>
+						<PaginationContainer>
 							{pagination!.map((page) => {
 								return (
 									<Page
@@ -91,7 +87,7 @@ const NewsPosts = () => {
 									</Page>
 								);
 							})}
-						</ComponentsContainer>
+						</PaginationContainer>
 						<Button
 							disabled={currentPage >= totalCount}
 							onClick={() => onPageChange(currentPage + 1)}

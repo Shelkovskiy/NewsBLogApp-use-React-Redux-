@@ -15,7 +15,7 @@ import {
 	totalCountSelector,
 } from "../../redux/selectors/blogsSelector/index";
 import Button from "../common-components/Button";
-import { Page } from "../Pagination";
+import { Page, PaginationContainer } from "../Pagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { AppDispatch } from "../../redux/hooks/index";
@@ -58,10 +58,9 @@ const BlogPosts = () => {
 					{errorMessage && <WarningText>{errorMessage}</WarningText>}
 					<List items={blogs} />
 					<ComponentsContainer
-						width="100%"
 						display="flex"
-						justifyContent="space-between"
-						alignItems="center"
+						justifyContent="center"
+						gap="10px"
 					>
 						<Button
 							disabled={currentPage <= 1}
@@ -75,11 +74,7 @@ const BlogPosts = () => {
 						>
 							<FontAwesomeIcon icon={faArrowLeft} /> Prev
 						</Button>
-						<ComponentsContainer
-							width="600px"
-							display="flex"
-							justifyContent="space-between"
-						>
+						<PaginationContainer>
 							{pagination!.map((page) => {
 								return (
 									<Page
@@ -91,7 +86,7 @@ const BlogPosts = () => {
 									</Page>
 								);
 							})}
-						</ComponentsContainer>
+						</PaginationContainer>
 						<Button
 							disabled={currentPage >= totalCount}
 							onClick={() => onPageChange(currentPage + 1)}

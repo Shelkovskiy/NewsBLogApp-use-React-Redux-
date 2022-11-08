@@ -6,6 +6,7 @@ import { Image } from "../../Image/index";
 import ComponentsContainer from "../../Container/index";
 import { CustomLnk } from "../../CustomLink/index";
 import { IAsyncBlogsResponseData } from "../../../../redux/Types/responseType";
+import { device } from "../../../../constants/size";
 
 interface IListProps {
 	items: IAsyncBlogsResponseData[];
@@ -47,6 +48,49 @@ export const CardImageContainer = styled.div`
 	}
 `;
 
+interface ICardTextContainer {
+	maxWidth?: string;
+	display?: string;
+	margin?: string;
+	padding?: string;
+	justifyContent?: string;
+	alignItems?: string;
+	width?: string;
+	fontSize?: string;
+	color?: string;
+	background?: string;
+	borderRadius?: string;
+}
+
+export const CardTextContainer = styled.div<ICardTextContainer>`
+	border-radius: ${(props) => props.borderRadius || "0px"};
+	background: ${(props) => props.background || "none"};
+	font-size: ${(props) => props.fontSize || "16px"};
+	color: ${(props) => props.color || "black"};
+	width: ${(props) => props.width || "100%"};
+	max-width: ${(props) => props.maxWidth || "100%"};
+	display: ${(props) => props.display || "block"};
+	margin: ${(props) => props.margin || "0"};
+	padding: ${(props) => props.padding || 0};
+	justify-content: ${(props) => props.justifyContent || "space-between"};
+	align-items: ${(props) => props.alignItems || "center"};
+	box-sizing: border-box;
+
+	@media ${device.desktop} {
+		max-width: 287px;
+		padding: 32px;
+	}
+
+	@media ${device.tablet} {
+		max-width: 261px;
+		padding: 33px;
+	}
+	@media ${device.mobile} {
+		max-width: 224px;
+		padding: 24px;
+	}
+`;
+
 const List = ({ items }: IListProps) => {
 	return (
 		<UlList>
@@ -56,7 +100,7 @@ const List = ({ items }: IListProps) => {
 						<CardImageContainer>
 							<Image src={item.imageUrl} alt="" />
 						</CardImageContainer>
-						<ComponentsContainer width="287px" margin="auto" padding="32px">
+						<CardTextContainer margin="auto">
 							<CustomText
 								fontfamily="Inter"
 								fontstyle="normal"
@@ -85,7 +129,7 @@ const List = ({ items }: IListProps) => {
 									{item.title}
 								</CustomText>
 							</CustomLnk>
-						</ComponentsContainer>
+						</CardTextContainer>
 					</ListItem>
 				);
 			})}

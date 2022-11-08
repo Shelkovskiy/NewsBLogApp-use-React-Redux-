@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { device } from "../../../../../constants/size";
 
 interface IListItem {
 	children: React.ReactNode;
@@ -16,6 +17,16 @@ const ListItemLi = styled.li`
 	display: flex;
 	flex-direction: column;
 	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+	@media ${device.desktop} {
+		max-width: 352px;
+	}
+	@media ${device.tablet} {
+		max-width: 328px;
+	}
+	@media ${device.mobile} {
+		max-width: 272px;
+	}
 `;
 
 const ListItem = ({ children }: IListItem) => {

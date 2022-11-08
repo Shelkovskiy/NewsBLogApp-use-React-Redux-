@@ -8,6 +8,8 @@ import {
 	NavWrapItem,
 } from "../../components/common-components/Navigation";
 import NewsPost from "../../components/NewsPost";
+import { MainTitle } from "../../components/MainTitle";
+import { SortContainer } from "../../components/SortContainer";
 
 const SortItem = styled.div`
 	text-align: center;
@@ -37,17 +39,7 @@ export const NewsPage = () => {
 		>
 			<ComponentsContainer maxWidth="100%" margin="0px 0px 64px">
 				<div>
-					<CustomText
-						fontweight="700"
-						fontsize="56"
-						lineheight="80"
-						color="#313037"
-						margin="0px 0px 40px"
-						alignItems="center"
-						width="123px"
-					>
-						News
-					</CustomText>
+					<MainTitle>News</MainTitle>
 				</div>
 				<NavWrap>
 					<CustomLnk textDecoration="none" to="/MainPage">
@@ -61,17 +53,12 @@ export const NewsPage = () => {
 				justifyContent="space-between"
 				alignItems="center"
 			>
-				<ComponentsContainer
-					display="flex"
-					justifyContent="space-between"
-					alignItems="center"
-					width="535px"
-				>
+				<SortContainer>
 					<SortItem>Day</SortItem>
 					<SortItem>Week</SortItem>
 					<SortItem>Monath</SortItem>
 					<SortItem>Year</SortItem>
-				</ComponentsContainer>
+				</SortContainer>
 				<SortItem>SORT</SortItem>
 			</ComponentsContainer>
 			<div>
