@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { device } from "../../../constants/size";
+import { DEVICE } from "../../../constants";
 
 interface ICustomText {
 	fontfamily?: string;
@@ -16,7 +16,6 @@ interface ICustomText {
 	width?: string;
 	cursor?: string;
 	margin?: string;
-	
 }
 
 const Text = styled.p<ICustomText>`
@@ -40,7 +39,7 @@ const Text = styled.p<ICustomText>`
 `;
 
 interface IText extends ICustomText {
-	children?: string;
+	children?: React.ReactNode;
 }
 
 const CustomText = ({

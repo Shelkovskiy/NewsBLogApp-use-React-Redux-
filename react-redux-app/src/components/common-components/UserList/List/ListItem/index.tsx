@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { device } from "../../../../../constants/size";
+import { DEVICE } from "../../../../../constants";
 
 interface IListItem {
 	children: React.ReactNode;
@@ -18,13 +18,13 @@ const ListItemLi = styled.li`
 	flex-direction: column;
 	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
-	@media ${device.desktop} {
+	@media ${DEVICE.desktop} {
 		max-width: 352px;
 	}
-	@media ${device.tablet} {
+	@media ${DEVICE.tablet} {
 		max-width: 328px;
 	}
-	@media ${device.mobile} {
+	@media ${DEVICE.mobile} {
 		max-width: 272px;
 	}
 `;

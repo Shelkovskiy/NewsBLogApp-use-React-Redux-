@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { device } from "../../../constants/size";
+import { DEVICE } from "../../../constants";
 
 interface ICustomComponentsContainer {
 	maxWidth?: string;
@@ -32,14 +32,14 @@ export const ComponentsContainer = styled.div<ICustomComponentsContainer>`
 	box-sizing: border-box;
 	gap: ${(props) => props.gap};
 
-	@media ${device.desktop} {
+	@media ${DEVICE.desktop} {
 		max-width: 1120px;
 	}
 
-	@media ${device.tablet} {
+	@media ${DEVICE.tablet} {
 		max-width: 686px;
 	}
-	@media ${device.mobile} {
+	@media ${DEVICE.mobile} {
 		max-width: 272px;
 	}
 `;

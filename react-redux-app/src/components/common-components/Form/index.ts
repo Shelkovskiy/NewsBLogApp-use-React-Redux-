@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { DEVICE } from "../../../constants";
 
 interface IFormProps {
 	maxwidth?: string;
@@ -10,7 +11,8 @@ interface IFormProps {
 }
 
 export const Form = styled.form<IFormProps>`
-	width: ${(props) => props.width || "auto"};
+	box-sizing: border-box;
+	width: ${(props) => props.width};
 	border-radius: 16px;
 	display: flex;
 	flex-direction: ${(props) => props.flexDirection || "column"};
@@ -19,7 +21,15 @@ export const Form = styled.form<IFormProps>`
 	max-height: ${(props) => props.maxheigth}px;
 	padding: ${(props) => props.padding}px;
 	margin: ${(props) => props.margin};
-	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+	@media ${DEVICE.desktop} {
+		max-width: 648px;
+	}
+
+	@media ${DEVICE.mobile} {
+		box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+		/* padding: 24px; */
+	}
 `;
 
 export const FormLabel = styled.label`

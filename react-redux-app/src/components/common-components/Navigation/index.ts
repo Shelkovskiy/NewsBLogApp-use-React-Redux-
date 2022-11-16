@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { device } from "../../../constants/size";
+import { DEVICE } from "../../../constants";
 
 export const NavWrap = styled.nav`
 	max-width: 305px;
@@ -7,7 +7,7 @@ export const NavWrap = styled.nav`
 	justify-content: space-evenly;
 	border-bottom: 1px solid rgba(49, 48, 55, 0.1);
 
-	@media ${device.mobile} {
+	@media ${DEVICE.mobile} {
 		max-width: 272px;
 	}
 `;
@@ -30,14 +30,14 @@ export const NavWrapItem = styled.nav`
 		color: #6c1bdb;
 	}
 
-	@media ${device.desktop} {
+	@media ${DEVICE.desktop} {
 		max-width: 141px;
 	}
-	@media ${device.tablet} {
+	@media ${DEVICE.tablet} {
 		max-width: 141px;
 	}
 
-	@media ${device.mobile} {
+	@media ${DEVICE.mobile} {
 		max-width: 124px;
 		font-size: 16px;
 		margin: start;

@@ -2,11 +2,9 @@ import React from "react";
 import ListItem from "./ListItem/index";
 import styled from "styled-components";
 import CustomText from "../../Text";
-import { Image } from "../../Image/index";
-import ComponentsContainer from "../../Container/index";
 import { CustomLnk } from "../../CustomLink/index";
 import { IAsyncBlogsResponseData } from "../../../../redux/Types/responseType";
-import { device } from "../../../../constants/size";
+import { DEVICE } from "../../../../constants";
 
 interface IListProps {
 	items: IAsyncBlogsResponseData[];
@@ -46,6 +44,25 @@ export const CardImageContainer = styled.div`
 			opacity: 0;
 		}
 	}
+
+	@media ${DEVICE.desktop} {
+		width: 352px;
+	}
+
+	@media ${DEVICE.tablet} {
+		max-width: 328px;
+	}
+
+	@media ${DEVICE.mobile} {
+		max-width: 272px;
+	}
+`;
+
+const CardImage = styled.img`
+	width: 100%;
+	height: 208px;
+	object-fit: cover;
+	z-index: 1;
 `;
 
 interface ICardTextContainer {
@@ -76,16 +93,16 @@ export const CardTextContainer = styled.div<ICardTextContainer>`
 	align-items: ${(props) => props.alignItems || "center"};
 	box-sizing: border-box;
 
-	@media ${device.desktop} {
+	@media ${DEVICE.desktop} {
 		max-width: 287px;
 		padding: 32px;
 	}
 
-	@media ${device.tablet} {
+	@media ${DEVICE.tablet} {
 		max-width: 261px;
 		padding: 33px;
 	}
-	@media ${device.mobile} {
+	@media ${DEVICE.mobile} {
 		max-width: 224px;
 		padding: 24px;
 	}
@@ -98,7 +115,7 @@ const List = ({ items }: IListProps) => {
 				return (
 					<ListItem key={item.id}>
 						<CardImageContainer>
-							<Image src={item.imageUrl} alt="" />
+							<CardImage src={item.imageUrl} alt="" />
 						</CardImageContainer>
 						<CardTextContainer margin="auto">
 							<CustomText

@@ -4,8 +4,8 @@ import Button from "../../Button";
 import { faCopyright, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomText from "../../Text/index";
-import { device } from "../../../../constants/size";
 import ComponentsContainer from "../../Container";
+import { DEVICE } from "../../../../constants";
 
 interface IFooter {
 	background?: string;
@@ -15,7 +15,7 @@ interface IFooter {
 }
 
 const FooterBlock = styled.footer<IFooter>`
-	box-sizing:border-box;
+	box-sizing: border-box;
 	max-width: ${(props) => props.maxWidth};
 	border-top: 2px solid rgba(49, 48, 55, 0.1);
 	display: flex;
@@ -27,22 +27,22 @@ const FooterBlock = styled.footer<IFooter>`
 	justify-content: space-between;
 	align-items: center;
 	left: 270px;
-	width:100%;
+	width: 100%;
 
-	@media ${device.desktop} {
+	@media ${DEVICE.desktop} {
 		padding: 34px;
-		max-width:1120px
+		max-width: 1120px;
 	}
 
-	@media ${device.tablet} {
+	@media ${DEVICE.tablet} {
 		padding: 34px;
-		max-width:688px;
+		max-width: 688px;
 	}
 
-	@media ${device.mobile} {
+	@media ${DEVICE.mobile} {
 		padding: 32px 0px;
 		flex-direction: column;
-		max-width:272px;
+		max-width: 272px;
 	}
 `;
 
