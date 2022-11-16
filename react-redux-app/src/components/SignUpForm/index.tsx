@@ -73,7 +73,7 @@ const SignUp = () => {
 						{!isLoading ? (
 							<>
 								<Form maxwidth="624" maxheigth="550" margin="auto" padding="40">
-									<ComponentsContainer margin="0 0 10px">
+									<ComponentsContainer margin="0 auto 10px">
 										<FormLabel htmlFor="name">
 											Username
 											<Input

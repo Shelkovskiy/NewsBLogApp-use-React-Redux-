@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { device } from "../../constants/size";
+import { DEVICE } from "../../constants";
 
 export const MainTitle = styled.p`
 	font-weight: 700;
@@ -8,8 +8,10 @@ export const MainTitle = styled.p`
 	color: #313037;
 	align-items: center;
 	width: 100%;
+	margin-block-start: 0px;
+	margin-block-end: 0px;
 
-	@media ${device.mobile} {
+	@media ${DEVICE.mobile} {
 		font-size: 32px;
 		line-height: 48px;
 	}

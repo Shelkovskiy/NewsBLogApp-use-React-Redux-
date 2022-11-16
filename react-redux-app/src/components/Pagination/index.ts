@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { device } from "../../constants/size";
+import { DEVICE } from "../../constants";
 
 interface IPageProps {
 	isSelected: boolean;
@@ -19,16 +19,16 @@ export const Page = styled.span<IPageProps>`
 	text-align: center;
 	color: ${(props) => (props.isSelected ? "black" : "rgba(49, 48, 55, 1)")};
 
-	@media ${device.desktop} {
+	@media ${DEVICE.desktop} {
 		font-size: 16px;
 		max-width: 40px;
 	}
-	@media ${device.tablet} {
+	@media ${DEVICE.tablet} {
 		max-width: 25px;
 		font-size: 14px;
 		border: none;
 	}
-	@media ${device.mobile} {
+	@media ${DEVICE.mobile} {
 		max-width: 20px;
 		font-size: 14px;
 		border: none;
@@ -41,13 +41,13 @@ export const PaginationContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 
-	@media ${device.desktop} {
+	@media ${DEVICE.desktop} {
 		max-width: 600px;
 	}
-	@media ${device.tablet} {
+	@media ${DEVICE.tablet} {
 		max-width: 350px;
 	}
-	@media ${device.mobile} {
+	@media ${DEVICE.mobile} {
 		max-width: 150px;
 	}
 `;
