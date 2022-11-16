@@ -1,4 +1,8 @@
-import { GET_ASYNC_TOTAL_COUNT_NEWS_FAILURE } from "./../index";
+import {
+	GET_ASYNC_TOTAL_COUNT_NEWS_FAILURE,
+	GET_BLOG_SORT_SUCCESS,
+	SET_NEWS_SORT,
+} from "./../index";
 import { Dispatch, ActionCreator } from "redux";
 import {
 	getAsyncNewsFromApi,
@@ -62,13 +66,30 @@ export const getAsyncCountFailure = (error: string) => {
 	};
 };
 
-export const getAsyncNews = (currentPage: number | string) => {
+export const setNewsSort: ActionCreator<TNewsActionTypes> = (sort: string) => {
+	return {
+		type: SET_NEWS_SORT,
+		payload: sort,
+	};
+};
+
+export const getAsyncNewsSortSuccess: ActionCreator<TNewsActionTypes> = (
+	sort: string,
+) => {
+	return {
+		type: GET_BLOG_SORT_SUCCESS,
+		payload: sort,
+	};
+};
+
+export const getAsyncNews = (currentPage: number | string, sort?: string) => {
 	return (dispatch: Dispatch<TNewsActionTypes>) => {
-		dispatch(setCurrentNewsPage(currentPage));
 		dispatch(getAsyncNewsStart());
-		getAsyncNewsFromApi({ currentPage })
+		dispatch(setCurrentNewsPage(currentPage));
+		dispatch(setNewsSort(sort));
+		getAsyncNewsFromApi({ currentPage, sort })
 			.then((res) => {
-				dispatch(getAsyncNewsSuccess(res.data));
+				dispatch(getAsyncNewsSortSuccess(res.data));
 			})
 			.catch((error) => {
 				dispatch(getAsyncNewsFailure(error?.message));

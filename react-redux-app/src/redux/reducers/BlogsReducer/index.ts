@@ -1,4 +1,8 @@
-import { SET_BLOG_FILTER } from "./../../action/index";
+import {
+	GET_BLOG_SORT_SUCCESS,
+	SET_BLOG_FILTER,
+	SET_SORT,
+} from "./../../action/index";
 import { GET_ASYNC_TOTAL_COUNT_FAILURE } from "../../action/index";
 import { IAsyncBlogsResponseData } from "../../Types/responseType";
 import {
@@ -16,9 +20,10 @@ export type IInitialState = {
 	blogs: IAsyncBlogsResponseData[];
 	isLoading: boolean;
 	error: null | string;
-	currentPage: number |string;
+	currentPage: number | string;
 	totalCount: number;
 	filter: string;
+	sort: string;
 };
 
 const initialState: IInitialState = {
@@ -28,6 +33,7 @@ const initialState: IInitialState = {
 	currentPage: 1,
 	totalCount: 0,
 	filter: "",
+	sort: "id",
 };
 
 export const blogReducer = (state = initialState, { type, payload }: any) => {
@@ -49,6 +55,11 @@ export const blogReducer = (state = initialState, { type, payload }: any) => {
 				...state,
 				error: payload,
 				isLoading: false,
+			};
+		case SET_SORT:
+			return {
+				...state,
+				sort: payload,
 			};
 		case SET_CURRENT_PAGE:
 			return {
@@ -89,6 +100,14 @@ export const blogReducer = (state = initialState, { type, payload }: any) => {
 				...state,
 				filter: payload,
 			};
+		case GET_BLOG_SORT_SUCCESS: {
+			return {
+				...state,
+				blogs: [...payload],
+				isLoading: false,
+				error: null,
+			};
+		}
 		default:
 			return state;
 	}

@@ -1,4 +1,8 @@
-import { GET_ASYNC_TOTAL_COUNT_NEWS_FAILURE } from "./../../action/index";
+import {
+	GET_ASYNC_TOTAL_COUNT_NEWS_FAILURE,
+	GET_NEWS_SORT_SUCCESS,
+	SET_NEWS_SORT,
+} from "./../../action/index";
 import {
 	GET_ASYNC_NEWS_START,
 	GET_ASYNC_NEWS_SUCCESS,
@@ -16,7 +20,9 @@ export type TNewsActionTypes =
 	| IGetAsyncBlogsFailureAction
 	| ISetCurrentNewsPageAction
 	| IGetAsyncTotalCountNews
-	| IGetAsyncNewsCountFailureAction;
+	| IGetAsyncNewsCountFailureAction
+	| ISetBlogSort
+	| IGetBlogWithSort;
 
 interface IGetAsyncBlogsStartAction {
 	type: typeof GET_ASYNC_NEWS_START;
@@ -46,4 +52,14 @@ export interface ISetCurrentNewsPageAction {
 interface IGetAsyncTotalCountNews {
 	type: typeof GET_ASYNC_TOTAL_COUNT_NEWS;
 	payload: number;
+}
+
+interface ISetBlogSort {
+	type: typeof SET_NEWS_SORT;
+	payload: string;
+}
+
+interface IGetBlogWithSort {
+	type: typeof GET_NEWS_SORT_SUCCESS;
+	payload: string;
 }
