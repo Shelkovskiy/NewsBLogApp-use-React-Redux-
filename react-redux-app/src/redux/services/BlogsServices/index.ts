@@ -23,12 +23,6 @@ export const getAsyncBlogsCount = () => {
 	return axiosContent.get<number>(`/v3/articles/count`);
 };
 
-export const blogsSearch = ({ filter = "" }: { filter?: string }) => {
-	return axiosContent.get<IAsyncBlogsResponseData[]>(
-		`/v3/articles?title_contains=${filter}`,
-	);
-};
-
 export const getSignglePosts = async (id: string) => {
 	return axiosContent.get<ISinglePage>(`/v3/articles/${id}`);
 };

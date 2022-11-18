@@ -2,8 +2,6 @@ import { GET_BLOG_SORT_SUCCESS, SET_BLOG_FILTER, SET_SORT } from "./../index";
 import {
 	getAsyncBlogsFromApi,
 	getAsyncBlogsCount,
-	blogsSearch,
-	// blogSort,
 } from "../../services/BlogsServices";
 import { Dispatch, ActionCreator } from "redux";
 import {
@@ -156,17 +154,3 @@ export const getTotalAsyncCount = () => {
 			});
 	};
 };
-
-// export const getAsyncBlogsSearch = (filter: string) => {
-// 	return (dispatch: Dispatch<TBlogsActionTypes>) => {
-// 		dispatch(setBlogsFilter(filter));
-// 		dispatch(getAsyncBlogsSearchStart());
-// 		blogsSearch({ filter })
-// 			.then((res) => {
-// 				dispatch(getAsyncBlogsSearchSuccess(res.data));
-// 			})
-// 			.catch((error) => {
-// 				dispatch(getAsyncBlogsSearchFailure(error?.message));
-// 			});
-// 	};
-// };
