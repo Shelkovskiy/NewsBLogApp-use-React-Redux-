@@ -28,34 +28,12 @@ import {
 	OPTION,
 	PAGE_SIZE,
 	SIBLING_COUNT,
-	SortItemArr,
+	SORT_ITEM_ARR,
 	SORT_OPTION,
 } from "../../constants";
-import { SortContainer, SortWrapper } from "../SortContainer";
-import styled from "styled-components";
+import { SortContainer, SortItem, SortWrapper } from "../SortContainer";
 import Select from "../Select";
-import Headers from "../common-components/Layout/Headers";
-import { Form } from "../common-components/Form";
 import SearchForm from "../SearchForm";
-
-const SortItem = styled.div`
-	text-align: center;
-	list-style-type: none;
-	font-family: "Inter";
-	font-style: normal;
-	font-weight: 500;
-	font-size: 16px;
-	line-height: 24px;
-	background: rgba(49, 48, 55, 0.1);
-	border-radius: 4px;
-	padding: 16px 40px;
-	gap: 4px;
-	color: #313037;
-	:hover {
-		background: rgba(108, 27, 219, 1);
-		color: #ffffff;
-	}
-`;
 
 const BlogPosts = () => {
 	const blogs = useAppSelector(blogSelectors);
@@ -105,7 +83,7 @@ const BlogPosts = () => {
 						{size.width < 321 && <SearchForm />}
 						{size.width > 768 ? (
 							<SortContainer>
-								{SortItemArr.map((item) => {
+								{SORT_ITEM_ARR.map((item) => {
 									return <SortItem key={item}>{item}</SortItem>;
 								})}
 							</SortContainer>

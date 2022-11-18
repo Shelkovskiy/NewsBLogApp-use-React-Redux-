@@ -31,6 +31,7 @@ const SearchForm = () => {
 			})),
 		[],
 	);
+
 	return (
 		<Form
 			width="100%"

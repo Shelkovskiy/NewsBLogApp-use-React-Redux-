@@ -2,45 +2,43 @@ import React from "react";
 import styled from "styled-components";
 
 export const StyledBurger = styled.button`
-	align-items: center;
-	position: absolute;
-	left: 80%;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
-	width: 2rem;
-	height: 2rem;
+	width: 70px;
+	height: 20px;
 	background: transparent;
-	border: none;
-	cursor: pointer;
+	box-shadow: none;
 	padding: 0;
-	z-index: 10;
-
-	&:focus {
-		outline: none;
+	border-style: solid;
+	border-color: gray transparent;
+	border-width: 2px 0;
+	position: relative;
+	transition: all 0.2s ease-in-out;
+	&::after,
+	&::before {
+		content: "";
+		display: block;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 50%;
+		margin-top: -1px;
+		height: 2px;
+		background: gray;
+		transition: all 0.2s ease-in-out;
 	}
-
-	span {
-		width: 2rem;
-		height: 0.25rem;
-		background: black;
-		border-radius: 10px;
-		transition: all 0.3s linear;
-		position: relative;
-		transform-origin: 1px;
+	&.active,
+	&:hover {
+		border-color: transparent;
+		&::after {
+			transform: rotate(-45deg);
+		}
+		&::before {
+			transform: rotate(45deg);
+		}
 	}
 `;
 
-interface IBurgerProps {}
-
 const Burger = () => {
-	return (
-		<StyledBurger>
-			<span></span>
-			<span></span>
-			<span></span>
-		</StyledBurger>
-	);
+	return <StyledBurger></StyledBurger>;
 };
 
 export default Burger;
