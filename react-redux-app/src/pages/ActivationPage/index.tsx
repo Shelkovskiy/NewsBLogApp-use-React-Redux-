@@ -35,7 +35,7 @@ const ActivationPage = () => {
 
 	return (
 		<ComponentsContainer width="100%">
-			<CustomText width="500px" fontsize="36" margin="30px auto 60px">
+			<CustomText width="500px" fontsize="36" margin="60px auto 60px">
 				Activation Page
 			</CustomText>
 

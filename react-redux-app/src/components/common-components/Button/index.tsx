@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { DEVICE } from "../../../constants";
 
 interface IButtonProps extends IButtonVisualProps {
 	children: React.ReactNode;
@@ -40,6 +41,14 @@ export const Btn = styled.button<IButtonVisualProps>`
 	border: ${(props) => props.border || "none"};
 	border-radius: ${(props) => props.borderRadius || "4"}px;
 	cursor: pointer;
+
+	@media ${DEVICE.mobile} {
+		font-size: 12px;
+	}
+
+	@media ${DEVICE.tablet} {
+		font-size: 14px;
+	}
 `;
 
 const Button = ({

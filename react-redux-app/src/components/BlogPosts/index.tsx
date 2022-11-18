@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import List from "../common-components/UserList/List";
 import Loader from "../common-components/Loader/Loader";
-import { useAppSelector } from "../../redux/hooks/index";
+import useWindowSize, { useAppSelector } from "../../redux/hooks/index";
 import {
 	getAsyncBlogs,
 	getTotalAsyncCount,
@@ -13,16 +13,27 @@ import {
 	errorSelector,
 	currentPageSelector,
 	totalCountSelector,
+	sortBlogSelector,
+	filterBlogSelector,
 } from "../../redux/selectors/blogsSelector/index";
 import Button from "../common-components/Button";
-import { Page } from "../Pagination";
+import { Page, PaginationContainer } from "../Pagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { AppDispatch } from "../../redux/hooks/index";
 import { useDispatch } from "react-redux";
 import { usePagination } from "../Pagination/createPagesFUnc";
 import WarningText from "../common-components/warningText";
-import { PAGE_SIZE, SIBLING_COUNT } from "../../constants";
+import {
+	OPTION,
+	PAGE_SIZE,
+	SIBLING_COUNT,
+	SORT_ITEM_ARR,
+	SORT_OPTION,
+} from "../../constants";
+import { SortContainer, SortItem, SortWrapper } from "../SortContainer";
+import Select from "../Select";
+import SearchForm from "../SearchForm";
 
 const BlogPosts = () => {
 	const blogs = useAppSelector(blogSelectors);
@@ -30,6 +41,9 @@ const BlogPosts = () => {
 	const errorMessage = useAppSelector(errorSelector);
 	const currentPage: number = useAppSelector(currentPageSelector);
 	const totalCount = useAppSelector(totalCountSelector);
+	const sort = useAppSelector(sortBlogSelector);
+	const filter = useAppSelector(filterBlogSelector);
+	const size = useWindowSize();
 
 	const pagination = usePagination({
 		currentPage,
@@ -42,12 +56,22 @@ const BlogPosts = () => {
 
 	useEffect(() => {
 		dispatch(getTotalAsyncCount());
-		dispatch(getAsyncBlogs(currentPage));
-	}, [currentPage, dispatch]);
+		dispatch(getAsyncBlogs(currentPage, filter, sort));
+	}, []);
 
-	const onPageChange = (currentPage: number) => {
-		dispatch(getAsyncBlogs(currentPage));
-	};
+	const onPageChange = useCallback(
+		async (currentPage: number) => {
+			dispatch(getAsyncBlogs(currentPage, filter, sort));
+		},
+		[currentPage, dispatch, sort],
+	);
+
+	const onSortItemChange = useCallback(
+		async (e: React.ChangeEvent<HTMLSelectElement>) => {
+			dispatch(getAsyncBlogs(currentPage, filter, e.target.value));
+		},
+		[dispatch, currentPage],
+	);
 
 	return (
 		<>
@@ -55,13 +79,26 @@ const BlogPosts = () => {
 				<Loader />
 			) : (
 				<>
+					<SortWrapper>
+						{size.width < 321 && <SearchForm />}
+						{size.width > 768 ? (
+							<SortContainer>
+								{SORT_ITEM_ARR.map((item) => {
+									return <SortItem key={item}>{item}</SortItem>;
+								})}
+							</SortContainer>
+						) : (
+							<Select option={SORT_OPTION} />
+						)}
+						<Select option={OPTION} value={sort} onChange={onSortItemChange} />
+					</SortWrapper>
 					{errorMessage && <WarningText>{errorMessage}</WarningText>}
+
 					<List items={blogs} />
 					<ComponentsContainer
-						width="100%"
 						display="flex"
-						justifyContent="space-between"
-						alignItems="center"
+						justifyContent="center"
+						gap="10px"
 					>
 						<Button
 							disabled={currentPage <= 1}
@@ -75,11 +112,7 @@ const BlogPosts = () => {
 						>
 							<FontAwesomeIcon icon={faArrowLeft} /> Prev
 						</Button>
-						<ComponentsContainer
-							width="600px"
-							display="flex"
-							justifyContent="space-between"
-						>
+						<PaginationContainer>
 							{pagination!.map((page) => {
 								return (
 									<Page
@@ -91,7 +124,7 @@ const BlogPosts = () => {
 									</Page>
 								);
 							})}
-						</ComponentsContainer>
+						</PaginationContainer>
 						<Button
 							disabled={currentPage >= totalCount}
 							onClick={() => onPageChange(currentPage + 1)}

@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { ISinglePage } from "../../redux/Types/responseType";
+import { MainTitle } from "../../components/MainTitle";
 
 const SelectedPage = () => {
 	const [singlePosts, setSiglePosts] = useState<ISinglePage>();
@@ -57,18 +58,7 @@ const SelectedPage = () => {
 				/{id}
 			</ComponentsContainer>
 			<ComponentsContainer margin="0px 0px 48px">
-				<CustomText
-					fontsize="56"
-					fontweight="700"
-					width="100%"
-					textAlignt="start"
-					lineheight="80"
-					alignItems="center"
-					color="#313037"
-					cursor="default"
-				>
-					{singlePosts?.title}
-				</CustomText>
+				<MainTitle>{singlePosts?.title}</MainTitle>
 			</ComponentsContainer>
 			<div>
 				<Image

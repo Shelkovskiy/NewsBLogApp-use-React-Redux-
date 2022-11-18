@@ -1,8 +1,7 @@
-import { SET_BLOG_FILTER } from "./../index";
+import { GET_BLOG_SORT_SUCCESS, SET_BLOG_FILTER, SET_SORT } from "./../index";
 import {
 	getAsyncBlogsFromApi,
 	getAsyncBlogsCount,
-	blogsSearch,
 } from "../../services/BlogsServices";
 import { Dispatch, ActionCreator } from "redux";
 import {
@@ -105,13 +104,38 @@ export const getAsyncCountFailure = (error: string) => {
 	};
 };
 
-export const getAsyncBlogs = (currentPage: number | string) => {
+// sort
+export const setBlogsSort: ActionCreator<TBlogsActionTypes> = (
+	sort: string,
+) => {
+	return {
+		type: SET_SORT,
+		payload: sort,
+	};
+};
+
+export const getAsyncBlogsSortSuccess: ActionCreator<TBlogsActionTypes> = (
+	sort: string,
+) => {
+	return {
+		type: GET_BLOG_SORT_SUCCESS,
+		payload: sort,
+	};
+};
+
+export const getAsyncBlogs = (
+	currentPage: number | string,
+	filter: string,
+	sort?: string,
+) => {
 	return (dispatch: Dispatch<TBlogsActionTypes>) => {
 		dispatch(getAsyncBlogsStart());
 		dispatch(setCurrentPage(currentPage));
-		getAsyncBlogsFromApi({ currentPage })
+		dispatch(setBlogsFilter(filter));
+		dispatch(setBlogsSort(sort));
+		getAsyncBlogsFromApi({ currentPage, sort, filter })
 			.then((res) => {
-				dispatch(getAsyncBlogsSuccess(res.data));
+				dispatch(getAsyncBlogsSortSuccess(res.data));
 			})
 			.catch((error) => {
 				dispatch(getAsyncBlogsFailure(error?.message));
@@ -127,20 +151,6 @@ export const getTotalAsyncCount = () => {
 			})
 			.catch((error) => {
 				dispatch(getAsyncCountFailure(error?.message));
-			});
-	};
-};
-
-export const getAsyncBlogsSearch = (filter: string) => {
-	return (dispatch: Dispatch<TBlogsActionTypes>) => {
-		dispatch(setBlogsFilter(filter));
-		dispatch(getAsyncBlogsSearchStart());
-		blogsSearch({ filter })
-			.then((res) => {
-				dispatch(getAsyncBlogsSearchSuccess(res.data));
-			})
-			.catch((error) => {
-				dispatch(getAsyncBlogsSearchFailure(error?.message));
 			});
 	};
 };

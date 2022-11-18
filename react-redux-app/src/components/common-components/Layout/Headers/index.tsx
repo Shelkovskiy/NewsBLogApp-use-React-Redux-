@@ -1,21 +1,17 @@
-import React, { useCallback, useState, useMemo } from "react";
+import React from "react";
 import styled from "styled-components";
-import Input from "../../Input";
-import Button from "../../Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import CustomText from "../../Text/index";
 import { CustomLnk } from "../../CustomLink/index";
-import { Form } from "../../Form/index";
 import Image from "./img/logo.png";
-import { AppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { useDispatch } from "react-redux";
-import { getAsyncBlogsSearch } from "../../../../redux/action/blogsActionCreators/index";
+import useWindowSize, { useAppSelector } from "../../../../redux/hooks";
 import {
 	dataSelectors,
 	isAuthSelector,
 } from "../../../../redux/selectors/authSelectrors";
-import ComponentsContainer from "../../Container";
+import { DEVICE } from "../../../../constants";
+import SearchForm from "../../../SearchForm";
+import { Logo } from "../../../Logo";
+import Burger from "../../../Burger";
 
 interface IHeader {
 	background?: string;
@@ -24,83 +20,69 @@ interface IHeader {
 }
 
 const HeaderBlock = styled.header<IHeader>`
+	gap: 10px;
+	box-sizing: border-box;
 	background: ${(props) => props.background || "none"};
 	margin: ${(props) => props.margin || "start"};
-	padding: ${(props) => props.padding || "0"}px;
+	padding: ${(props) => props.padding || "0px"};
 	display: flex;
 	flex-direction: row;
-	justify-content: space-evenly;
+	justify-content: space-between;
 	align-items: center;
 	top: 0px;
 	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+	@media ${DEVICE.desktop} {
+		padding: 20px 32px;
+	}
+	@media ${DEVICE.tablet} {
+		padding: 20px 32px;
+	}
+	@media ${DEVICE.mobile} {
+		padding: 18px 24px;
+	}
 `;
 
-const initialSearchValue = {
-	searchText: "",
-};
+const SearchContainer = styled.div`
+	width: 100%;
+	@media ${DEVICE.desktop} {
+		max-width: 1300px;
+	}
+`;
 
 const Header = () => {
-	const [searchForm, setSearchForm] = useState(initialSearchValue);
-	const dispatch: AppDispatch = useDispatch();
 	const { username } = useAppSelector(dataSelectors);
 	const isAuth = useAppSelector(isAuthSelector);
-
-	const onBtnSearch = useCallback(async () => {
-		dispatch(getAsyncBlogsSearch(searchForm.searchText));
-	}, [dispatch, searchForm.searchText]);
-
-	const handleSearchChange = useCallback(
-		(e: React.ChangeEvent<HTMLInputElement>) =>
-			setSearchForm((prevState) => ({
-				...prevState,
-				[e.target.id]: e.target.value,
-			})),
-		[],
-	);
+	const size = useWindowSize();
 
 	return (
 		<>
-			<HeaderBlock padding="20">
+			<HeaderBlock>
 				<CustomLnk to="/mainpage">
 					<div>
-						<img src={Image} alt="logo" />
+						<Logo src={Image} alt="logo" />
 					</div>
 				</CustomLnk>
-				<Form
-					width="1300px"
-					maxwidth="1300"
-					maxheigth="100"
-					padding="0"
-					margin="auto"
-					flexDirection="row"
-				>
-					<Input
-						fieldName="searchText"
-						border="none"
-						margin="auto"
-						width="100%"
-						value={searchForm.searchText}
-						onChange={handleSearchChange}
-						height="56px"
-						type="text"
-					/>
-					<ComponentsContainer width="20px" alignItems="center" display="flex">
-						<CustomLnk to="/searchpage" textDecoration="none">
-							<Button
-								width="100%"
-								type="submit"
-								onClick={onBtnSearch}
-								background="none"
-								border="none"
-							>
-								<FontAwesomeIcon icon={faMagnifyingGlass} />
-							</Button>
-						</CustomLnk>
-					</ComponentsContainer>
-				</Form>
-				{!isAuth ? (
-					<CustomLnk to="/signinpage" textDecoration="none">
-						<div>
+				<SearchContainer>{size.width > 320 && <SearchForm />}</SearchContainer>
+				{size.width < 321 ? (
+					<Burger />
+				) : (
+					<>
+						{!isAuth ? (
+							<CustomLnk to="/signinpage" textDecoration="none">
+								<div>
+									<CustomText
+										fontfamily="Inter"
+										color="rgba(49, 48, 55, 1)"
+										fontweight="700"
+										lineheight="34"
+										fontsize="16"
+									>
+										Login
+									</CustomText>
+								</div>
+							</CustomLnk>
+						) : (
 							<CustomText
 								fontfamily="Inter"
 								color="rgba(49, 48, 55, 1)"
@@ -108,12 +90,10 @@ const Header = () => {
 								lineheight="34"
 								fontsize="16"
 							>
-								Login
+								{username}
 							</CustomText>
-						</div>
-					</CustomLnk>
-				) : (
-					<CustomText>{username}</CustomText>
+						)}
+					</>
 				)}
 			</HeaderBlock>
 		</>

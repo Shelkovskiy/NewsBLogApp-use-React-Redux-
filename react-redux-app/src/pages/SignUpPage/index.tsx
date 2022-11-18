@@ -3,12 +3,15 @@ import CustomText from "../../components/common-components/Text";
 import SignUp from "../../components/SignUpForm";
 import ComponentsContainer from "../../components/common-components/Container";
 import { CustomLnk } from "../../components/common-components/CustomLink/index";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { MainTitle } from "../../components/MainTitle";
 
 const SignUpPage = () => {
 	return (
-		<ComponentsContainer margin="30px 0px 0px">
-			<ComponentsContainer maxWidth="1120px" margin="0 auto 20px">
-				<ComponentsContainer maxWidth="212px" margin="20px 0 0">
+		<ComponentsContainer margin="30px auto 0px">
+			<ComponentsContainer maxWidth="1120px" margin="60px auto 0">
+				<ComponentsContainer width="212px" margin="20px 0 0">
 					<CustomLnk to="/mainpage" textDecoration="none">
 						<CustomText
 							fontfamily="Inter"
@@ -18,19 +21,11 @@ const SignUpPage = () => {
 							lineheight="24"
 							cursor="pointer"
 						>
-							← Back to home
+							<FontAwesomeIcon icon={faArrowLeft} size="xs" /> Back to Login
+							Page
 						</CustomText>
 					</CustomLnk>
-					<CustomText
-						fontfamily="Inter"
-						fontsize="56"
-						fontweight="700"
-						alignItems="center"
-						color="#313037"
-						lineheight="80"
-					>
-						Sign Up
-					</CustomText>
+					<MainTitle>Sign Up</MainTitle>
 				</ComponentsContainer>
 				<SignUp />
 			</ComponentsContainer>

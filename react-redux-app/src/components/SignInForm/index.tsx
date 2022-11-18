@@ -56,7 +56,7 @@ const SignIN = () => {
 			{errorMessage && <WarningText>{errorMessage}</WarningText>}
 			{!isAuthLoading ? (
 				<>
-					<Form maxwidth="624" maxheigth="472" margin="auto" padding="40">
+					<Form maxheigth="472" margin="auto" padding="40">
 						<ComponentsContainer margin="0 0 48px">
 							<FormLabel htmlFor="email">
 								Email

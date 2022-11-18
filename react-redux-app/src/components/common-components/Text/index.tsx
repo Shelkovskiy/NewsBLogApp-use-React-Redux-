@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { DEVICE } from "../../../constants";
 
 interface ICustomText {
 	fontfamily?: string;
@@ -38,7 +39,7 @@ const Text = styled.p<ICustomText>`
 `;
 
 interface IText extends ICustomText {
-	children?: string;
+	children?: React.ReactNode;
 }
 
 const CustomText = ({

@@ -1,4 +1,8 @@
-import { GET_ASYNC_TOTAL_COUNT_NEWS_FAILURE } from "./../../action/index";
+import {
+	GET_ASYNC_TOTAL_COUNT_NEWS_FAILURE,
+	GET_NEWS_SORT_SUCCESS,
+	SET_NEWS_SORT,
+} from "./../../action/index";
 import { IAsyncBlogsResponseData } from "../../Types/responseType";
 import {
 	GET_ASYNC_NEWS_START,
@@ -14,6 +18,8 @@ export type IInitialState = {
 	error: null | string;
 	currentPage: number;
 	totalCount: number;
+	filter: string;
+	sort: string;
 };
 
 const initialState: IInitialState = {
@@ -22,6 +28,8 @@ const initialState: IInitialState = {
 	error: null,
 	currentPage: 1,
 	totalCount: 0,
+	filter: "",
+	sort: "id",
 };
 
 export const newsReducer = (state = initialState, { type, payload }: any) => {
@@ -60,6 +68,19 @@ export const newsReducer = (state = initialState, { type, payload }: any) => {
 				error: payload,
 				isLoading: false,
 			};
+		case SET_NEWS_SORT:
+			return {
+				...state,
+				sort: payload,
+			};
+		case GET_NEWS_SORT_SUCCESS: {
+			return {
+				...state,
+				news: [...payload],
+				isLoading: false,
+				error: null,
+			};
+		}
 		default:
 			return state;
 	}

@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import Loader from "../common-components/Loader/Loader";
 import List from "../common-components/UserList/List";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../redux/hooks/index";
+import useWindowSize, { useAppSelector } from "../../redux/hooks/index";
 import {
 	newsSelectors,
 	isLoadingNewsSelector,
 	errorNewsSelector,
 	currentPageSelector,
 	totalCountSelector,
+	sortNewsSelector,
 } from "../../redux/selectors/newsSelector";
 import {
 	getAsyncNews,
@@ -17,12 +18,20 @@ import {
 import WarningText from "../common-components/warningText";
 import ComponentsContainer from "../common-components/Container";
 import Button from "../common-components/Button";
-import { Page } from "../Pagination";
+import { Page, PaginationContainer } from "../Pagination";
 import { AppDispatch } from "../../redux/hooks/index";
 import { usePagination } from "../Pagination/createPagesFUnc";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { PAGE_SIZE, SIBLING_COUNT } from "../../constants";
+import {
+	OPTION,
+	PAGE_SIZE,
+	SIBLING_COUNT,
+	SORT_ITEM_ARR,
+	SORT_OPTION,
+} from "../../constants";
+import { SortContainer, SortWrapper, SortItem } from "../SortContainer";
+import Select from "../Select";
 
 const NewsPosts = () => {
 	const dispatch: AppDispatch = useDispatch();
@@ -30,12 +39,9 @@ const NewsPosts = () => {
 	const isLoading = useAppSelector(isLoadingNewsSelector);
 	const errorMessage = useAppSelector(errorNewsSelector);
 	const currentPage: number = useAppSelector(currentPageSelector);
-
 	const totalCount = useAppSelector(totalCountSelector);
-
-	const onPageChange = (currentPage: number) => {
-		dispatch(getAsyncNews(currentPage));
-	};
+	const sort = useAppSelector(sortNewsSelector);
+	const size = useWindowSize();
 
 	const pagination = usePagination({
 		currentPage,
@@ -46,8 +52,22 @@ const NewsPosts = () => {
 
 	useEffect(() => {
 		dispatch(getTotalAsyncNewsCount());
-		dispatch(getAsyncNews(currentPage));
-	}, [dispatch, currentPage]);
+		dispatch(getAsyncNews(currentPage, sort));
+	}, []);
+
+	const onPageChange = useCallback(
+		async (currentPage: number) => {
+			dispatch(getAsyncNews(currentPage, sort));
+		},
+		[currentPage, dispatch, sort],
+	);
+
+	const onSortItemChange = useCallback(
+		async (e: React.ChangeEvent<HTMLSelectElement>) => {
+			dispatch(getAsyncNews(currentPage, e.target.value));
+		},
+		[dispatch, currentPage],
+	);
 
 	return (
 		<>
@@ -55,6 +75,18 @@ const NewsPosts = () => {
 				<Loader />
 			) : (
 				<>
+					<SortWrapper>
+						{size.width > 768 ? (
+							<SortContainer>
+								{SORT_ITEM_ARR.map((item) => {
+									return <SortItem key={item}>{item}</SortItem>;
+								})}
+							</SortContainer>
+						) : (
+							<Select option={SORT_OPTION} />
+						)}
+						<Select option={OPTION} value={sort} onChange={onSortItemChange} />
+					</SortWrapper>
 					{errorMessage && <WarningText>{errorMessage}</WarningText>}
 					<List items={news} />
 					<ComponentsContainer
@@ -75,11 +107,7 @@ const NewsPosts = () => {
 						>
 							<FontAwesomeIcon icon={faArrowLeft} /> Prev
 						</Button>
-						<ComponentsContainer
-							width="600px"
-							display="flex"
-							justifyContent="space-between"
-						>
+						<PaginationContainer>
 							{pagination!.map((page) => {
 								return (
 									<Page
@@ -91,7 +119,7 @@ const NewsPosts = () => {
 									</Page>
 								);
 							})}
-						</ComponentsContainer>
+						</PaginationContainer>
 						<Button
 							disabled={currentPage >= totalCount}
 							onClick={() => onPageChange(currentPage + 1)}

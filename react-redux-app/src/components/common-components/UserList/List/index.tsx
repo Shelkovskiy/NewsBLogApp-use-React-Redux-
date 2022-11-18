@@ -2,10 +2,9 @@ import React from "react";
 import ListItem from "./ListItem/index";
 import styled from "styled-components";
 import CustomText from "../../Text";
-import { Image } from "../../Image/index";
-import ComponentsContainer from "../../Container/index";
 import { CustomLnk } from "../../CustomLink/index";
 import { IAsyncBlogsResponseData } from "../../../../redux/Types/responseType";
+import { DEVICE } from "../../../../constants";
 
 interface IListProps {
 	items: IAsyncBlogsResponseData[];
@@ -45,6 +44,68 @@ export const CardImageContainer = styled.div`
 			opacity: 0;
 		}
 	}
+
+	@media ${DEVICE.desktop} {
+		width: 352px;
+	}
+
+	@media ${DEVICE.tablet} {
+		max-width: 328px;
+	}
+
+	@media ${DEVICE.mobile} {
+		max-width: 272px;
+	}
+`;
+
+const CardImage = styled.img`
+	width: 100%;
+	height: 208px;
+	object-fit: cover;
+	z-index: 1;
+`;
+
+interface ICardTextContainer {
+	maxWidth?: string;
+	display?: string;
+	margin?: string;
+	padding?: string;
+	justifyContent?: string;
+	alignItems?: string;
+	width?: string;
+	fontSize?: string;
+	color?: string;
+	background?: string;
+	borderRadius?: string;
+}
+
+export const CardTextContainer = styled.div<ICardTextContainer>`
+	border-radius: ${(props) => props.borderRadius || "0px"};
+	background: ${(props) => props.background || "none"};
+	font-size: ${(props) => props.fontSize || "16px"};
+	color: ${(props) => props.color || "black"};
+	width: ${(props) => props.width || "100%"};
+	max-width: ${(props) => props.maxWidth || "100%"};
+	display: ${(props) => props.display || "block"};
+	margin: ${(props) => props.margin || "0"};
+	padding: ${(props) => props.padding || 0};
+	justify-content: ${(props) => props.justifyContent || "space-between"};
+	align-items: ${(props) => props.alignItems || "center"};
+	box-sizing: border-box;
+
+	@media ${DEVICE.desktop} {
+		max-width: 287px;
+		padding: 32px;
+	}
+
+	@media ${DEVICE.tablet} {
+		max-width: 261px;
+		padding: 33px;
+	}
+	@media ${DEVICE.mobile} {
+		max-width: 224px;
+		padding: 24px;
+	}
 `;
 
 const List = ({ items }: IListProps) => {
@@ -54,9 +115,9 @@ const List = ({ items }: IListProps) => {
 				return (
 					<ListItem key={item.id}>
 						<CardImageContainer>
-							<Image src={item.imageUrl} alt="" />
+							<CardImage src={item.imageUrl} alt="" />
 						</CardImageContainer>
-						<ComponentsContainer width="287px" margin="auto" padding="32px">
+						<CardTextContainer margin="auto">
 							<CustomText
 								fontfamily="Inter"
 								fontstyle="normal"
@@ -85,7 +146,7 @@ const List = ({ items }: IListProps) => {
 									{item.title}
 								</CustomText>
 							</CustomLnk>
-						</ComponentsContainer>
+						</CardTextContainer>
 					</ListItem>
 				);
 			})}
