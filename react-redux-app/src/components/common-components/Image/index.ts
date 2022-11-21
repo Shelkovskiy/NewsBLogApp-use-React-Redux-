@@ -27,5 +27,6 @@ export const Image = styled.img<IImage>`
 
 	@media ${DEVICE.mobile} {
 		max-width: 272px;
+		max-height:224px;
 	}
 `;

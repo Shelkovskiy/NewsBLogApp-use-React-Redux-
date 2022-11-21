@@ -42,12 +42,30 @@ export const Btn = styled.button<IButtonVisualProps>`
 	border-radius: ${(props) => props.borderRadius || "4"}px;
 	cursor: pointer;
 
-	@media ${DEVICE.mobile} {
-		font-size: 12px;
+	:disabled {
+		:hover {
+			color: red;
+			background-color: lightgray;
+		}
+	}
+
+	@media ${DEVICE.desktop} {
+		:hover {
+			color: black;
+		}
 	}
 
 	@media ${DEVICE.tablet} {
 		font-size: 14px;
+	}
+
+	@media ${DEVICE.mobile} {
+		font-size: 14px;
+		padding: 0px 40px 24px;
+		margin: left;
+		:hover {
+			color: black;
+		}
 	}
 `;
 

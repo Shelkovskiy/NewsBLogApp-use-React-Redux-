@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FocusEvent } from "react";
 import styled from "styled-components";
 
 export interface iInputprops extends IInputForm {
@@ -10,6 +10,7 @@ export interface iInputprops extends IInputForm {
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	field?: string;
 	fieldName?: string;
+	onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
 }
 
 interface IInputForm {
@@ -51,6 +52,7 @@ const Input = ({
 	width,
 	height,
 	border,
+	onBlur,
 }: iInputprops) => {
 	return (
 		<InputForm
@@ -65,6 +67,7 @@ const Input = ({
 			height={height}
 			width={width}
 			border={border}
+			onBlur={onBlur}
 		/>
 	);
 };
