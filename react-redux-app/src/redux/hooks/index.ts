@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, RefObject } from "react";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { AnyAction } from "redux";
@@ -37,3 +37,26 @@ const useWindowSize = () => {
 };
 
 export default useWindowSize;
+
+export const useOnClickOutside = (
+	ref: RefObject<HTMLButtonElement>,
+	closeMenu: () => void,
+) => {
+	useEffect(() => {
+		const listener = (event: MouseEvent) => {
+			if (
+				ref.current &&
+				event.target &&
+				ref.current.contains(event.target as Node)
+			) {
+				return;
+			}
+			closeMenu();
+		};
+
+		document.addEventListener("mousedown", listener);
+		return () => {
+			document.removeEventListener("mousedown", listener);
+		};
+	}, [ref, closeMenu]);
+};

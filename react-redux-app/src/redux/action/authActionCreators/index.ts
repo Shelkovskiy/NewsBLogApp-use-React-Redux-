@@ -7,6 +7,7 @@ import {
 	AUTH_LOADING,
 	GET_LOGIN_DATA_SUCCESS,
 	GET_LOGIN_DATA_FAILURE,
+	LOGOUT,
 } from "./../index";
 import { TAuthLoginData } from "./../../Types/asyncAuthActionType/index";
 import { ActionCreator } from "redux";
@@ -35,6 +36,12 @@ export const getLoginDataFailure = (error: any) => {
 	return {
 		type: GET_LOGIN_DATA_FAILURE,
 		payload: error,
+	};
+};
+
+export const logout = () => {
+	return {
+		type: LOGOUT,
 	};
 };
 
