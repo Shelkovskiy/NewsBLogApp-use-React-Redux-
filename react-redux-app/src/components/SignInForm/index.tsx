@@ -23,6 +23,12 @@ import WarningText from "../common-components/warningText";
 import Loader from "../common-components/Loader/Loader";
 import { useNavigate } from "react-router";
 import { IAuthRequestLoginData } from "../../redux/Types/authTypes";
+import {
+	EMPTY_EMAIL,
+	EMPTY_PASSWORD,
+	INCORRECT_PASSWORD,
+	RE_EMAIL,
+} from "../../constants";
 
 const prevUserData: IAuthRequestLoginData = { email: "", password: "" };
 
@@ -33,12 +39,10 @@ const SignIN = () => {
 	const [userData, setUserData] = useState(prevUserData);
 	const isAuth = useAppSelector(isAuthSelector);
 	const navigate = useNavigate();
-	const [emailDirty, setEmailDirty] = useState(false);
-	const [passwordDiry, setPasswordDirty] = useState(false);
-	const [emailError, setEmailError] = useState("Email cannot be empty");
-	const [passwordError, setPasswordError] = useState(
-		"Password cannot be empty",
-	);
+	const [emailWrong, setEmailWrong] = useState(false);
+	const [passwordWrong, setPasswordWrong] = useState(false);
+	const [emailError, setEmailError] = useState(EMPTY_EMAIL);
+	const [passwordError, setPasswordError] = useState(EMPTY_PASSWORD);
 	const [formValid, setFormValid] = useState(false);
 
 	const onUserDataChange = useCallback(
@@ -49,12 +53,10 @@ const SignIN = () => {
 			}));
 			switch (e.target.name) {
 				case "email":
-					const reEmail =
-						/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-					if (!reEmail.test(String(e.target.value))) {
+					if (!RE_EMAIL.test(String(e.target.value))) {
 						setEmailError("Incorrect email");
 						if (!e.target.value) {
-							setEmailError("Email cannot be empty");
+							setEmailError(EMPTY_EMAIL);
 						}
 					} else {
 						setEmailError("");
@@ -62,11 +64,9 @@ const SignIN = () => {
 					break;
 				case "password":
 					if (e.target.value.length < 3 || e.target.value.length > 25) {
-						setPasswordError(
-							" Password must not be shorter than 3 or more than 25 characters",
-						);
+						setPasswordError(INCORRECT_PASSWORD);
 						if (!e.target.value) {
-							setPasswordError("Password cannot be empty");
+							setPasswordError(EMPTY_PASSWORD);
 						}
 					} else {
 						setPasswordError("");
@@ -80,10 +80,10 @@ const SignIN = () => {
 	const blurHandler = (e: FocusEvent<HTMLInputElement>) => {
 		switch (e.target.name) {
 			case "email":
-				setEmailDirty(true);
+				setEmailWrong(true);
 				break;
 			case "password":
-				setPasswordDirty(true);
+				setPasswordWrong(true);
 				break;
 		}
 	};
@@ -119,7 +119,7 @@ const SignIN = () => {
 							<FormLabel htmlFor="email">
 								Email
 								<Input
-									onBlur={(e) => blurHandler(e)}
+									onBlur={blurHandler}
 									name="email"
 									height="56px"
 									border="1px solid rgba(49, 48, 55, 0.1) "
@@ -128,14 +128,14 @@ const SignIN = () => {
 									fieldName="email"
 									onChange={onUserDataChange}
 								/>
-								{emailDirty && emailError && (
+								{emailWrong && emailError && (
 									<WarningText>{emailError}</WarningText>
 								)}
 							</FormLabel>
 							<FormLabel htmlFor="password">
 								Password
 								<Input
-									onBlur={(e) => blurHandler(e)}
+									onBlur={blurHandler}
 									height="56px"
 									border="1px solid rgba(49, 48, 55, 0.1) "
 									name="password"
@@ -145,7 +145,7 @@ const SignIN = () => {
 									onChange={onUserDataChange}
 								/>
 							</FormLabel>
-							{passwordDiry && passwordError && (
+							{passwordWrong && passwordError && (
 								<WarningText>{passwordError}</WarningText>
 							)}
 						</ComponentsContainer>

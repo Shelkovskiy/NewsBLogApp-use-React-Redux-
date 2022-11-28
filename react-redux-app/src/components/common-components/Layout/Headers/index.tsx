@@ -6,7 +6,7 @@ import Image from "./img/logo.png";
 import useWindowSize, {
 	AppDispatch,
 	useAppSelector,
-	useOnClickOutside,
+	useOutside,
 } from "../../../../redux/hooks";
 import {
 	dataSelectors,
@@ -65,7 +65,7 @@ const Header = () => {
 	const isAuth = useAppSelector(isAuthSelector);
 	const size = useWindowSize();
 	const node = useRef<HTMLButtonElement>(null);
-	useOnClickOutside(node, () => setOpen(false));
+	useOutside(node, () => setOpen(false));
 
 	const onLogout = useCallback(() => {
 		dispatch(logout());

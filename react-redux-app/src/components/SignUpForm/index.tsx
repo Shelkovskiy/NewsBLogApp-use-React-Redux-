@@ -9,6 +9,16 @@ import { CustomLnk } from "../common-components/CustomLink";
 import CustomText from "../common-components/Text";
 import Loader from "../common-components/Loader/Loader";
 import { IAuthRequestRegistrationData } from "../../redux/Types/authTypes";
+import {
+	EMPTY_EMAIL,
+	EMPTY_PASSWORD,
+	EMPTY_USERNAME,
+	INCORRECT_EMAIL,
+	INCORRECT_PASSWORD,
+	INCORRECT_USERNAME,
+	RE_EMAIL,
+	RE_NAME,
+} from "../../constants";
 
 const prevUserData: IAuthRequestRegistrationData = {
 	username: "",
@@ -22,16 +32,12 @@ const SignUp = () => {
 	const [isRegistered, setIsRegistered] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
 	const [isLoading, setIsloading] = useState(false);
-	const [userNameDirty, setUserNameDirty] = useState(false);
-	const [userNameError, setUserNameError] = useState(
-		"Username cannot be empty",
-	);
-	const [emailDirty, setEmailDirty] = useState(false);
-	const [emailError, setEmailError] = useState("Email cannot be empty");
-	const [passwordDiry, setPasswordDirty] = useState(false);
-	const [passwordError, setPasswordError] = useState(
-		"Password cannot be empty",
-	);
+	const [userNameWrong, setUserNameWrong] = useState(false);
+	const [userNameError, setUserNameError] = useState(EMPTY_USERNAME);
+	const [emailWrong, setEmailWrong] = useState(false);
+	const [emailError, setEmailError] = useState(EMPTY_EMAIL);
+	const [passwordWrong, setPasswordWrong] = useState(false);
+	const [passwordError, setPasswordError] = useState(EMPTY_PASSWORD);
 
 	const [formValid, setFormValid] = useState(false);
 
@@ -43,23 +49,20 @@ const SignUp = () => {
 			}));
 			switch (e.target.name) {
 				case "name":
-					const reName = /^[A-Za-z][A-Za-z0-9_]{7,29}$/;
-					if (!reName.test(String(e.target.value))) {
-						setUserNameError("Incorrect username");
+					if (!RE_NAME.test(String(e.target.value))) {
+						setUserNameError(INCORRECT_USERNAME);
 						if (!e.target.value) {
-							setUserNameError("Username cannot be empty");
+							setUserNameError(EMPTY_USERNAME);
 						} else {
 							setUserNameError("");
 						}
 					}
 					break;
 				case "email":
-					const reEmail =
-						/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-					if (!reEmail.test(String(e.target.value))) {
-						setEmailError("Incorrect email");
+					if (!RE_EMAIL.test(String(e.target.value))) {
+						setEmailError(INCORRECT_EMAIL);
 						if (!e.target.value) {
-							setEmailError("Email cannot be empty");
+							setEmailError(EMPTY_EMAIL);
 						}
 					} else {
 						setEmailError("");
@@ -67,11 +70,9 @@ const SignUp = () => {
 					break;
 				case "password":
 					if (e.target.value.length < 3 || e.target.value.length > 25) {
-						setPasswordError(
-							"Password must not be shorter than 3 or more than 25 characters",
-						);
+						setPasswordError(INCORRECT_PASSWORD);
 						if (!e.target.value) {
-							setPasswordError("Password cannot be empty");
+							setPasswordError(EMPTY_PASSWORD);
 						}
 					} else {
 						setPasswordError("");
@@ -89,13 +90,13 @@ const SignUp = () => {
 	const blurHandler = (e: FocusEvent<HTMLInputElement>) => {
 		switch (e.target.name) {
 			case "name":
-				setUserNameDirty(true);
+				setUserNameWrong(true);
 				break;
 			case "email":
-				setEmailDirty(true);
+				setEmailWrong(true);
 				break;
 			case "password":
-				setPasswordDirty(true);
+				setPasswordWrong(true);
 				break;
 		}
 	};
@@ -152,7 +153,7 @@ const SignUp = () => {
 										<FormLabel htmlFor="name">
 											Username
 											<Input
-												onBlur={(e) => blurHandler(e)}
+												onBlur={blurHandler}
 												name="name"
 												height="56px"
 												border="1px solid rgba(49, 48, 55, 0.1) "
@@ -161,14 +162,14 @@ const SignUp = () => {
 												fieldName="username"
 												onChange={onUserDataChange}
 											/>
-											{userNameDirty && userNameError && (
+											{userNameWrong && userNameError && (
 												<WarningText>{userNameError}</WarningText>
 											)}
 										</FormLabel>
 										<FormLabel htmlFor="email">
 											Email
 											<Input
-												onBlur={(e) => blurHandler(e)}
+												onBlur={blurHandler}
 												name="email"
 												height="56px"
 												border="1px solid rgba(49, 48, 55, 0.1) "
@@ -177,14 +178,14 @@ const SignUp = () => {
 												fieldName="email"
 												onChange={onUserDataChange}
 											/>
-											{emailDirty && emailError && (
+											{emailWrong && emailError && (
 												<WarningText>{emailError}</WarningText>
 											)}
 										</FormLabel>
 										<FormLabel htmlFor="password">
 											Password
 											<Input
-												onBlur={(e) => blurHandler(e)}
+												onBlur={blurHandler}
 												height="56px"
 												border="1px solid rgba(49, 48, 55, 0.1) "
 												name="password"
@@ -193,7 +194,7 @@ const SignUp = () => {
 												fieldName="password"
 												onChange={onUserDataChange}
 											/>
-											{passwordDiry && passwordError && (
+											{passwordWrong && passwordError && (
 												<WarningText>{passwordError}</WarningText>
 											)}
 										</FormLabel>

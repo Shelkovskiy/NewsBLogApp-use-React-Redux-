@@ -61,7 +61,7 @@ export const Btn = styled.button<IButtonVisualProps>`
 
 	@media ${DEVICE.mobile} {
 		font-size: 14px;
-		padding: 0px 40px 24px;
+
 		margin: left;
 		:hover {
 			color: black;

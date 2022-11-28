@@ -37,11 +37,16 @@ export const StyledBurger = styled.button<{ open: boolean }>`
 
 interface TBurgerProps {
 	open: boolean;
-	setOpen: (v: boolean) => void;
+	setOpen: (e: (prevState: boolean) => boolean) => void;
 }
 
 const Burger = ({ open, setOpen }: TBurgerProps) => {
-	return <StyledBurger open={open} onClick={() => setOpen(!open)} />;
+	return (
+		<StyledBurger
+			open={open}
+			onClick={() => setOpen((prevState: boolean) => !prevState)}
+		/>
+	);
 };
 
 export default Burger;
