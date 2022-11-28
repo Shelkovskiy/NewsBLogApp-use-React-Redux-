@@ -38,9 +38,9 @@ const useWindowSize = () => {
 
 export default useWindowSize;
 
-export const useOnClickOutside = (
+export const useOutside = (
 	ref: RefObject<HTMLButtonElement>,
-	closeMenu: () => void,
+	callBack: () => void,
 ) => {
 	useEffect(() => {
 		const listener = (event: MouseEvent) => {
@@ -51,12 +51,12 @@ export const useOnClickOutside = (
 			) {
 				return;
 			}
-			closeMenu();
+			callBack();
 		};
 
 		document.addEventListener("mousedown", listener);
 		return () => {
 			document.removeEventListener("mousedown", listener);
 		};
-	}, [ref, closeMenu]);
+	}, [ref, callBack]);
 };
