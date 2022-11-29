@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-export const StyledBurger = styled.button<{ open: boolean }>`
+interface ICustomBurgerProps {
+	open: boolean;
+}
+
+export const StyledBurger = styled.button<ICustomBurgerProps>`
 	width: 70px;
 	height: 20px;
 	background: transparent;
@@ -37,16 +41,11 @@ export const StyledBurger = styled.button<{ open: boolean }>`
 
 interface TBurgerProps {
 	open: boolean;
-	setOpen: (e: (prevState: boolean) => boolean) => void;
+	changeOpen: () => void;
 }
 
-const Burger = ({ open, setOpen }: TBurgerProps) => {
-	return (
-		<StyledBurger
-			open={open}
-			onClick={() => setOpen((prevState: boolean) => !prevState)}
-		/>
-	);
+const Burger = ({ open, changeOpen }: TBurgerProps) => {
+	return <StyledBurger open={open} onClick={changeOpen} />;
 };
 
 export default Burger;

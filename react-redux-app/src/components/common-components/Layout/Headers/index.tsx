@@ -6,7 +6,7 @@ import Image from "./img/logo.png";
 import useWindowSize, {
 	AppDispatch,
 	useAppSelector,
-	useOutside,
+	useClickOutside,
 } from "../../../../redux/hooks";
 import {
 	dataSelectors,
@@ -65,7 +65,7 @@ const Header = () => {
 	const isAuth = useAppSelector(isAuthSelector);
 	const size = useWindowSize();
 	const node = useRef<HTMLButtonElement>(null);
-	useOutside(node, () => setOpen(false));
+	useClickOutside(node, () => setOpen(false));
 
 	const onLogout = useCallback(() => {
 		dispatch(logout());
@@ -82,7 +82,10 @@ const Header = () => {
 				<SearchContainer>{size.width > 320 && <SearchForm />}</SearchContainer>
 				{size.width < 321 ? (
 					<>
-						<Burger open={open} setOpen={setOpen} />
+						<Burger
+							open={open}
+							changeOpen={() => setOpen((prevState) => !prevState)}
+						/>
 						<div>
 							<NavWrap open={open}>
 								<CustomLnk textDecoration="none" to="/MainPage">
