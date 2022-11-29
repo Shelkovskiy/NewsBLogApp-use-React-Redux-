@@ -36,6 +36,7 @@ import Select from "../Select";
 import SearchForm from "../SearchForm";
 
 const BlogPosts = () => {
+	const dispatch: AppDispatch = useDispatch();
 	const blogs = useAppSelector(blogSelectors);
 	const isLoading = useAppSelector(isLoadingSelector);
 	const errorMessage = useAppSelector(errorSelector);
@@ -51,8 +52,6 @@ const BlogPosts = () => {
 		SIBLING_COUNT,
 		totalCount,
 	});
-
-	const dispatch: AppDispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(getTotalAsyncCount());
@@ -93,7 +92,6 @@ const BlogPosts = () => {
 						<Select option={OPTION} value={sort} onChange={onSortItemChange} />
 					</SortWrapper>
 					{errorMessage && <WarningText>{errorMessage}</WarningText>}
-
 					<List items={blogs} />
 					<ComponentsContainer
 						display="flex"

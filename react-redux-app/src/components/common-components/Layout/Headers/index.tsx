@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import CustomText from "../../Text/index";
 import { CustomLnk } from "../../CustomLink/index";
 import Image from "./img/logo.png";
-import useWindowSize, { useAppSelector } from "../../../../redux/hooks";
+import useWindowSize, {
+	AppDispatch,
+	useAppSelector,
+	useClickOutside,
+} from "../../../../redux/hooks";
 import {
 	dataSelectors,
 	isAuthSelector,
@@ -12,6 +16,10 @@ import { DEVICE } from "../../../../constants";
 import SearchForm from "../../../SearchForm";
 import { Logo } from "../../../Logo";
 import Burger from "../../../Burger";
+import { NavWrap, NavWrapItem } from "../../Navigation";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../../redux/action/authActionCreators";
+import Button from "../../Button";
 
 interface IHeader {
 	background?: string;
@@ -51,9 +59,17 @@ const SearchContainer = styled.div`
 `;
 
 const Header = () => {
+	const dispatch: AppDispatch = useDispatch();
+	const [open, setOpen] = useState<boolean>(false);
 	const { username } = useAppSelector(dataSelectors);
 	const isAuth = useAppSelector(isAuthSelector);
 	const size = useWindowSize();
+	const node = useRef<HTMLButtonElement>(null);
+	useClickOutside(node, () => setOpen(false));
+
+	const onLogout = useCallback(() => {
+		dispatch(logout());
+	}, [dispatch]);
 
 	return (
 		<>
@@ -65,7 +81,34 @@ const Header = () => {
 				</CustomLnk>
 				<SearchContainer>{size.width > 320 && <SearchForm />}</SearchContainer>
 				{size.width < 321 ? (
-					<Burger />
+					<>
+						<Burger
+							open={open}
+							changeOpen={() => setOpen((prevState) => !prevState)}
+						/>
+						<div>
+							<NavWrap open={open}>
+								<CustomLnk textDecoration="none" to="/MainPage">
+									<NavWrapItem>Articles</NavWrapItem>
+								</CustomLnk>
+								<CustomLnk textDecoration="none" to="/newspage">
+									<NavWrapItem>News</NavWrapItem>
+								</CustomLnk>
+								<div>
+									<Button
+										onClick={onLogout}
+										fontWeight="600"
+										width="124px"
+										margin="start"
+										fontSize="16px"
+										color="white"
+									>
+										Logout
+									</Button>
+								</div>
+							</NavWrap>
+						</div>
+					</>
 				) : (
 					<>
 						{!isAuth ? (

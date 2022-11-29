@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-export const StyledBurger = styled.button`
+interface ICustomBurgerProps {
+	open: boolean;
+}
+
+export const StyledBurger = styled.button<ICustomBurgerProps>`
 	width: 70px;
 	height: 20px;
 	background: transparent;
@@ -9,9 +13,8 @@ export const StyledBurger = styled.button`
 	padding: 0;
 	border-style: solid;
 	border-color: gray transparent;
-	border-width: 2px 0;
+	border-width: ${({ open }) => (open ? "0px" : "2px 0")} 2px 0;
 	position: relative;
-	transition: all 0.2s ease-in-out;
 	&::after,
 	&::before {
 		content: "";
@@ -25,20 +28,24 @@ export const StyledBurger = styled.button`
 		background: gray;
 		transition: all 0.2s ease-in-out;
 	}
-	&.active,
-	&:hover {
-		border-color: transparent;
-		&::after {
-			transform: rotate(-45deg);
-		}
-		&::before {
-			transform: rotate(45deg);
-		}
+
+	&::after {
+		transform: ${({ open }) => (open ? "rotate(45deg)" : "rotate(0)")};
+		transition: all 0.2s ease-in-out;
+	}
+	&::before {
+		transform: ${({ open }) => (open ? "rotate(-45deg)" : "rotate(0)")};
+		transition: all 0.2s ease-in-out;
 	}
 `;
 
-const Burger = () => {
-	return <StyledBurger></StyledBurger>;
+interface TBurgerProps {
+	open: boolean;
+	changeOpen: () => void;
+}
+
+const Burger = ({ open, changeOpen }: TBurgerProps) => {
+	return <StyledBurger open={open} onClick={changeOpen} />;
 };
 
 export default Burger;

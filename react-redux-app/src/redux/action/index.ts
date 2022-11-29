@@ -38,3 +38,4 @@ export const AUTH_LOADING = "AUTH_LOADING" as const;
 export const SET_LOGIN_DATA_START = "SET_LOGIN_DATA_START" as const;
 export const GET_LOGIN_DATA_SUCCESS = "GET_LOGIN_DATA_SUCCESS" as const;
 export const GET_LOGIN_DATA_FAILURE = "GET_LOGIN_DATA_FAILURE" as const;
+export const LOGOUT = "LOGOUT" as const;

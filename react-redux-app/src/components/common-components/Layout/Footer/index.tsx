@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import Button from "../../Button";
 import { faCopyright, faToggleOn } from "@fortawesome/free-solid-svg-icons";
@@ -6,6 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomText from "../../Text/index";
 import ComponentsContainer from "../../Container";
 import { DEVICE } from "../../../../constants";
+import { AppDispatch } from "../../../../redux/hooks";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../../redux/action/authActionCreators";
 
 interface IFooter {
 	background?: string;
@@ -55,6 +58,12 @@ const DarkThemeBlock = styled.div`
 `;
 
 const Footer = () => {
+	const dispatch: AppDispatch = useDispatch();
+
+	const onLogout = useCallback(() => {
+		dispatch(logout());
+	}, [dispatch]);
+
 	return (
 		<>
 			<FooterBlock background="none" margin="auto auto 0">
@@ -101,6 +110,18 @@ const Footer = () => {
 						/>
 					</Button>
 				</DarkThemeBlock>
+				<div>
+					<Button
+						onClick={onLogout}
+						fontWeight="600"
+						width="124px"
+						margin="start"
+						fontSize="16"
+						color="rgba(49, 48, 55, 0.5)"
+					>
+						Logout
+					</Button>
+				</div>
 			</FooterBlock>
 		</>
 	);

@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import BlogPosts from "../../components/BlogPosts/index";
 import { CustomLnk } from "../../components/common-components/CustomLink";
 import ComponentsContainer from "../../components/common-components/Container";
-import styled from "styled-components";
 import {
 	NavWrap,
 	NavWrapItem,
 } from "../../components/common-components/Navigation";
 import { MainTitle } from "../../components/MainTitle";
+import useWindowSize from "../../redux/hooks";
 
 const MainPage = () => {
+	const [open, setOpen] = useState<boolean>(false);
+	const size = useWindowSize();
+
 	return (
 		<ComponentsContainer
 			width="100%"
@@ -20,16 +23,17 @@ const MainPage = () => {
 				<div>
 					<MainTitle>Articles</MainTitle>
 				</div>
-				<NavWrap>
-					<CustomLnk textDecoration="none" to="/MainPage">
-						<NavWrapItem>Articles</NavWrapItem>
-					</CustomLnk>
-					<CustomLnk textDecoration="none" to="/newspage">
-						<NavWrapItem>News</NavWrapItem>
-					</CustomLnk>
-				</NavWrap>
+				{size.width > 321 && (
+					<NavWrap open={open}>
+						<CustomLnk textDecoration="none" to="/MainPage">
+							<NavWrapItem>Articles</NavWrapItem>
+						</CustomLnk>
+						<CustomLnk textDecoration="none" to="/newspage">
+							<NavWrapItem>News</NavWrapItem>
+						</CustomLnk>
+					</NavWrap>
+				)}
 			</ComponentsContainer>
-
 			<div>
 				<BlogPosts />
 			</div>
