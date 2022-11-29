@@ -28,7 +28,7 @@ import {
 	EMPTY_PASSWORD,
 	INCORRECT_PASSWORD,
 	RE_EMAIL,
-} from "../../constants";
+} from "../../constants/error_mesage_for_validation";
 
 const prevUserData: IAuthRequestLoginData = { email: "", password: "" };
 

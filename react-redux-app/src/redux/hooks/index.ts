@@ -38,7 +38,7 @@ const useWindowSize = () => {
 
 export default useWindowSize;
 
-export const useOutside = (
+export const useClickOutside = (
 	ref: RefObject<HTMLButtonElement>,
 	callBack: () => void,
 ) => {

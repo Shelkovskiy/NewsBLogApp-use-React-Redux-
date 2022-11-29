@@ -18,7 +18,7 @@ import {
 	INCORRECT_USERNAME,
 	RE_EMAIL,
 	RE_NAME,
-} from "../../constants";
+} from "../../constants/error_mesage_for_validation";
 
 const prevUserData: IAuthRequestRegistrationData = {
 	username: "",
