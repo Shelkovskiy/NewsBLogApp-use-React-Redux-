@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import CustomText from "../../Text/index";
 import { CustomLnk } from "../../CustomLink/index";
@@ -70,6 +70,10 @@ const Header = () => {
 	const onLogout = useCallback(() => {
 		dispatch(logout());
 	}, [dispatch]);
+
+	useEffect(() => {
+		document.body.style.overflow = open ? "hidden" : "unset";
+	}, [open]);
 
 	return (
 		<>
