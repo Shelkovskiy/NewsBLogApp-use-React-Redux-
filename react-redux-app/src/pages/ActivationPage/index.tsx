@@ -55,7 +55,7 @@ const ActivationPage = () => {
 							width="500px"
 							margin="10px auto 100px"
 						>
-							<CustomText width="624" fontsize="20" color="green">
+							<CustomText margin="40px auto 40px" width="624" fontsize="20" color="green">
 								Your account is succesfully activated!
 							</CustomText>
 							<CustomLnk to="/signinpage">
