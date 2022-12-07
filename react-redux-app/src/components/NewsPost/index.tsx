@@ -43,6 +43,8 @@ const NewsPosts = () => {
 	const sort = useAppSelector(sortNewsSelector);
 	const size = useWindowSize();
 
+	const totalPageCount = Math.ceil(totalCount / PAGE_SIZE);
+
 	const pagination = usePagination({
 		currentPage,
 		PAGE_SIZE,
@@ -121,7 +123,7 @@ const NewsPosts = () => {
 							})}
 						</PaginationContainer>
 						<Button
-							disabled={currentPage >= totalCount}
+							disabled={currentPage >= totalPageCount}
 							onClick={() => onPageChange(currentPage + 1)}
 							background="none"
 							color="#313037"
