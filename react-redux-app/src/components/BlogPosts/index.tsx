@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback, useState, useMemo } from "react";
 import List from "../common-components/UserList/List";
 import Loader from "../common-components/Loader/Loader";
 import useWindowSize, { useAppSelector } from "../../redux/hooks/index";
@@ -45,6 +45,8 @@ const BlogPosts = () => {
 	const sort = useAppSelector(sortBlogSelector);
 	const filter = useAppSelector(filterBlogSelector);
 	const size = useWindowSize();
+
+	const totalPageCount = Math.ceil(totalCount / PAGE_SIZE);
 
 	const pagination = usePagination({
 		currentPage,
@@ -124,7 +126,7 @@ const BlogPosts = () => {
 							})}
 						</PaginationContainer>
 						<Button
-							disabled={currentPage >= totalCount}
+							disabled={currentPage >= totalPageCount}
 							onClick={() => onPageChange(currentPage + 1)}
 							background="none"
 							color="#313037"
