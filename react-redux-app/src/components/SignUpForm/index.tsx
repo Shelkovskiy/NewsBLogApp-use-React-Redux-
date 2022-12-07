@@ -139,9 +139,13 @@ const SignUp = () => {
 			<>
 				{isRegistered ? (
 					<>
-						<CustomText>Please check email to verify your account</CustomText>
+						<CustomText fontsize="24">
+							Please check email to verify your account
+						</CustomText>
 						<CustomLnk to="/activate/:uid/:id">
-							<Button>Go to activation page</Button>
+							<Button color="green" background="lightgray">
+								Go to activation page
+							</Button>
 						</CustomLnk>
 					</>
 				) : (
